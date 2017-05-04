@@ -13,6 +13,7 @@ class API {
     let userID = UserID(IDnum: "", userName: "", phoneNumber: "")
     init(){
         _ = userID.loadUserIDFromPhone()
+        print("UserID: \(userID.IDnum)")
     }
     
     // POST Requests
@@ -71,6 +72,15 @@ class API {
         let json = send_post(endpoint: "add-user", parameters: parameters)
         
         return String(json.object(forKey: "userid")! as! Int)
+    }
+    
+    func update_user_info(username: String, userid: String) {
+        let parameters: Parameters = [
+            "username": username,
+            "userid": userid
+        ]
+        
+        _ = send_post(endpoint: "update-user-info", parameters: parameters)
     }
     
     

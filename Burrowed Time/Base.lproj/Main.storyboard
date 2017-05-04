@@ -46,7 +46,7 @@
                                     <constraint firstAttribute="height" constant="37" id="0Tj-Me-R5b"/>
                                 </constraints>
                             </pageControl>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Burrowed Time" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SKO-Px-K5C">
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Burrowed Time" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SKO-Px-K5C">
                                 <rect key="frame" x="3" y="28" width="369" height="48"/>
                                 <color key="backgroundColor" red="0.69149678945541382" green="0.93344300985336304" blue="0.90170830488204956" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
@@ -145,6 +145,13 @@
                                     <segue destination="bAP-Ch-XeP" kind="embed" identifier="settingsSegue" id="69H-8V-wGg"/>
                                 </connections>
                             </containerView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SdY-OA-TGN">
+                                <rect key="frame" x="81" y="41" width="212" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.54979302196161051" green="0.64788275326808509" blue="0.6414330489820802" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -184,6 +191,7 @@
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="dataLabel" destination="SKO-Px-K5C" id="uk3-0p-vv5"/>
+                        <outlet property="debuggerLabel" destination="SdY-OA-TGN" id="NQz-Nf-KXS"/>
                         <outlet property="editingDoneButton" destination="zzE-MT-gEc" id="cnL-Gn-e4k"/>
                         <outlet property="homeArrow" destination="jmR-Zv-vlM" id="AIw-rL-Q9u"/>
                         <outlet property="homeTable" destination="aTB-Qe-Kcc" id="h7n-jw-b5l"/>
@@ -396,13 +404,13 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ugK-nA-IUQ">
+                            <textField hidden="YES" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ugK-nA-IUQ">
                                 <rect key="frame" x="14" y="188" width="350" height="30"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" keyboardType="phonePad"/>
                             </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Phone Number:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fx8-td-5Ma">
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Phone Number:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fx8-td-5Ma">
                                 <rect key="frame" x="16" y="159.5" width="119.5" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>

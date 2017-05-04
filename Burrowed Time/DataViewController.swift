@@ -10,6 +10,7 @@ import UIKit
 
 class DataViewController: UIViewController {
 
+    @IBOutlet weak var debuggerLabel: UILabel!
     @IBOutlet weak var editingDoneButton: UIButton!
     @IBOutlet weak var dataLabel: UILabel!
     @IBOutlet weak var homeArrow: UIButton!
@@ -126,6 +127,14 @@ class DataViewController: UIViewController {
                 
                 self.groupList.saveGroupListToPhone()
             }
+        }
+        
+        let debugger = UserDefaults.standard.object(forKey: "mapdebugger") as! String
+        if (debugger == "d") {
+            debuggerLabel.text = "Waiting for location"
+        }
+        else {
+            debuggerLabel.text = debugger;
         }
     }
 

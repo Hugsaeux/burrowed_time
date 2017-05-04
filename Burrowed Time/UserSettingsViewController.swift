@@ -14,21 +14,28 @@ class UserSettingsViewController: UIViewController {
     @IBOutlet weak var phoneNumberTextField: UITextField!
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let root:RootViewController! = segue.destination as! RootViewController
-        root.passedData = "\(usernameTextField.text!);\(phoneNumberTextField.text!)"
+        //let root:RootViewController! = segue.destination as! RootViewController
+        //root.passedData = "\(usernameTextField.text!);\(phoneNumberTextField.text!)"
         
-        let userID:UserID = UserID(IDnum: "", userName: "", phoneNumber: "")
-        _ = userID.loadUserIDFromPhone()
-        
-        if (usernameTextField.text != "") {
-            userID.username = usernameTextField.text!
+        if (usernameTextField.text! != "") {
+            let userID:UserID = UserID(IDnum: "", userName: "", phoneNumber: "")
+            _ = userID.loadUserIDFromPhone()
+            
+            if (usernameTextField.text != "") {
+                userID.username = usernameTextField.text!
+            }
+            userID.saveUserIDToPhone()
+            
+            let api:API = API()
+            api.update_user_info(username: usernameTextField.text!, userid: userID.getIDnum())
+            
+            let groupList = GroupList()
+            groupList.saveGroupListToPhone()
         }
         
-        if (phoneNumberTextField.text != "") {
-            userID.phoneNumber = phoneNumberTextField.text!
-        }
-        
-        userID.saveUserIDToPhone()
+//        if (phoneNumberTextField.text != "") {
+//            userID.phoneNumber = phoneNumberTextField.text!
+//        }
     }
     
     override func viewDidLoad() {
@@ -37,10 +44,10 @@ class UserSettingsViewController: UIViewController {
         _ = userID.loadUserIDFromPhone()
         
         let username = userID.getUsername()
-        let phoneNumber = userID.getPhoneNumber()
+        //let phoneNumber = userID.getPhoneNumber()
         
         usernameTextField.placeholder = username
-        phoneNumberTextField.placeholder = phoneNumber
+        //phoneNumberTextField.placeholder = phoneNumber
     }
 
     override func didReceiveMemoryWarning() {

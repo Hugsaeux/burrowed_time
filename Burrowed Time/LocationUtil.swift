@@ -56,6 +56,10 @@ class LocationUtil: NSObject, CLLocationManagerDelegate {
         storedRegionLookup.loadRegionLookupFromPhone()
         
         let info:NSArray = storedRegionLookup.regionLookup.object(forKey: region.identifier) as! NSArray
+        let title = String(describing: info[TITLE])
+        let value = "Exited Region: \(title)"
+        UserDefaults.standard.setValue(value, forKey: "mapdebugger")
+        
         if (info.count > 0) {
             NSLog("Retrieved info was: \(info).")
             
@@ -79,6 +83,9 @@ class LocationUtil: NSObject, CLLocationManagerDelegate {
         storedRegionLookup.loadRegionLookupFromPhone()
         
         let info:NSArray = storedRegionLookup.regionLookup.object(forKey: region.identifier) as! NSArray
+        let title = String(describing: info[TITLE])
+        let value = "Entered Region: \(title)"
+        UserDefaults.standard.setValue(value, forKey: "mapdebugger")
         
         if (info.count > 0) {
             NSLog("Retrieved info was: \(info).")
