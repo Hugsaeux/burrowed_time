@@ -99,7 +99,6 @@ class MapGUIViewController: UIViewController, MKMapViewDelegate {
                 mapView.setRegion(mapRegion, animated: true)
                 radiusSlider.setValue(Float(radius), animated: true)
                 currentRadius = NumberFormatter().number(from: String(describing: regionInfo[RADIUS]))!.doubleValue
-                print(currentRadius)
                 currentIdx = regionIdx
                 currentCoordinate = coordinate
             }

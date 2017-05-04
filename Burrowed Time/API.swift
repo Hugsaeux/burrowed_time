@@ -13,6 +13,7 @@ class API {
     let userID = UserID(IDnum: "", userName: "", phoneNumber: "")
     init(){
         _ = userID.loadUserIDFromPhone()
+        print("UserID: \(userID.IDnum)")
     }
     
     // POST Requests

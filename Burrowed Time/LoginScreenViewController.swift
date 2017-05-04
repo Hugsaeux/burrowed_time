@@ -16,6 +16,8 @@ class LoginScreenViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -27,10 +29,20 @@ class LoginScreenViewController: UIViewController {
         if (userNameTextField.text != "" && phoneNumberTextField.text != "") {
             let api:API = API()
             
-            let id:String = api.add_user(username: userNameTextField.text!, phonenumber: phoneNumberTextField.text!)
+            let lookUp = api.lookup_user(phonenumber: phoneNumberTextField.text!)
+            let userID = lookUp.object(forKey: "userid") as! Int
             
-            let userID:UserID = UserID(IDnum: id, userName: userNameTextField.text!, phoneNumber: phoneNumberTextField.text!)
-            userID.saveUserIDToPhone()
+            if (userID != -1) {
+                let userID:UserID = UserID(IDnum: userID.description, userName: userNameTextField.text!, phoneNumber: phoneNumberTextField.text!)
+                userID.saveUserIDToPhone()
+            }
+            else {
+                let id:String = api.add_user(username: userNameTextField.text!, phonenumber: phoneNumberTextField.text!)
+                
+                let userID:UserID = UserID(IDnum: id, userName: userNameTextField.text!, phoneNumber: phoneNumberTextField.text!)
+                userID.saveUserIDToPhone()
+            }
+            
         }
     }
 }
