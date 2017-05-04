@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		214F48CB1EBBCDD30025A227 /* Invitation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214F48CA1EBBCDD30025A227 /* Invitation.swift */; };
 		4A1C26261E44D117007C2579 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A1C26251E44D117007C2579 /* MapKit.framework */; };
 		4A244C931E304D1A0006DB23 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A244C921E304D1A0006DB23 /* AppDelegate.swift */; };
 		4A244C951E304D1A0006DB23 /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A244C941E304D1A0006DB23 /* RootViewController.swift */; };
@@ -126,6 +127,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		214F48CA1EBBCDD30025A227 /* Invitation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Invitation.swift; sourceTree = "<group>"; };
 		4A1C26251E44D117007C2579 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		4A244C8F1E304D1A0006DB23 /* Burrowed Time.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Burrowed Time.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A244C921E304D1A0006DB23 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -254,6 +256,7 @@
 				4A3E5EF71E6AFE2600EBA3B3 /* UserID.swift */,
 				4A6FDCBA1E3A305200CCB564 /* Person.swift */,
 				4A26D5D31EA3CE5D002B47E0 /* Location.swift */,
+				214F48CA1EBBCDD30025A227 /* Invitation.swift */,
 			);
 			name = "Data Structures";
 			sourceTree = "<group>";
@@ -492,6 +495,7 @@
 				4A2ED06B1E944D99007D984B /* LocationPickerViewController.swift in Sources */,
 				4A2D9C491E67A40D00745F97 /* AddressBookTableViewCell.swift in Sources */,
 				4A95958F1E355A6800C2B541 /* DataViewController.swift in Sources */,
+				214F48CB1EBBCDD30025A227 /* Invitation.swift in Sources */,
 				4A6FDCBD1E3A32D900CCB564 /* Group.swift in Sources */,
 				4A3E5EF61E6AFDE500EBA3B3 /* RegionLookup.swift in Sources */,
 				4A2809AA1E5E7FAB00AFEDE8 /* LoginScreenViewController.swift in Sources */,

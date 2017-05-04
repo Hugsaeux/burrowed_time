@@ -144,6 +144,7 @@ class API {
             "loc_numbers": loc_numbers
         ]
         
+        print(parameters)
         _ = send_post(endpoint: "respond-invite", parameters: parameters)
     }
     
