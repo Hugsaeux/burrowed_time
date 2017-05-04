@@ -10,9 +10,25 @@ import UIKit
 
 class GroupInviteTableViewController: UITableViewController {
 
+    var invites = [Invitation]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        let api:API = API()
+        print("invite_started")
+        let invitations = api.removeSuccess(dict: api.check_invites())
+        
+        for (inviteId, info) in invitations{
+            let invite = Invitation(id:inviteId as! String, inviter:(info as! NSArray)[0] as! String, group:(info as! NSArray)[2] as! String)
+            invites.append(invite)
+        }
+        
+        for invite in invites{
+            print(invite.getId())
+            print(invite.getInviter())
+            print(invite.getGroup())
+        }
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -34,13 +50,15 @@ class GroupInviteTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 1
+        return invites.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell:GroupInviteTableViewCell = tableView.dequeueReusableCell(withIdentifier: "inviteTableCell", for: indexPath) as! GroupInviteTableViewCell
 
         // Configure the cell...
+        cell.friendLabel.text = invites[indexPath.row].getInviter()
+        cell.groupLabel.text = invites[indexPath.row].getGroup()
 
         return cell
     }
