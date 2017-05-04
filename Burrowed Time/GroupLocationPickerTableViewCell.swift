@@ -25,16 +25,38 @@ class GroupLocationPickerTableViewCell: UITableViewCell {
             groupList.groups[groupList.getIndexOfGroup(groupName: currentGroup)].removeLocation(location: locationLabel.text!)
         }
         
-        //let locations:NSArray = groupList.groups[groupList.getIndexOfGroup(groupName: currentGroup)].locations as NSArray
+//        //let locations:NSArray = groupList.groups[groupList.getIndexOfGroup(groupName: currentGroup)].locations as NSArray
+//        var locations = [Int]()
+//        for location in groupList.groups[groupList.getIndexOfGroup(groupName: currentGroup)].locations {
+//            locations.append(location.locationID)
+//        }
+//        
+//        let api:API = API()
+//        api.change_group_locations(groupid: groupList.groups[groupList.getIndexOfGroup(groupName: currentGroup)].getIdentifier(), locs: locations as NSArray)
+//        print(groupList.groups[groupList.getIndexOfGroup(groupName: currentGroup)].getIdentifier())
+//        print(locations)
+//        
+//        groupList.saveGroupListToPhone()
+        
         var locations = [Int]()
-        for location in groupList.groups[groupList.getIndexOfGroup(groupName: currentGroup)].locations {
-            locations.append(location.locationID)
+        let storedRegionLookup = RegionLookup()
+        storedRegionLookup.loadRegionLookupFromPhone()
+        for region in locationUtil!.manager.monitoredRegions {
+            for location in groupList.groups[groupList.getIndexOfGroup(groupName: currentGroup)].locations {
+                // Make a new annotation for this region
+                let regionIdx = region.identifier
+                let regionInfo:NSArray = storedRegionLookup.regionLookup.object(forKey: regionIdx) as! NSArray
+                let title = String(describing: regionInfo[TITLE])
+                
+                if (title == location.name) {
+                    locations.append(Int(regionIdx)!)
+                    location.locationID = Int(regionIdx)!
+                }
+            }
         }
         
         let api:API = API()
         api.change_group_locations(groupid: groupList.groups[groupList.getIndexOfGroup(groupName: currentGroup)].getIdentifier(), locs: locations as NSArray)
-        print(groupList.groups[groupList.getIndexOfGroup(groupName: currentGroup)].getIdentifier())
-        print(locations)
         
         groupList.saveGroupListToPhone()
     }

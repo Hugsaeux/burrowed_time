@@ -74,6 +74,15 @@ class API {
         return String(json.object(forKey: "userid")! as! Int)
     }
     
+    func update_user_info(username: String, userid: String) {
+        let parameters: Parameters = [
+            "username": username,
+            "userid": userid
+        ]
+        
+        _ = send_post(endpoint: "update-user-info", parameters: parameters)
+    }
+    
     
     func create_group(groupname: String, locs: NSArray) ->String{
         let parameters: Parameters = [
