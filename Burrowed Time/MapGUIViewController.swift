@@ -353,6 +353,7 @@ class MapGUIViewController: UIViewController, MKMapViewDelegate {
                     
                     if ((distance! as Double) < radius) {
                         let api:API = API()
+                        print("You are in this location")
                         api.enter_location(loc_num: regionIdx)
                     }
                 }

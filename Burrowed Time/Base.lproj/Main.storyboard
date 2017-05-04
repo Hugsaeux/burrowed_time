@@ -100,8 +100,8 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dTs-rT-Ud0">
-                                <rect key="frame" x="329" y="627" width="22" height="22"/>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dTs-rT-Ud0">
+                                <rect key="frame" x="316" y="613" width="41" height="41"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="22" id="5DO-dY-cgH"/>
                                     <constraint firstAttribute="width" constant="22" id="dal-qd-LSP"/>

@@ -18,40 +18,46 @@ class LocationPickerTableViewCell: UITableViewCell {
     var cellIndex:Int!
     
     @IBAction func switchChanged(_ sender: Any) {
-        if (!groupList.groups[cellGroupIndex].checkLocation(location: cellLocation)) {
-            let location:Location = Location(name: cellLocation, locationID: cellIndex)
-            groupList.groups[cellGroupIndex].addLocation(location: location)
-        }
-        else {
-            groupList.groups[cellGroupIndex].removeLocation(location: cellLocation)
-        }
-        
-        var locations = [Int]()
-//        for location in groupList.groups[cellGroupIndex].locations {
-//            locations.append(location.locationID)
-//        }
-        
-        // need identifier from location util
-        let storedRegionLookup = RegionLookup()
-        storedRegionLookup.loadRegionLookupFromPhone()
-        for region in locationUtil!.manager.monitoredRegions {
-            for location in groupList.groups[cellGroupIndex].locations {
-                // Make a new annotation for this region
-                let regionIdx = region.identifier
-                let regionInfo:NSArray = storedRegionLookup.regionLookup.object(forKey: regionIdx) as! NSArray
-                let title = String(describing: regionInfo[TITLE])
-                
-                if (title == location.name) {
-                    locations.append(Int(regionIdx)!)
-                    location.locationID = Int(regionIdx)!
+        if (groupList.groups[cellGroupIndex].locations.count < 6) {
+            if (!groupList.groups[cellGroupIndex].checkLocation(location: cellLocation)) {
+                let location:Location = Location(name: cellLocation, locationID: cellIndex)
+                groupList.groups[cellGroupIndex].addLocation(location: location)
+            }
+            else {
+                groupList.groups[cellGroupIndex].removeLocation(location: cellLocation)
+            }
+            
+            var locations = [Int]()
+    //        for location in groupList.groups[cellGroupIndex].locations {
+    //            locations.append(location.locationID)
+    //        }
+            
+            // need identifier from location util
+            let storedRegionLookup = RegionLookup()
+            storedRegionLookup.loadRegionLookupFromPhone()
+            for region in locationUtil!.manager.monitoredRegions {
+                for location in groupList.groups[cellGroupIndex].locations {
+                    // Make a new annotation for this region
+                    let regionIdx = region.identifier
+                    let regionInfo:NSArray = storedRegionLookup.regionLookup.object(forKey: regionIdx) as! NSArray
+                    let title = String(describing: regionInfo[TITLE])
+                    
+                    if (title == location.name) {
+                        locations.append(Int(regionIdx)!)
+                        location.locationID = Int(regionIdx)!
+                    }
                 }
             }
+            
+            let api:API = API()
+            api.change_group_locations(groupid: groupList.groups[cellGroupIndex].getIdentifier(), locs: locations as NSArray)
+            
+            
+            groupList.saveGroupListToPhone()
         }
-        
-        let api:API = API()
-        api.change_group_locations(groupid: groupList.groups[cellGroupIndex].getIdentifier(), locs: locations as NSArray)
-        
-        groupList.saveGroupListToPhone()
+        else {
+            trackingSwitch.onTintColor = UIColor .red
+        }
     }
 
     override func awakeFromNib() {
