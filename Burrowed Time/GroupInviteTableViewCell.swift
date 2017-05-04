@@ -16,15 +16,24 @@ class GroupInviteTableViewCell: UITableViewCell {
     var inviteId:String!
     
     let api:API = API()
+
+    let nc = NotificationCenter.default
+
     
     @IBAction func acceptButtonClick(_ sender: Any) {
         api.respond_invite(inviteid: inviteId, accept: 1, loc_numbers: [])
         print("accepted")
+        nc.post(name:Notification.Name(rawValue:"RefreshInvites"),
+                object: nil,
+                userInfo: ["message":"Hello there!", "date":Date()])
     }
     
     @IBAction func rejectButtonClick(_ sender: Any) {
         api.respond_invite(inviteid: inviteId, accept: 0, loc_numbers: [])
         print("rejected")
+        nc.post(name:Notification.Name(rawValue:"RefreshInvites"),
+                object: nil,
+                userInfo: ["message":"Hello there!", "date":Date()])
     }
     
     override func awakeFromNib() {

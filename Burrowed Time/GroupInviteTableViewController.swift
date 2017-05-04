@@ -12,12 +12,11 @@ class GroupInviteTableViewController: UITableViewController {
 
     var invites = [Invitation]()
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
+    func refreshInvitesData() {
         let api:API = API()
-        print("invite_started")
         let invitations = api.removeSuccess(dict: api.check_invites())
+        
+        invites = [Invitation]()
         
         for (inviteId, info) in invitations{
             let invite = Invitation(id:inviteId as! String, inviter:(info as! NSArray)[0] as! String, group:(info as! NSArray)[2] as! String)
@@ -29,6 +28,24 @@ class GroupInviteTableViewController: UITableViewController {
             print(invite.getInviter())
             print(invite.getGroup())
         }
+    }
+    
+    func refreshTable(note: Notification)->Void{
+        refreshInvitesData()
+        print("refreshing")
+        self.tableView.reloadData()
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        self.refreshInvitesData()
+        
+        
+        let nc = NotificationCenter.default
+        nc.addObserver(forName:Notification.Name(rawValue:"RefreshInvites"),
+                       object:nil, queue:nil,
+                       using:refreshTable)
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -50,12 +67,14 @@ class GroupInviteTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
+        print(String(invites.count) + "rows")
         return invites.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell:GroupInviteTableViewCell = tableView.dequeueReusableCell(withIdentifier: "inviteTableCell", for: indexPath) as! GroupInviteTableViewCell
 
+        print("building cells")
         // Configure the cell...
         let invite = invites[indexPath.row]
         cell.friendLabel.text = invite.getInviter()
@@ -64,6 +83,7 @@ class GroupInviteTableViewController: UITableViewController {
 
         return cell
     }
+
 
     /*
     // Override to support conditional editing of the table view.
