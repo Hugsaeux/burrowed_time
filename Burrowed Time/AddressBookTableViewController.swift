@@ -75,11 +75,12 @@ class AddressBookTableViewController: UITableViewController {
         currentIndex = groupList.getIndexOfGroup(groupName: currentGroup)
         
         let api:API = API()
-        let newUserID = api.lookup_user(phonenumber: phoneNumber)
+        api.invite_to_group(groupid: groupList.groups[groupList.getIndexOfGroup(groupName: currentGroup)].getIdentifier(), phonenumber: phoneNumber)
+        //let newUserID = api.lookup_user(phonenumber: phoneNumber)
         
-        let number:Int64 = newUserID.object(forKey: "userid") as! Int64
+        //let number:Int64 = newUserID.object(forKey: "userid") as! Int64
         
-        api.join_group_for_user(friendUserID: number.description, groupid: groupList.groups[groupList.getIndexOfGroup(groupName: currentGroup)].getIdentifier(), locs: [])
+        //api.join_group_for_user(friendUserID: number.description, groupid: groupList.groups[groupList.getIndexOfGroup(groupName: currentGroup)].getIdentifier(), locs: [])
         
         //api.join_group(groupid: groupList.groups[groupList.getIndexOfGroup(groupName: currentGroup)].getIdentifier(), locs: <#T##NSArray#>)
         

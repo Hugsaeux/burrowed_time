@@ -57,8 +57,10 @@ class GroupInviteTableViewController: UITableViewController {
         let cell:GroupInviteTableViewCell = tableView.dequeueReusableCell(withIdentifier: "inviteTableCell", for: indexPath) as! GroupInviteTableViewCell
 
         // Configure the cell...
-        cell.friendLabel.text = invites[indexPath.row].getInviter()
-        cell.groupLabel.text = invites[indexPath.row].getGroup()
+        let invite = invites[indexPath.row]
+        cell.friendLabel.text = invite.getInviter()
+        cell.groupLabel.text = invite.getGroup()
+        cell.inviteId = invite.getId()
 
         return cell
     }

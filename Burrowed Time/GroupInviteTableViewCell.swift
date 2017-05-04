@@ -13,10 +13,18 @@ class GroupInviteTableViewCell: UITableViewCell {
     @IBOutlet weak var friendLabel: UILabel!
     @IBOutlet weak var groupLabel: UILabel!
     
+    var inviteId:String!
+    
+    let api:API = API()
+    
     @IBAction func acceptButtonClick(_ sender: Any) {
+        api.respond_invite(inviteid: inviteId, accept: 1, loc_numbers: [])
+        print("accepted")
     }
     
     @IBAction func rejectButtonClick(_ sender: Any) {
+        api.respond_invite(inviteid: inviteId, accept: 0, loc_numbers: [])
+        print("rejected")
     }
     
     override func awakeFromNib() {
