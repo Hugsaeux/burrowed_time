@@ -102,6 +102,10 @@ class MapTableViewController: UITableViewController {
                 if (info[TITLE] as! String == deletedTitle) {
                     // Stop monitoring for deleted region
                     locationUtil!.manager.stopMonitoring(for: region)
+                    // Exit the deleted region
+                    let api:API = API()
+                    api.exit_location(loc_num: region.identifier)
+                    
                 } else {
                     newLookup[newIdx] = info
                     locDict[String(newIdx)] = info[TITLE] 
