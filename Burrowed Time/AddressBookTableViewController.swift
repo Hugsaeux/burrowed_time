@@ -15,8 +15,28 @@ class AddressBookTableViewController: UITableViewController {
     var currentGroup:String!
     var currentIndex:Int!
     
+    var alertController:UIAlertController!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.alertController = UIAlertController(title: "Default AlertController", message: "A standard alert", preferredStyle: .alert)
+        
+        /*let cancelAction = UIAlertAction(title: "No", style: .cancel) { (action:UIAlertAction!) in
+            print("you have pressed the No button");
+            //Call another alert here
+        }
+        self.alertController.addAction(cancelAction)*/
+        
+        let OKAction = UIAlertAction(title: "Okay", style: .default) { (action:UIAlertAction!) in
+            print("you have pressed Okay button");
+            //Call another alert here
+            self.performSegue(withIdentifier: "saveFriendUnwindSegue", sender: self)
+        }
+        self.alertController.addAction(OKAction)
+        /*DispatchQueue.main.async(execute: {
+            self.present(alertController, animated: true, completion:nil)
+        })*/
     }
 
     override func didReceiveMemoryWarning() {
@@ -72,16 +92,18 @@ class AddressBookTableViewController: UITableViewController {
             phoneNumber = "1\(phoneNumber)"
         }
         
+        /*
         let newPerson:Person = Person(name: "\(cellData[indexPath.row].givenName) \(cellData[indexPath.row].familyName)", phoneNumber: phoneNumber)
         
         groupList.addPersonToGroup(groupName: currentGroup, newPerson: newPerson)
         groupList.saveGroupListToPhone()
+        */
         currentIndex = groupList.getIndexOfGroup(groupName: currentGroup)
         
         let api:API = API()
         api.invite_to_group(groupid: groupList.groups[groupList.getIndexOfGroup(groupName: currentGroup)].getIdentifier(), phonenumber: phoneNumber)
         
-        self.performSegue(withIdentifier: "saveFriendUnwindSegue", sender: self)
+        
     }
 
     // MARK: - Navigation
