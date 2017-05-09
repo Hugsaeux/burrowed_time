@@ -12,8 +12,6 @@ class GroupInviteTableViewController: UITableViewController {
 
     var invites = [Invitation]()
     
-    var alertController:UIAlertController!
-    
     func refreshInvitesData() {
         let api:API = API()
         let invitations = api.removeSuccess(dict: api.check_invites())
@@ -48,25 +46,6 @@ class GroupInviteTableViewController: UITableViewController {
         nc.addObserver(forName:Notification.Name(rawValue:"RefreshInvites"),
                        object:nil, queue:nil,
                        using:refreshTable)
-        
-        self.alertController = UIAlertController(title: "Default AlertController", message: "A standard alert", preferredStyle: .alert)
-        
-        /*let cancelAction = UIAlertAction(title: "No", style: .cancel) { (action:UIAlertAction!) in
-         print("you have pressed the No button");
-         //Call another alert here
-         }
-         self.alertController.addAction(cancelAction)*/
-        
-        let OKAction = UIAlertAction(title: "Okay", style: .default) { (action:UIAlertAction!) in
-            print("you have pressed Okay button");
-            //Call another alert here
-            
-        }
-        self.alertController.addAction(OKAction)
-        /*DispatchQueue.main.async(execute: {
-         self.present(alertController, animated: true, completion:nil)
-         })*/
-        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 

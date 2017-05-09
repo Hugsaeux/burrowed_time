@@ -88,10 +88,12 @@ class AddressBookTableViewController: UITableViewController {
         phoneNumber = phoneNumber.components(separatedBy: CharacterSet.decimalDigits.inverted).joined()
         print(phoneNumber)
         
+        /*
         let newPerson:Person = Person(name: "\(cellData[indexPath.row].givenName) \(cellData[indexPath.row].familyName)", phoneNumber: phoneNumber)
         
         groupList.addPersonToGroup(groupName: currentGroup, newPerson: newPerson)
         groupList.saveGroupListToPhone()
+        */
         currentIndex = groupList.getIndexOfGroup(groupName: currentGroup)
         
         let api:API = API()
