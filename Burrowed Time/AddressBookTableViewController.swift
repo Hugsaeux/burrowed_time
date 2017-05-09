@@ -66,7 +66,11 @@ class AddressBookTableViewController: UITableViewController {
         }
         
         phoneNumber = phoneNumber.components(separatedBy: CharacterSet.decimalDigits.inverted).joined()
-        print(phoneNumber)
+        let length = phoneNumber.characters.count;
+        
+        if (length != 11) {
+            phoneNumber = "1\(phoneNumber)"
+        }
         
         let newPerson:Person = Person(name: "\(cellData[indexPath.row].givenName) \(cellData[indexPath.row].familyName)", phoneNumber: phoneNumber)
         
@@ -76,13 +80,6 @@ class AddressBookTableViewController: UITableViewController {
         
         let api:API = API()
         api.invite_to_group(groupid: groupList.groups[groupList.getIndexOfGroup(groupName: currentGroup)].getIdentifier(), phonenumber: phoneNumber)
-        //let newUserID = api.lookup_user(phonenumber: phoneNumber)
-        
-        //let number:Int64 = newUserID.object(forKey: "userid") as! Int64
-        
-        //api.join_group_for_user(friendUserID: number.description, groupid: groupList.groups[groupList.getIndexOfGroup(groupName: currentGroup)].getIdentifier(), locs: [])
-        
-        //api.join_group(groupid: groupList.groups[groupList.getIndexOfGroup(groupName: currentGroup)].getIdentifier(), locs: <#T##NSArray#>)
         
         self.performSegue(withIdentifier: "saveFriendUnwindSegue", sender: self)
     }
