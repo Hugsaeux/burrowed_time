@@ -18,18 +18,25 @@ class LocationPickerTableViewCell: UITableViewCell {
     var cellIndex:Int!
     
     @IBAction func switchChanged(_ sender: Any) {
-        if (!groupList.groups[cellGroupIndex].checkLocation(location: cellLocation)) {
-            let location:Location = Location(name: cellLocation, locationID: cellIndex)
-            groupList.groups[cellGroupIndex].addLocation(location: location)
+        if (groupList.groups[cellGroupIndex].locations.count < 7) {
+            if (!groupList.groups[cellGroupIndex].checkLocation(location: cellLocation)) {
+                let location:Location = Location(name: cellLocation, locationID: cellIndex)
+                groupList.groups[cellGroupIndex].addLocation(location: location)
+            }
+            else {
+                groupList.groups[cellGroupIndex].removeLocation(location: cellLocation)
+            }
         }
-        else {
-            groupList.groups[cellGroupIndex].removeLocation(location: cellLocation)
+        else if (groupList.groups[cellGroupIndex].locations.count == 7) {
+            if (trackingSwitch.isOn == false) {
+                groupList.groups[cellGroupIndex].removeLocation(location: cellLocation)
+            }
+            else {
+                trackingSwitch.setOn(false, animated: true)
+            }
         }
         
         var locations = [Int]()
-//        for location in groupList.groups[cellGroupIndex].locations {
-//            locations.append(location.locationID)
-//        }
         
         // need identifier from location util
         let storedRegionLookup = RegionLookup()
@@ -50,6 +57,7 @@ class LocationPickerTableViewCell: UITableViewCell {
         
         let api:API = API()
         api.change_group_locations(groupid: groupList.groups[cellGroupIndex].getIdentifier(), locs: locations as NSArray)
+        
         
         groupList.saveGroupListToPhone()
     }

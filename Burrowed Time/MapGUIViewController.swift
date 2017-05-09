@@ -243,31 +243,8 @@ class MapGUIViewController: UIViewController, MKMapViewDelegate {
             locationUtil!.manager.startMonitoring(for: currRegion)
             NSLog("Manager is monitoring AFTER STARTING: \(locationUtil!.manager.monitoredRegions)")
             
-            
-            var cellTitles = [String]()
-            
-            let cellData:RegionLookup = RegionLookup();
-            cellData.loadRegionLookupFromPhone()
-            
-            for (_, value) in cellData.regionLookup {
-                let data:NSArray = value as! NSArray
-                cellTitles.append(data[0] as! String)
-            }
-            
-            let api:API = API()
-            var names:[String] = []
-            var indices:[String] = []
-            var index:Int = 0
-            
-            for title in cellTitles {
-                names.append(title)
-                indices.append(String(index))
-            
-                index+=1
-            }
-            
-            let locationDictionary:NSDictionary = NSDictionary(objects:  names, forKeys: indices as [NSCopying])
-            api.change_location_names(loc_dict: locationDictionary)
+            var locations = [String]()
+            var indices = [String]()
             
             let storedRegionLookup = RegionLookup()
             storedRegionLookup.loadRegionLookupFromPhone()
@@ -276,6 +253,9 @@ class MapGUIViewController: UIViewController, MKMapViewDelegate {
                 let regionIdx = region.identifier
                 let regionInfo:NSArray = storedRegionLookup.regionLookup.object(forKey: regionIdx) as! NSArray
                 let title = String(describing: regionInfo[TITLE])
+                
+                locations.append(title)
+                indices.append(regionIdx)
                 
                 if (title == currentTitle) {
                     //check if in bounds
@@ -293,12 +273,17 @@ class MapGUIViewController: UIViewController, MKMapViewDelegate {
                     }
                 }
             }
+            
+            let api:API = API();
+            let locationDictionary:NSDictionary = NSDictionary(objects:  locations, forKeys: indices as [NSCopying])
+            api.change_location_names(loc_dict: locationDictionary)
         
             let locationPickerPage:LocationPickerViewController! = self.storyboard?.instantiateViewController(withIdentifier: "LocationPicker") as! LocationPickerViewController
             locationPickerPage.currentTitle = self.currentTitle
             
             self.present(locationPickerPage, animated: true, completion: nil)
         }
+            
         else if (segue.identifier == "saveNewPlace") {
             let storedRegionLookup = RegionLookup()
             storedRegionLookup.loadRegionLookupFromPhone()
@@ -332,6 +317,7 @@ class MapGUIViewController: UIViewController, MKMapViewDelegate {
             
             self.present(locationPickerPage, animated: true, completion: nil)
         }
+            
         else {
             let storedRegionLookup = RegionLookup()
             storedRegionLookup.loadRegionLookupFromPhone()
@@ -352,7 +338,9 @@ class MapGUIViewController: UIViewController, MKMapViewDelegate {
                     let distance = ourLocation?.distance(from: clLocCoor)
                     
                     if ((distance! as Double) < radius) {
+                        print("you are in this region");
                         let api:API = API()
+                        print("You are in this location")
                         api.enter_location(loc_num: regionIdx)
                     }
                 }
