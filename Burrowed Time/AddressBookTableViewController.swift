@@ -101,9 +101,18 @@ class AddressBookTableViewController: UITableViewController {
         currentIndex = groupList.getIndexOfGroup(groupName: currentGroup)
         
         let api:API = API()
-        api.invite_to_group(groupid: groupList.groups[groupList.getIndexOfGroup(groupName: currentGroup)].getIdentifier(), phonenumber: phoneNumber)
+        let result = api.invite_to_group(groupid: groupList.groups[groupList.getIndexOfGroup(groupName: currentGroup)].getIdentifier(), phonenumber: phoneNumber)
         
+        if (result["Success"] as! Bool){
+            self.alertController.title = "Success"
+            self.alertController.message = "Invitation Sent"
+        }else{
+            self.alertController.title = "Invitation Failed"
+            self.alertController.message = (result["Message"] as! String)
+        }
         
+        self.present(self.alertController, animated: true, completion:nil)
+        //let newUserID = api.lookup_user(phonenumber: phoneNumber)
     }
 
     // MARK: - Navigation
