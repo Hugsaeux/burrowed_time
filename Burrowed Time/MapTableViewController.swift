@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MapKit
 
 class MapTableViewController: UITableViewController {
     
@@ -78,9 +79,6 @@ class MapTableViewController: UITableViewController {
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            // Delete the row from the table view
-//            tableView.deleteRows(at: [indexPath], with: .fade)
-            
             // Delete the location from the data source
             let storedRegionLookup = RegionLookup()
             storedRegionLookup.loadRegionLookupFromPhone()
@@ -94,20 +92,31 @@ class MapTableViewController: UITableViewController {
             let newLookup = NSMutableDictionary()
             let locDict = NSMutableDictionary()
             var newIdx = 0
-                
-
+            
             for region in locationUtil!.manager.monitoredRegions {
+                locationUtil!.manager.stopMonitoring(for: region)
+                
                 print("At time of delete manager was monitoring the region: \(region)")
                 let info:NSArray = storedRegionLookup.regionLookup.object(forKey: region.identifier) as! NSArray
-                if (info[TITLE] as! String == deletedTitle) {
-                    // Stop monitoring for deleted region
-                    locationUtil!.manager.stopMonitoring(for: region)
-                } else {
-                    newLookup[newIdx] = info
-                    locDict[String(newIdx)] = info[TITLE] 
+                if (info[TITLE] as! String != deletedTitle) {
+                    let lat = NumberFormatter().number(from: String(describing: info[LATITUDE]))!.doubleValue
+                    let long = NumberFormatter().number(from: String(describing: info[LONGITUDE]))!.doubleValue
+                    let rad = NumberFormatter().number(from: String(describing: info[RADIUS]))!.doubleValue
+                    
+                    let center = CLLocationCoordinate2D(latitude: lat, longitude: long)
+                    let currRegion = CLCircularRegion(center: center, radius: rad, identifier: String(newIdx))
+                    locationUtil!.manager.startMonitoring(for: currRegion)
+                    
+                    newLookup[newIdx.description] = info
+                    locDict[newIdx.description] = info[TITLE]
                     newIdx += 1
                 }
+                else {
+                    let api:API = API()
+                    api.exit_location(loc_num: region.identifier)
+                }
             }
+            
             let newRegionLookup = RegionLookup(regionLookup: newLookup)
             newRegionLookup.saveRegionLookupToPhone()
             
@@ -120,6 +129,44 @@ class MapTableViewController: UITableViewController {
             let api:API = API()
             api.change_location_names(loc_dict: locDict)
             
+            // Rename locations in groupList
+            let groupList:GroupList = GroupList()
+            groupList.loadGroupListFromPhone()
+            
+            for group in groupList.groups {
+                for location in group.locations {
+                    if (location.name == cell.title.text) {
+                        api.change_group_locations(groupid: group.getIdentifier(), locs: [])
+                        group.locations = []
+                    }
+                }
+            }
+            groupList.saveGroupListToPhone()
+            
+//            for region in locationUtil!.manager.monitoredRegions {
+//                // Make a new annotation for this region
+//                let regionIdx = region.identifier
+//                let regionInfo:NSArray = storedRegionLookup.regionLookup.object(forKey: regionIdx) as! NSArray
+//                
+//                //check if in bounds
+//                let latitude = NumberFormatter().number(from: String(describing: regionInfo[LATITUDE]))!.doubleValue
+//                let longitude = NumberFormatter().number(from: String(describing: regionInfo[LONGITUDE]))!.doubleValue
+//                let radius = NumberFormatter().number(from: String(describing: regionInfo[RADIUS]))!.doubleValue
+//                let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+//                let ourLocation = locationUtil!.manager.location
+//                let clLocCoor = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
+//                let distance = ourLocation?.distance(from: clLocCoor)
+//                
+//                if ((distance! as Double) < radius) {
+//                    api.enter_location(loc_num: regionIdx)
+//                }
+//                else {
+//                    api.exit_location(loc_num: regionIdx)
+//                }
+//            }
+            
+            cellTitles.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
         }
     }
 

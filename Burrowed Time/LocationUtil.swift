@@ -33,6 +33,7 @@ class LocationUtil: NSObject, CLLocationManagerDelegate {
             manager.stopMonitoring(for: region)
         }
          */
+ 
         
         //request location
     }
