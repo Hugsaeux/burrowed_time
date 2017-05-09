@@ -78,17 +78,53 @@ class MapTableViewController: UITableViewController {
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            // Delete the row from the data source\
+            // Delete the row from the table view
+//            tableView.deleteRows(at: [indexPath], with: .fade)
+            
+            // Delete the location from the data source
             let storedRegionLookup = RegionLookup()
             storedRegionLookup.loadRegionLookupFromPhone()
             let storedRegionIdx = RegionIdx()
             storedRegionIdx.loadRegionIdxFromPhone()
-            
 
-            // ADD in remove from location manager
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+            let cell:MapTableViewCell = tableView.cellForRow(at: indexPath) as! MapTableViewCell
+            let deletedTitle:String = cell.title.text!
+            NSLog("Attempted to delete \(deletedTitle)")
+            
+            let newLookup = NSMutableDictionary()
+            let locDict = NSMutableDictionary()
+            var newIdx = 0
+                
+
+            for region in locationUtil!.manager.monitoredRegions {
+                print("At time of delete manager was monitoring the region: \(region)")
+                let info:NSArray = storedRegionLookup.regionLookup.object(forKey: region.identifier) as! NSArray
+                if (info[TITLE] as! String == deletedTitle) {
+                    // Stop monitoring for deleted region
+                    locationUtil!.manager.stopMonitoring(for: region)
+                    // Exit the deleted region
+                    let api:API = API()
+                    api.exit_location(loc_num: region.identifier)
+                    
+                } else {
+                    newLookup[newIdx] = info
+                    locDict[String(newIdx)] = info[TITLE] 
+                    newIdx += 1
+                }
+            }
+            let newRegionLookup = RegionLookup(regionLookup: newLookup)
+            newRegionLookup.saveRegionLookupToPhone()
+            
+            // Decrement index
+            storedRegionIdx.decrementIdx()
+            storedRegionIdx.saveRegionIdxToPhone()
+            
+            // Delete the location from the database
+            locDict[storedRegionIdx.regionIdx] = NSNull() // This does nothing ?
+            let api:API = API()
+            api.change_location_names(loc_dict: locDict)
+            
+        }
     }
 
     /*
