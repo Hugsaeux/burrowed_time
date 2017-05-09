@@ -126,14 +126,16 @@ class API {
         _ = send_post(endpoint: "leave-group", parameters: parameters)
     }
     
-    func invite_to_group(groupid: String, phonenumber: String){
+    func invite_to_group(groupid: String, phonenumber: String) -> NSDictionary{
         let parameters: Parameters = [
             "userid": userID.IDnum,
             "groupid": groupid,
             "phonenumber": phonenumber
         ]
         
-        _ = send_post(endpoint: "invite-to-group", parameters: parameters)
+        let json = send_post(endpoint: "invite-to-group", parameters: parameters)
+        
+        return json
     }
     
     func respond_invite(inviteid: String, accept: Int, loc_numbers: NSArray){

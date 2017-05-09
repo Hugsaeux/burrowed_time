@@ -15,8 +15,28 @@ class AddressBookTableViewController: UITableViewController {
     var currentGroup:String!
     var currentIndex:Int!
     
+    var alertController:UIAlertController!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.alertController = UIAlertController(title: "Default AlertController", message: "A standard alert", preferredStyle: .alert)
+        
+        /*let cancelAction = UIAlertAction(title: "No", style: .cancel) { (action:UIAlertAction!) in
+            print("you have pressed the No button");
+            //Call another alert here
+        }
+        self.alertController.addAction(cancelAction)*/
+        
+        let OKAction = UIAlertAction(title: "Okay", style: .default) { (action:UIAlertAction!) in
+            print("you have pressed Okay button");
+            //Call another alert here
+            self.performSegue(withIdentifier: "saveFriendUnwindSegue", sender: self)
+        }
+        self.alertController.addAction(OKAction)
+        /*DispatchQueue.main.async(execute: {
+            self.present(alertController, animated: true, completion:nil)
+        })*/
     }
 
     override func didReceiveMemoryWarning() {
@@ -75,7 +95,17 @@ class AddressBookTableViewController: UITableViewController {
         currentIndex = groupList.getIndexOfGroup(groupName: currentGroup)
         
         let api:API = API()
-        api.invite_to_group(groupid: groupList.groups[groupList.getIndexOfGroup(groupName: currentGroup)].getIdentifier(), phonenumber: phoneNumber)
+        let result = api.invite_to_group(groupid: groupList.groups[groupList.getIndexOfGroup(groupName: currentGroup)].getIdentifier(), phonenumber: phoneNumber)
+        
+        if (result["Success"] as! Bool){
+            self.alertController.title = "Success"
+            self.alertController.message = "Invitation Sent"
+        }else{
+            self.alertController.title = "Invitation Failed"
+            self.alertController.message = (result["Message"] as! String)
+        }
+        
+        self.present(self.alertController, animated: true, completion:nil)
         //let newUserID = api.lookup_user(phonenumber: phoneNumber)
         
         //let number:Int64 = newUserID.object(forKey: "userid") as! Int64
@@ -84,7 +114,7 @@ class AddressBookTableViewController: UITableViewController {
         
         //api.join_group(groupid: groupList.groups[groupList.getIndexOfGroup(groupName: currentGroup)].getIdentifier(), locs: <#T##NSArray#>)
         
-        self.performSegue(withIdentifier: "saveFriendUnwindSegue", sender: self)
+        
     }
 
     // MARK: - Navigation
