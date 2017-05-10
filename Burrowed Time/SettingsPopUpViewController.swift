@@ -68,11 +68,11 @@ class SettingsPopUpViewController: UIViewController {
         
         if (currentPage != 0) {
             addButton.text = "  Invite To Group"
-            removeButton.text = "  Edit Locations"
+            removeButton.text = "  Set Group Locations"
 
         }
         else {
-            addButton.text = "  Add Group"
+            addButton.text = "  Create Group"
             removeButton.isHidden = false
             removeButton.text = "  Leave Group"
         }
