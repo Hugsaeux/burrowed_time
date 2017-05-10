@@ -31,8 +31,12 @@ class AddressBookTableViewController: UITableViewController {
         let OKAction = UIAlertAction(title: "Okay", style: .default) { (action:UIAlertAction!) in
             print("you have pressed Okay button");
             //Call another alert here
-            self.performSegue(withIdentifier: "saveFriendUnwindSegue", sender: self)
+            
+            if (self.alertController.title == "Success") {
+                self.performSegue(withIdentifier: "saveAddFriend", sender: self)
+            }
         }
+        
         self.alertController.addAction(OKAction)
         /*DispatchQueue.main.async(execute: {
             self.present(alertController, animated: true, completion:nil)

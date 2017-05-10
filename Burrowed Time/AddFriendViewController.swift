@@ -17,6 +17,8 @@ class AddFriendViewController: UIViewController {
     var cellData:[CNContact]!
     var table:AddressBookTableViewController!
     
+    var alertController:UIAlertController!
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == "contactListTableSegue") {
             table = segue.destination as! AddressBookTableViewController
@@ -24,9 +26,40 @@ class AddFriendViewController: UIViewController {
             table.currentGroup = currentGroup
         }
     }
+    
+    @IBAction func addButtonPress(_ sender: Any) {
+        let number = Int(addFriendTextField.text!)
+        if (number != nil) {
+            let api:API = API()
+            let result = api.invite_to_group(groupid: groupList.groups[groupList.getIndexOfGroup(groupName: currentGroup)].getIdentifier(), phonenumber: addFriendTextField.text!)
+            
+            if (result["Success"] as! Bool){
+                self.alertController.title = "Success"
+                self.alertController.message = "Invitation Sent"
+            }else{
+                self.alertController.title = "Invitation Failed"
+                self.alertController.message = (result["Message"] as! String)
+            }
+            
+            self.present(self.alertController, animated: true, completion:nil)
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.alertController = UIAlertController(title: "Default AlertController", message: "A standard alert", preferredStyle: .alert)
+        
+        let OKAction = UIAlertAction(title: "Okay", style: .default) { (action:UIAlertAction!) in
+            print("you have pressed Okay button");
+            //Call another alert here
+            
+            if (self.alertController.title == "Success") {
+                self.performSegue(withIdentifier: "saveAddFriend", sender: self)
+            }
+        }
+        
+        self.alertController.addAction(OKAction)
     }
 
     override func didReceiveMemoryWarning() {
