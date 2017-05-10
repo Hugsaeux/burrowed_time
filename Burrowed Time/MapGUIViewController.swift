@@ -26,7 +26,7 @@ class LocationAnnotation: NSObject, MKAnnotation{
 class MapGUIViewController: UIViewController, MKMapViewDelegate {
     var currentTitle:String!
     var currentRadius:CLLocationDistance = 100
-    var currentIdx:String = "0"
+    var currentIdx:String = "-1"
     var addLocationFlag:Bool = false
     var currentCoordinate:CLLocationCoordinate2D!
     var saveLocationFlag:Bool = false
@@ -43,6 +43,7 @@ class MapGUIViewController: UIViewController, MKMapViewDelegate {
             let touchLocation = sender.location(in: mapView)
             let locationCoordinate = mapView.convert(touchLocation, toCoordinateFrom: mapView)
             
+            NSLog("currentTitle = \(currentTitle) : longPressed")
             let annotation:LocationAnnotation = LocationAnnotation(title: currentTitle, coordinate: locationCoordinate)
     
             radiusOverlay(center: annotation.coordinate, radius: currentRadius)
@@ -77,7 +78,7 @@ class MapGUIViewController: UIViewController, MKMapViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        NSLog("currentTitle = \(currentTitle) : viewDidLoad")
         mapTitle.title = currentTitle
         
         let storedRegionLookup = RegionLookup()
@@ -104,6 +105,13 @@ class MapGUIViewController: UIViewController, MKMapViewDelegate {
             }
             
             mapView.addAnnotation(annotation)
+        }
+        
+        // If currentTitle is not a currently monitored region, its currentIdx should be the next available index
+        if (currentIdx == "-1") {
+            let storedRegionIdx = RegionIdx()
+            storedRegionIdx.loadRegionIdxFromPhone()
+            currentIdx = storedRegionIdx.regionIdx as String
         }
         
         mapView.delegate = self
@@ -149,6 +157,7 @@ class MapGUIViewController: UIViewController, MKMapViewDelegate {
             view = MKPinAnnotationView(annotation: annotation, reuseIdentifier: annotation.title)
             view.isEnabled = true
             view.canShowCallout = true
+            NSLog("currentTitle = \(currentTitle) : MKAnnotationView")
             if (annotation.title! == currentTitle) {
                 view.pinTintColor = UIColor.green
                 view.isDraggable = true
@@ -160,6 +169,7 @@ class MapGUIViewController: UIViewController, MKMapViewDelegate {
     
     
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, didChange newState: MKAnnotationViewDragState, fromOldState oldState: MKAnnotationViewDragState) {
+        NSLog("currentTitle = \(currentTitle) : MKAnnotationViewDragState")
         if (newState == MKAnnotationViewDragState.starting) {
             mapView.removeOverlays(mapView.overlays)
         }
@@ -231,18 +241,19 @@ class MapGUIViewController: UIViewController, MKMapViewDelegate {
      override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
      // Get the new view controller using segue.destinationViewController.
      // Pass the selected object to the new view controller.
-        
+        NSLog("currentTitle = \(currentTitle) : prepare for segue")
         if (segue.identifier == "saveNewPlace" && saveLocationFlag) {
             let currInfo:NSArray = [currentTitle, currentCoordinate.latitude, currentCoordinate.longitude, String(currentRadius)]
             addRegion(center: currentCoordinate, radius: currentRadius, currInfo: currInfo)
-            
+
+/* We believe this is redundant 5/10/17
             // Start location manager monitoring new region
             let currRegion = CLCircularRegion.init(center: currentCoordinate, radius: currentRadius, identifier: currentIdx)
             NSLog("Manager is monitoring AFTER STOPPING: \(locationUtil!.manager.monitoredRegions)")
             
             locationUtil!.manager.startMonitoring(for: currRegion)
             NSLog("Manager is monitoring AFTER STARTING: \(locationUtil!.manager.monitoredRegions)")
-            
+*/
             var locations = [String]()
             var indices = [String]()
             
