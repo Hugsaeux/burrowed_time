@@ -222,7 +222,10 @@ class MapGUIViewController: UIViewController, MKMapViewDelegate {
      override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
      // Get the new view controller using segue.destinationViewController.
      // Pass the selected object to the new view controller.
+        let api:API = API()
+        
         NSLog("currentTitle = \(currentTitle) : prepare for segue")
+        // Save a new location
         if (segue.identifier == "saveNewPlace" && saveLocationFlag) {
             let currInfo:NSArray = [currentTitle, currentCoordinate.latitude, currentCoordinate.longitude, String(currentRadius)]
             addRegion(center: currentCoordinate, radius: currentRadius, currInfo: currInfo)
