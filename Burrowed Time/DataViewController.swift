@@ -8,6 +8,38 @@
 
 import UIKit
 
+func refreshGroupInfo(group:Group){
+    let api:API = API()
+    // pull all the members in the group
+    let groupMembers:NSDictionary = api.get_group_members(groupid: group.identifier)
+    let locations:NSDictionary = api.get_location(userid: "", groupid: group.identifier)
+    
+    for (key, value) in groupMembers {
+        // pull member location
+        let location = locations[key as! String] as! String
+        
+        if (group.checkMemberName(name: value as! String)) {
+            let newPerson:Person = Person(name: value as! String, phoneNumber: "232")
+            
+            // pull new members locations
+            
+            //self.api.get_location(userid: key as! String, groupid: group.getIdentifier())
+            newPerson.location = location
+            group.addMember(person: newPerson)
+        }
+        else {
+            //let location = self.api.get_location(userid: key as! String, groupid: group.getIdentifier())
+            
+            for member in group.members {
+                if (member.getName() == value as! String) {
+                    member.location = location
+                }
+            }
+        }
+    }
+    
+}
+
 class DataViewController: UIViewController {
 
     @IBOutlet weak var debuggerLabel: UILabel!
@@ -27,6 +59,8 @@ class DataViewController: UIViewController {
     var passedData:String = ""
     var editingMode:Bool = false
     var api:API = API()
+    
+    
     
     @IBAction func settingsButtonClick(_ sender: Any) {
         settingsPopUp.isHidden = false
@@ -77,35 +111,16 @@ class DataViewController: UIViewController {
         super.viewDidLoad()
         // pull from server
         
+        
         if (self.currentPage != 0) {
             DispatchQueue.global(qos: DispatchQoS.background.qosClass).async {
                 for group in self.groupList.groups {
-                    
-                    // pull all the members in the group
-                    let groupMembers:NSDictionary = self.api.get_group_members(groupid: group.identifier)
-                    
-                    for (key, value) in groupMembers {
-                        if (group.checkMemberName(name: value as! String)) {
-                            let newPerson:Person = Person(name: value as! String, phoneNumber: "232")
-                            
-                            // pull new members locations
-                            let location = self.api.get_location(userid: key as! String, groupid: group.getIdentifier())
-                            newPerson.location = location
-                            group.addMember(person: newPerson)
-                        }
-                        else {
-                            let location = self.api.get_location(userid: key as! String, groupid: group.getIdentifier())
-                            
-                            for member in group.members {
-                                if (member.getName() == value as! String) {
-                                    member.location = location
-                                }
-                            }
-                        }
-                    }
+                    refreshGroupInfo(group: group)
                 }
                 
                 self.groupList.saveGroupListToPhone()
+                print("refreshing tables")
+                self.table.tableView.reloadData()
             }
         }
             
@@ -208,11 +223,11 @@ class DataViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == "homePageSegue") {
-            table = segue.destination as! HomeTableViewController
-            table.cellData = groupList
-            table.index = currentPage
-            table.dataViewController = self
-            
+            self.table = segue.destination as! HomeTableViewController
+            self.table.cellData = groupList
+            self.table.index = currentPage
+            self.table.dataViewController = self
+            self.table.tableView.reloadData()
             if (editingMode && currentPage == 0) {
                 table.setEditing(true, animated: true)
             }
