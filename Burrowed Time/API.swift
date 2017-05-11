@@ -146,7 +146,7 @@ class API {
             "loc_numbers": loc_numbers
         ]
         
-        print(parameters)
+        //print(parameters)
         _ = send_post(endpoint: "respond-invite", parameters: parameters)
     }
     
@@ -239,13 +239,14 @@ class API {
         return send_get(endpoint: "check-invites", headers: headers)
     }
     
-    func get_location(userid: String, groupid: String) -> String {
+    func get_location(userid: String, groupid: String) -> NSDictionary {
         var headers = HEADERS
         headers["userid"] = userid
         headers["groupid"] = groupid
         
         let json = send_get(endpoint: "get-location", headers: headers)
-        return json[userid] as! String
+        //return json[userid] as! String
+        return removeSuccess(dict: json)
     }
     
     func get_location_names(userid: String, groupid: String) -> NSArray {

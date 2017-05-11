@@ -63,6 +63,8 @@ class HomeTableViewController: UITableViewController {
         cell.groupList = cellData
         cell.dataViewController = dataViewController
         
+        
+        
         if (cellData.getSize() > 0) {
             if (index == 0) {
                 cell.cellTitle.text = cellData.groups[indexPath.row].getGroupName()
@@ -76,7 +78,11 @@ class HomeTableViewController: UITableViewController {
                 }
             }
             else {
+                refreshGroupInfo(group: cellData.groups[index-1])
+                cellData.saveGroupListToPhone()
+                
                 cell.selectionStyle = UITableViewCellSelectionStyle.none;
+                print(cellData.groups[index-1].members[indexPath.row].getName()+" at "+cellData.groups[index-1].members[indexPath.row].location)
                 cell.cellTitle.text = cellData.groups[index-1].members[indexPath.row].getName()
                 cell.cellLocation.text = cellData.groups[index-1].members[indexPath.row].location
                 cell.invisibilitySwitch.isHidden = true
