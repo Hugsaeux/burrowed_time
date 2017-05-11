@@ -15,6 +15,11 @@ protocol HomeTableViewDelegate {
 class HomeTableViewController: UITableViewController {
     @IBOutlet weak var cellTitle: UILabel!
     
+    
+    //MARK: Properties
+    
+    
+    
     var cellData:GroupList = GroupList()
     var index:Int = 0
     var clickIndex = 0
@@ -107,12 +112,14 @@ class HomeTableViewController: UITableViewController {
             let indexOfGroup:Int = cellData.getIndexOfGroup(groupName: cell.cellTitle.text!)
             let group:Group = cellData.groups[indexOfGroup]
             
+            
             let api:API = API()
             api.leave_group(groupid: group.getIdentifier())
             
             cellData.removeGroup(groupName: cell.cellTitle.text!)
             cellData.saveGroupListToPhone()
             
+            dataViewController.topBarSwitch.isHidden = true
             tableView.deleteRows(at: [indexPath], with: .fade)
         }
     }

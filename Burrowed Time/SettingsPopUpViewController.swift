@@ -21,6 +21,8 @@ class SettingsPopUpViewController: UIViewController {
     var currentPage: Int = 0
     var groupList: GroupList!
     var pageTitle: String!
+    var dataViewController:DataViewController!
+
     
     @IBAction func addClick(gestureRecognizer: UIGestureRecognizer) {
         if (currentPage == 0) {
@@ -48,7 +50,9 @@ class SettingsPopUpViewController: UIViewController {
     
     @IBAction func removeClick(gestureRecognizer: UIGestureRecognizer) {
         if (currentPage == 0) {
+            //dataViewController.topBarSwitch.isHidden = true
             self.performSegue(withIdentifier: "removeGroupUnwindSegue", sender: self)
+            
         }
         else {
             let groupLocationPicker:GroupLocationPickerViewController! = self.storyboard?.instantiateViewController(withIdentifier: "GroupLocationPicker") as! GroupLocationPickerViewController
