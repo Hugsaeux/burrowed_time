@@ -26,7 +26,7 @@ class LocationAnnotation: NSObject, MKAnnotation{
 class MapGUIViewController: UIViewController, MKMapViewDelegate {
     var currentTitle:String!
     var currentRadius:CLLocationDistance = 100
-    var currentIdx:String = "0"
+    var currentIdx:String = "-1"
     var addLocationFlag:Bool = false
     var currentCoordinate:CLLocationCoordinate2D!
     var saveLocationFlag:Bool = false
@@ -43,6 +43,7 @@ class MapGUIViewController: UIViewController, MKMapViewDelegate {
             let touchLocation = sender.location(in: mapView)
             let locationCoordinate = mapView.convert(touchLocation, toCoordinateFrom: mapView)
             
+            NSLog("currentTitle = \(currentTitle) : longPressed")
             let annotation:LocationAnnotation = LocationAnnotation(title: currentTitle, coordinate: locationCoordinate)
     
             radiusOverlay(center: annotation.coordinate, radius: currentRadius)
@@ -77,7 +78,7 @@ class MapGUIViewController: UIViewController, MKMapViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        NSLog("currentTitle = \(currentTitle) : viewDidLoad")
         mapTitle.title = currentTitle
         
         let storedRegionLookup = RegionLookup()
@@ -104,6 +105,13 @@ class MapGUIViewController: UIViewController, MKMapViewDelegate {
             }
             
             mapView.addAnnotation(annotation)
+        }
+        
+        // If currentTitle is not a currently monitored region, its currentIdx should be the next available index
+        if (currentIdx == "-1") {
+            let storedRegionIdx = RegionIdx()
+            storedRegionIdx.loadRegionIdxFromPhone()
+            currentIdx = storedRegionIdx.regionIdx as String
         }
         
         mapView.delegate = self
@@ -149,6 +157,7 @@ class MapGUIViewController: UIViewController, MKMapViewDelegate {
             view = MKPinAnnotationView(annotation: annotation, reuseIdentifier: annotation.title)
             view.isEnabled = true
             view.canShowCallout = true
+            NSLog("currentTitle = \(currentTitle) : MKAnnotationView")
             if (annotation.title! == currentTitle) {
                 view.pinTintColor = UIColor.green
                 view.isDraggable = true
@@ -158,8 +167,9 @@ class MapGUIViewController: UIViewController, MKMapViewDelegate {
         }
     }
     
-    
+    // Dragging the pin
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, didChange newState: MKAnnotationViewDragState, fromOldState oldState: MKAnnotationViewDragState) {
+        NSLog("currentTitle = \(currentTitle) : MKAnnotationViewDragState")
         if (newState == MKAnnotationViewDragState.starting) {
             mapView.removeOverlays(mapView.overlays)
         }
@@ -167,26 +177,7 @@ class MapGUIViewController: UIViewController, MKMapViewDelegate {
         if (newState == MKAnnotationViewDragState.ending) {
             radiusOverlay(center: view.annotation!.coordinate, radius: currentRadius)
             currentCoordinate = view.annotation!.coordinate
-            
-            let storedRegionLookup = RegionLookup()
-            storedRegionLookup.loadRegionLookupFromPhone()
-            let currInfo:NSArray = [currentTitle, view.annotation!.coordinate.latitude, view.annotation!.coordinate.longitude, currentRadius]
-            storedRegionLookup.regionLookup[currentIdx] = currInfo
-            storedRegionLookup.saveRegionLookupToPhone()
-            
-            // Stop location manager monitoring of old region
-            for region:CLRegion in locationUtil!.manager.monitoredRegions {
-                if (region.identifier == currentIdx) {
-                    locationUtil!.manager.stopMonitoring(for: region)
-                }
-            }
-            
-            // Start location manager monitoring new region
-            let currRegion = CLCircularRegion.init(center: view.annotation!.coordinate, radius: currentRadius, identifier: currentIdx)
-            NSLog("Manager is monitoring AFTER STOPPING: \(locationUtil!.manager.monitoredRegions)")
-            
-            locationUtil!.manager.startMonitoring(for: currRegion)
-            NSLog("Manager is monitoring AFTER STARTING: \(locationUtil!.manager.monitoredRegions)")
+
             
         }
     }
@@ -231,18 +222,22 @@ class MapGUIViewController: UIViewController, MKMapViewDelegate {
      override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
      // Get the new view controller using segue.destinationViewController.
      // Pass the selected object to the new view controller.
+        let api:API = API()
         
+        NSLog("currentTitle = \(currentTitle) : prepare for segue")
+        // Save a new location
         if (segue.identifier == "saveNewPlace" && saveLocationFlag) {
             let currInfo:NSArray = [currentTitle, currentCoordinate.latitude, currentCoordinate.longitude, String(currentRadius)]
             addRegion(center: currentCoordinate, radius: currentRadius, currInfo: currInfo)
-            
+
+/* We believe this is redundant 5/10/17
             // Start location manager monitoring new region
             let currRegion = CLCircularRegion.init(center: currentCoordinate, radius: currentRadius, identifier: currentIdx)
             NSLog("Manager is monitoring AFTER STOPPING: \(locationUtil!.manager.monitoredRegions)")
             
             locationUtil!.manager.startMonitoring(for: currRegion)
             NSLog("Manager is monitoring AFTER STARTING: \(locationUtil!.manager.monitoredRegions)")
-            
+*/
             var locations = [String]()
             var indices = [String]()
             
@@ -268,13 +263,13 @@ class MapGUIViewController: UIViewController, MKMapViewDelegate {
                     let distance = ourLocation?.distance(from: clLocCoor)
                     
                     if ((distance! as Double) < radius) {
-                        let api:API = API()
                         api.enter_location(loc_num: regionIdx)
+                    }else{
+                        api.exit_location(loc_num: regionIdx)
                     }
                 }
             }
             
-            let api:API = API();
             let locationDictionary:NSDictionary = NSDictionary(objects:  locations, forKeys: indices as [NSCopying])
             api.change_location_names(loc_dict: locationDictionary)
         
@@ -284,6 +279,7 @@ class MapGUIViewController: UIViewController, MKMapViewDelegate {
             self.present(locationPickerPage, animated: true, completion: nil)
         }
             
+        // resave an old location
         else if (segue.identifier == "saveNewPlace") {
             let storedRegionLookup = RegionLookup()
             storedRegionLookup.loadRegionLookupFromPhone()
@@ -294,18 +290,37 @@ class MapGUIViewController: UIViewController, MKMapViewDelegate {
                 let title = String(describing: regionInfo[TITLE])
                 
                 if (title == currentTitle) {
+                    let storedRegionLookup = RegionLookup()
+                    storedRegionLookup.loadRegionLookupFromPhone()
+                    let currInfo:NSArray = [currentTitle, currentCoordinate.latitude, currentCoordinate.longitude, currentRadius]
+                    storedRegionLookup.regionLookup[currentIdx] = currInfo
+                    storedRegionLookup.saveRegionLookupToPhone()
+                    
+                    // Stop location manager monitoring of old region
+                    for region:CLRegion in locationUtil!.manager.monitoredRegions {
+                        if (region.identifier == currentIdx) {
+                            locationUtil!.manager.stopMonitoring(for: region)
+                        }
+                    }
+                    
+                    // Start location manager monitoring new region
+                    let currRegion = CLCircularRegion.init(center: currentCoordinate, radius: currentRadius, identifier: currentIdx)
+                    NSLog("Manager is monitoring AFTER STOPPING: \(locationUtil!.manager.monitoredRegions)")
+                    
+                    locationUtil!.manager.startMonitoring(for: currRegion)
+                    NSLog("Manager is monitoring AFTER STARTING: \(locationUtil!.manager.monitoredRegions)")
+                    
                     //check if in bounds
-                    let latitude = NumberFormatter().number(from: String(describing: regionInfo[LATITUDE]))!.doubleValue
-                    let longitude = NumberFormatter().number(from: String(describing: regionInfo[LONGITUDE]))!.doubleValue
-                    let radius = NumberFormatter().number(from: String(describing: regionInfo[RADIUS]))!.doubleValue
-                    let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
                     let ourLocation = locationUtil!.manager.location
-                    let clLocCoor = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
+                    let clLocCoor = CLLocation(latitude: currentCoordinate.latitude, longitude: currentCoordinate.longitude)
                     let distance = ourLocation?.distance(from: clLocCoor)
                     
-                    if ((distance! as Double) < radius) {
-                        let api:API = API()
+                    
+                    
+                    if ((distance! as Double) < currentRadius) {
                         api.enter_location(loc_num: regionIdx)
+                    }else{
+                        api.exit_location(loc_num: regionIdx)
                     }
                 }
             }
@@ -317,35 +332,9 @@ class MapGUIViewController: UIViewController, MKMapViewDelegate {
             
             self.present(locationPickerPage, animated: true, completion: nil)
         }
-            
+           
+        // you hit cancel
         else {
-            let storedRegionLookup = RegionLookup()
-            storedRegionLookup.loadRegionLookupFromPhone()
-            for region in locationUtil!.manager.monitoredRegions {
-                // Make a new annotation for this region
-                let regionIdx = region.identifier
-                let regionInfo:NSArray = storedRegionLookup.regionLookup.object(forKey: regionIdx) as! NSArray
-                let title = String(describing: regionInfo[TITLE])
-                
-                if (title == currentTitle) {
-                    //check if in bounds
-                    let latitude = NumberFormatter().number(from: String(describing: regionInfo[LATITUDE]))!.doubleValue
-                    let longitude = NumberFormatter().number(from: String(describing: regionInfo[LONGITUDE]))!.doubleValue
-                    let radius = NumberFormatter().number(from: String(describing: regionInfo[RADIUS]))!.doubleValue
-                    let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-                    let ourLocation = locationUtil!.manager.location
-                    let clLocCoor = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
-                    let distance = ourLocation?.distance(from: clLocCoor)
-                    
-                    if ((distance! as Double) < radius) {
-                        print("you are in this region");
-                        let api:API = API()
-                        print("You are in this location")
-                        api.enter_location(loc_num: regionIdx)
-                    }
-                }
-            }
-            
             let locationPickerPage:LocationPickerViewController! = self.storyboard?.instantiateViewController(withIdentifier: "LocationPicker") as! LocationPickerViewController
             
             locationPickerPage.currentTitle = self.currentTitle
