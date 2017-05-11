@@ -176,6 +176,10 @@ class DataViewController: UIViewController {
         
         if (currentPage == 0) {
             self.dataLabel!.text = "Burrowed Time"
+            self.dataLabel.backgroundColor = #colorLiteral(red: 0.6392156863, green: 0.7725490196, blue: 0.7215686275, alpha: 1)
+        }
+        else {
+            self.dataLabel.backgroundColor = #colorLiteral(red: 0.5843137255, green: 0.8784313725, blue: 0.8078431373, alpha: 1)
         }
         
         if (currentPage == 0) {
