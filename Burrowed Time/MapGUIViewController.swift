@@ -23,6 +23,19 @@ class LocationAnnotation: NSObject, MKAnnotation{
     }
 }
 
+func updateLocationNames(){
+    let storedRegionLookup = RegionLookup()
+    storedRegionLookup.loadRegionLookupFromPhone()
+    let api:API = API()
+    let locDict = NSMutableDictionary()
+    
+    for region in locationUtil!.manager.monitoredRegions {
+        let info:NSArray = storedRegionLookup.regionLookup.object(forKey: region.identifier) as! NSArray
+        locDict[region.identifier] = info[TITLE]
+    }
+    api.change_location_names(loc_dict: locDict)
+}
+
 func updateCurrentLocation(){
     let storedRegionLookup = RegionLookup()
     storedRegionLookup.loadRegionLookupFromPhone()
