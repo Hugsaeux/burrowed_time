@@ -15,6 +15,11 @@ protocol HomeTableViewDelegate {
 class HomeTableViewController: UITableViewController {
     @IBOutlet weak var cellTitle: UILabel!
     
+    
+    //MARK: Properties
+    
+    
+    
     var cellData:GroupList = GroupList()
     var index:Int = 0
     var clickIndex = 0
@@ -63,6 +68,8 @@ class HomeTableViewController: UITableViewController {
         cell.groupList = cellData
         cell.dataViewController = dataViewController
         
+        
+        
         if (cellData.getSize() > 0) {
             if (index == 0) {
                 cell.cellTitle.text = cellData.groups[indexPath.row].getGroupName()
@@ -76,7 +83,11 @@ class HomeTableViewController: UITableViewController {
                 }
             }
             else {
+                refreshGroupInfo(group: cellData.groups[index-1])
+                cellData.saveGroupListToPhone()
+                
                 cell.selectionStyle = UITableViewCellSelectionStyle.none;
+                print(cellData.groups[index-1].members[indexPath.row].getName()+" at "+cellData.groups[index-1].members[indexPath.row].location)
                 cell.cellTitle.text = cellData.groups[index-1].members[indexPath.row].getName()
                 cell.cellLocation.text = cellData.groups[index-1].members[indexPath.row].location
                 cell.invisibilitySwitch.isHidden = true
@@ -107,12 +118,14 @@ class HomeTableViewController: UITableViewController {
             let indexOfGroup:Int = cellData.getIndexOfGroup(groupName: cell.cellTitle.text!)
             let group:Group = cellData.groups[indexOfGroup]
             
+            
             let api:API = API()
             api.leave_group(groupid: group.getIdentifier())
             
             cellData.removeGroup(groupName: cell.cellTitle.text!)
             cellData.saveGroupListToPhone()
             
+            dataViewController.topBarSwitch.isHidden = true
             tableView.deleteRows(at: [indexPath], with: .fade)
         }
     }
