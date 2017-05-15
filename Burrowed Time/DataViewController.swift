@@ -59,6 +59,8 @@ class DataViewController: UIViewController {
     var passedData:String = ""
     var editingMode:Bool = false
     var api:API = API()
+    var dataViewController:DataViewController!
+
     
     
     
@@ -183,6 +185,7 @@ class DataViewController: UIViewController {
             homeArrow.isHidden = false
         }
         if (editingMode && currentPage == 0) {
+            self.topBarSwitch.isHidden = true
             self.editingDoneButton.isHidden = false
         }
         else {
@@ -191,7 +194,8 @@ class DataViewController: UIViewController {
         
         if (currentPage == 0) {
             self.dataLabel!.text = "Burrowed Time"
-            self.dataLabel.backgroundColor = #colorLiteral(red: 0.6392156863, green: 0.7725490196, blue: 0.7215686275, alpha: 1)
+            self.dataLabel!.font = UIFont(name:"GillSans-SemiBold", size: 28.0)
+            self.dataLabel.backgroundColor = #colorLiteral(red: 0.5843137255, green: 0.8784313725, blue: 0.8078431373, alpha: 1)
         }
         else {
             self.dataLabel.backgroundColor = #colorLiteral(red: 0.5843137255, green: 0.8784313725, blue: 0.8078431373, alpha: 1)
