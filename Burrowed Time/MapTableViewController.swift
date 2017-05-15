@@ -131,6 +131,9 @@ class MapTableViewController: UITableViewController {
             let api:API = API()
             api.change_location_names(loc_dict: locDict)
             
+            // Update current location in database
+            updateCurrentLocation()
+            
             // Rename locations in groupList
             let groupList:GroupList = GroupList()
             groupList.loadGroupListFromPhone()
@@ -179,6 +182,8 @@ class MapTableViewController: UITableViewController {
             
             cellTitles.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
+            
+
         }
     }
 

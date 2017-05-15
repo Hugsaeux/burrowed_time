@@ -23,6 +23,49 @@ class LocationAnnotation: NSObject, MKAnnotation{
     }
 }
 
+func updateLocationNames(){
+    let storedRegionLookup = RegionLookup()
+    storedRegionLookup.loadRegionLookupFromPhone()
+    let api:API = API()
+    let locDict = NSMutableDictionary()
+    
+    for region in locationUtil!.manager.monitoredRegions {
+        let info:NSArray = storedRegionLookup.regionLookup.object(forKey: region.identifier) as! NSArray
+        locDict[region.identifier] = info[TITLE]
+    }
+    api.change_location_names(loc_dict: locDict)
+}
+
+func updateCurrentLocation(){
+    let storedRegionLookup = RegionLookup()
+    storedRegionLookup.loadRegionLookupFromPhone()
+    let api:API = API()
+    
+    
+    api.exit_all()
+    
+    for region in locationUtil!.manager.monitoredRegions {
+        // Make a new annotation for this region
+        let regionIdx = region.identifier
+        let regionInfo:NSArray = storedRegionLookup.regionLookup.object(forKey: regionIdx) as! NSArray
+        
+        //check if in bounds
+        let latitude = NumberFormatter().number(from: String(describing: regionInfo[LATITUDE]))!.doubleValue
+        let longitude = NumberFormatter().number(from: String(describing: regionInfo[LONGITUDE]))!.doubleValue
+        let radius = NumberFormatter().number(from: String(describing: regionInfo[RADIUS]))!.doubleValue
+        let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        let ourLocation = locationUtil!.manager.location
+        let clLocCoor = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
+        let distance = ourLocation?.distance(from: clLocCoor)
+        
+        if ((distance! as Double) < radius) {
+            api.enter_location(loc_num: regionIdx)
+        }else{
+            //api.exit_location(loc_num: regionIdx)
+        }
+    }
+}
+
 class MapGUIViewController: UIViewController, MKMapViewDelegate {
     var currentTitle:String!
     var currentRadius:CLLocationDistance = 100
@@ -283,6 +326,7 @@ class MapGUIViewController: UIViewController, MKMapViewDelegate {
         else if (segue.identifier == "saveNewPlace") {
             let storedRegionLookup = RegionLookup()
             storedRegionLookup.loadRegionLookupFromPhone()
+            
             for region in locationUtil!.manager.monitoredRegions {
                 // Make a new annotation for this region
                 let regionIdx = region.identifier
