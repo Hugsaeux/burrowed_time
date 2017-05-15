@@ -17,6 +17,8 @@ class GroupLocationPickerTableViewCell: UITableViewCell {
     var currentGroup:String!
     var cellIndex:Int!
     
+    let nc = NotificationCenter.default
+    
     @IBAction func switchEvent(_ sender: Any) {
         if (groupList.groups[groupList.getIndexOfGroup(groupName: currentGroup)].locations.count < 7) {
             if (!groupList.groups[groupList.getIndexOfGroup(groupName: currentGroup)].checkLocation(location: locationLabel.text!)) {
@@ -120,6 +122,9 @@ class GroupLocationPickerTableViewCell: UITableViewCell {
             }
         }
         else {
+            nc.post(name:Notification.Name(rawValue:"GroupLocsExceeded"),
+                    object: nil,
+                    userInfo: ["message":"Hello there!", "date":Date()])
             locationSwitch.setOn(false, animated: true)
         }
     }

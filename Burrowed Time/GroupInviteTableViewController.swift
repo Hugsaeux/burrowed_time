@@ -23,16 +23,16 @@ class GroupInviteTableViewController: UITableViewController {
             invites.append(invite)
         }
         
-        for invite in invites{
+        /*for invite in invites{
             print(invite.getId())
             print(invite.getInviter())
             print(invite.getGroup())
-        }
+        }*/
     }
     
     func refreshTable(note: Notification)->Void{
         refreshInvitesData()
-        print("refreshing")
+        //print("refreshing")
         self.tableView.reloadData()
     }
     
