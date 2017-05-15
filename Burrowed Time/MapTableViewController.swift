@@ -90,6 +90,7 @@ class MapTableViewController: UITableViewController {
             NSLog("Attempted to delete \(deletedTitle)")
             
             let newLookup = NSMutableDictionary()
+            let oldToNewID = NSMutableDictionary()  // Lookup new integer ID using old string ID
             let locDict = NSMutableDictionary()
             var newIdx = 0
             
@@ -108,6 +109,7 @@ class MapTableViewController: UITableViewController {
                     locationUtil!.manager.startMonitoring(for: currRegion)
                     
                     newLookup[newIdx.description] = info
+                    oldToNewID[region.identifier] = newIdx
                     locDict[newIdx.description] = info[TITLE]
                     newIdx += 1
                 }
@@ -125,7 +127,7 @@ class MapTableViewController: UITableViewController {
             storedRegionIdx.saveRegionIdxToPhone()
             
             // Delete the location from the database
-            locDict[storedRegionIdx.regionIdx] = NSNull() // This does nothing ?
+            locDict[storedRegionIdx.regionIdx] = NSNull()
             let api:API = API()
             api.change_location_names(loc_dict: locDict)
             
@@ -133,13 +135,23 @@ class MapTableViewController: UITableViewController {
             let groupList:GroupList = GroupList()
             groupList.loadGroupListFromPhone()
             
-            for group in groupList.groups {
-                for location in group.locations {
+            for group:Group in groupList.groups {
+                let groupid = group.getIdentifier()
+                let locs = NSMutableArray()
+                for location:Location in group.locations {
                     if (location.name == cell.title.text) {
                         api.change_group_locations(groupid: group.getIdentifier(), locs: [])
-                        group.locations = []
+                        group.removeLocation(location: location.name)
+                    } else {
+                        let oldID = String(location.getLocationID())
+                        let newID = oldToNewID[oldID] as! Int
+                        location.setLocationID(newID: newID)
+                        locs.add(newID)
                     }
                 }
+//                NSLog("GROUPID: \(groupid)")
+//                NSLog("\(locs)")
+                api.change_group_locations(groupid: groupid, locs: locs)
             }
             groupList.saveGroupListToPhone()
             
