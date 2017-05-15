@@ -13,10 +13,13 @@ func refreshGroupInfo(group:Group){
     // pull all the members in the group
     let groupMembers:NSDictionary = api.get_group_members(groupid: group.identifier)
     let locations:NSDictionary = api.get_location(userid: "", groupid: group.identifier)
+    NSLog("groupMembers: \(groupMembers)")
+    NSLog("locations: \(locations)")
     
     for (key, value) in groupMembers {
         // pull member location
         let location = locations[key as! String] as! String
+        NSLog("location: \(location)")
         
         if (group.checkMemberName(name: value as! String)) {
             let newPerson:Person = Person(name: value as! String, phoneNumber: "232")
