@@ -64,7 +64,7 @@ class LocationPickerTableViewCell: UITableViewCell {
         let api:API = API()
         api.change_group_locations(groupid: groupList.groups[cellGroupIndex].getIdentifier(), locs: locations as NSArray)
         groupList.saveGroupListToPhone()
-        updateCurrentLocation()
+        //updateCurrentLocation()
     }
 
     override func awakeFromNib() {
