@@ -50,7 +50,7 @@ class GroupLocationPickerTableViewCell: UITableViewCell {
             api.change_group_locations(groupid: groupList.groups[groupList.getIndexOfGroup(groupName: currentGroup)].getIdentifier(), locs: locations as NSArray)
             
             groupList.saveGroupListToPhone()
-            updateCurrentLocation()
+            //updateCurrentLocation()
         }
             
         else if (groupList.groups[groupList.getIndexOfGroup(groupName: currentGroup)].locations.count == 7 && locationSwitch.isOn == false) {
@@ -77,7 +77,7 @@ class GroupLocationPickerTableViewCell: UITableViewCell {
             api.change_group_locations(groupid: groupList.groups[groupList.getIndexOfGroup(groupName: currentGroup)].getIdentifier(), locs: locations as NSArray)
             
             groupList.saveGroupListToPhone()
-            updateCurrentLocation()
+            //updateCurrentLocation()
         }
         else {
             nc.post(name:Notification.Name(rawValue:"GroupLocsExceeded"),
