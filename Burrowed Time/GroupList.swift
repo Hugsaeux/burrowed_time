@@ -78,7 +78,7 @@ class GroupList {
         }
         
         JSONstring = "\(JSONstring)}}"
-        print(JSONstring)
+        //print(JSONstring)
         return JSONstring
     }
     

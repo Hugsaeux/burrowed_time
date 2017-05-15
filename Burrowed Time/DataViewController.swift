@@ -60,9 +60,6 @@ class DataViewController: UIViewController {
     var editingMode:Bool = false
     var api:API = API()
     var dataViewController:DataViewController!
-
-    
-    
     
     @IBAction func settingsButtonClick(_ sender: Any) {
         settingsPopUp.isHidden = false
@@ -121,8 +118,8 @@ class DataViewController: UIViewController {
                 }
                 
                 self.groupList.saveGroupListToPhone()
-                print("refreshing tables")
                 self.table.tableView.reloadData()
+                
             }
         }
             
@@ -176,6 +173,9 @@ class DataViewController: UIViewController {
         }
         
         self.dataLabel!.text = pageTitle
+        self.dataLabel!.font = UIFont(name:"GillSans-SemiBold", size: 28.0)
+        self.dataLabel!.textColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
+        
         self.pageControl!.numberOfPages = numberOfPages
         self.pageControl!.currentPage = currentPage
         if (currentPage == 0) {
@@ -194,7 +194,7 @@ class DataViewController: UIViewController {
         
         if (currentPage == 0) {
             self.dataLabel!.text = "Burrowed Time"
-            self.dataLabel!.font = UIFont(name:"GillSans-SemiBold", size: 28.0)
+            self.dataLabel!.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
             self.dataLabel.backgroundColor = #colorLiteral(red: 0.5843137255, green: 0.8784313725, blue: 0.8078431373, alpha: 1)
         }
         else {
