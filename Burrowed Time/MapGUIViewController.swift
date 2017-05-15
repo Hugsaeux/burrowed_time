@@ -41,6 +41,9 @@ func updateCurrentLocation(){
     storedRegionLookup.loadRegionLookupFromPhone()
     let api:API = API()
     
+    
+    api.exit_all()
+    
     for region in locationUtil!.manager.monitoredRegions {
         // Make a new annotation for this region
         let regionIdx = region.identifier
@@ -58,7 +61,7 @@ func updateCurrentLocation(){
         if ((distance! as Double) < radius) {
             api.enter_location(loc_num: regionIdx)
         }else{
-            api.exit_location(loc_num: regionIdx)
+            //api.exit_location(loc_num: regionIdx)
         }
     }
 }

@@ -24,4 +24,7 @@ class Location {
         return self.locationID
     }
     
+    func setLocationID(newID: Int) {
+        self.locationID = newID
+    }
 }

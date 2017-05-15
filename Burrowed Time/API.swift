@@ -63,6 +63,15 @@ class API {
         _ = send_post(endpoint: "exit-location", parameters: parameters)
     }
     
+    func exit_all() {
+        let parameters:Parameters = [
+            "userid": userID.IDnum
+        ]
+        
+        let resp = send_post(endpoint: "exit-all", parameters: parameters)
+        NSLog("Exiting all: \(resp)")
+    }
+    
     func add_user(username: String, phonenumber: String) -> String {
         let parameters: Parameters = [
             "username": username,
