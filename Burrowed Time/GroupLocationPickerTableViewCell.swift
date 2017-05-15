@@ -49,6 +49,7 @@ class GroupLocationPickerTableViewCell: UITableViewCell {
             
             groupList.saveGroupListToPhone()
             
+            // check if in a region
             for region in locationUtil!.manager.monitoredRegions {
                 // Make a new annotation for this region
                 let regionIdx = region.identifier
@@ -97,6 +98,8 @@ class GroupLocationPickerTableViewCell: UITableViewCell {
             
             groupList.saveGroupListToPhone()
             
+            
+            // check if in a region
             for region in locationUtil!.manager.monitoredRegions {
                 // Make a new annotation for this region
                 let regionIdx = region.identifier

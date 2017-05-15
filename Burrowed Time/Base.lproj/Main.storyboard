@@ -1201,7 +1201,7 @@
                                         </label>
                                         <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oV7-lg-V3p">
                                             <rect key="frame" x="278" y="13" width="51" height="31"/>
-                                            <color key="onTintColor" red="0.76862745099999996" green="0.97647058819999999" blue="0.5450980392" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="onTintColor" red="0.62376493215560913" green="0.83685195446014404" blue="0.70198601484298706" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                             <connections>
                                                 <action selector="switchChanged:" destination="KrC-gs-8kI" eventType="valueChanged" id="6nf-w2-tTA"/>
                                             </connections>
@@ -1308,7 +1308,7 @@
                                     <subviews>
                                         <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iba-PW-BrH">
                                             <rect key="frame" x="279" y="11" width="51" height="31"/>
-                                            <color key="onTintColor" red="0.76862745099999996" green="0.97647058819999999" blue="0.5450980392" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="onTintColor" red="0.61592292785644531" green="0.82504546642303467" blue="0.69414454698562622" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                             <connections>
                                                 <action selector="switchEvent:" destination="V4b-cH-QgU" eventType="valueChanged" id="XAf-c6-9IS"/>
                                             </connections>
