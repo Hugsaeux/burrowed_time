@@ -35,6 +35,10 @@ class LoginScreenViewController: UIViewController {
             if (userID != -1) {
                 let userID:UserID = UserID(IDnum: userID.description, userName: userNameTextField.text!, phoneNumber: phoneNumberTextField.text!)
                 userID.saveUserIDToPhone()
+                
+                // Update user info to reflect typed-in name
+                let api:API = API()
+                api.update_user_info(username: userNameTextField.text!, userid: userID.getIDnum())
             }
             else {
                 let id:String = api.add_user(username: userNameTextField.text!, phonenumber: phoneNumberTextField.text!)
