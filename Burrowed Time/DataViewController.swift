@@ -15,32 +15,25 @@ func refreshGroupInfo(group:Group){
     let locations:NSDictionary = api.get_location(userid: "", groupid: group.identifier)
     NSLog("groupMembers: \(groupMembers)")
     NSLog("locations: \(locations)")
+    group.members = [];
     
     for (key, value) in groupMembers {
         // pull member location
         let location = locations[key as! String] as! String
         NSLog("location: \(location)")
         
-        if (group.checkMemberName(name: value as! String)) {
-            let newPerson:Person = Person(name: value as! String, phoneNumber: "232")
-            
-            // pull new members locations
-            
-            //self.api.get_location(userid: key as! String, groupid: group.getIdentifier())
-            newPerson.location = location
-            group.addMember(person: newPerson)
-        }
-        else {
-            //let location = self.api.get_location(userid: key as! String, groupid: group.getIdentifier())
-            
-            for member in group.members {
-                if (member.getName() == value as! String) {
-                    member.location = location
-                }
+        let newPerson:Person = Person(name: value as! String, phoneNumber: "232")
+        
+        newPerson.location = location
+        group.addMember(person: newPerson)
+
+
+        for member in group.members {
+            if (member.getName() == value as! String) {
+                member.location = location
             }
         }
     }
-    
 }
 
 class DataViewController: UIViewController {
@@ -76,12 +69,14 @@ class DataViewController: UIViewController {
                     DispatchQueue.global(qos: DispatchQoS.background.qosClass).sync {
                         self.api.set_invisible(groupid: group.getIdentifier(), is_invisible: 0)
                         self.groupList.saveGroupListToPhone()
+                        self.table.refreshData()
                     }
                 }
                 else {
                    DispatchQueue.global(qos: DispatchQoS.background.qosClass).sync {
                         self.api.set_invisible(groupid: group.getIdentifier(), is_invisible: 1)
                         self.groupList.saveGroupListToPhone()
+                        self.table.refreshData()
                    }
                 }
             }
@@ -94,56 +89,24 @@ class DataViewController: UIViewController {
                             DispatchQueue.global(qos: DispatchQoS.background.qosClass).sync {
                                 self.api.set_invisible(groupid: group.getIdentifier(), is_invisible: 0)
                                 self.groupList.saveGroupListToPhone()
+                                self.table.refreshData()
                             }
                     }
                     else {
                       DispatchQueue.global(qos: DispatchQoS.background.qosClass).sync {
                             self.api.set_invisible(groupid: group.getIdentifier(), is_invisible: 1)
                             self.groupList.saveGroupListToPhone()
+                            self.table.refreshData()
                       }
                     }
                 }
             }
         }
-    
-        self.table.tableView.reloadData()
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // pull from server
-        
-        
-        if (self.currentPage != 0) {
-            DispatchQueue.global(qos: DispatchQoS.background.qosClass).async {
-                for group in self.groupList.groups {
-                    refreshGroupInfo(group: group)
-                }
-                
-                self.groupList.saveGroupListToPhone()
-                self.table.tableView.reloadData()
-                
-            }
-        }
-            
-        else {
-            DispatchQueue.global(qos: DispatchQoS.background.qosClass).async {
-                let userID:UserID = UserID(IDnum: "", userName: "", phoneNumber: "")
-                _ = userID.loadUserIDFromPhone()
-                
-                let groups:NSDictionary = self.api.get_user_groups(userid: userID.IDnum)
-                
-                for (key, value) in groups {
-                    if (self.groupList.checkGroupName(name: value as! String)) {
-                        let newGroup:Group = Group(groupName: value as! String)
-                        newGroup.setIdentifier(id: key as! String)
-                        self.groupList.addGroup(group: newGroup)
-                    }
-                }
-                
-                self.groupList.saveGroupListToPhone()
-            }
-        }
         
         let debugger = UserDefaults.standard.object(forKey: "mapdebugger") as! String
         if (debugger == "d") {
@@ -221,11 +184,10 @@ class DataViewController: UIViewController {
                 }
             }
         }
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
         
-    
+        DispatchQueue.global(qos: DispatchQoS.background.qosClass).async {
+            self.table.refreshData();
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

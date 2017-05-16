@@ -22,6 +22,11 @@ class HomeTableViewController: UITableViewController {
     var refresh = UIRefreshControl()
     
     func refreshTable(_ sender : UIRefreshControl) {
+        refreshData()
+        refresh.endRefreshing()
+    }
+    
+    func refreshData() {
         if (index != 0) {
             refreshGroupInfo(group: cellData.groups[index-1])
             
@@ -45,7 +50,7 @@ class HomeTableViewController: UITableViewController {
         }
         
         self.tableView.reloadData()
-        refresh.endRefreshing()
+        
     }
 
     override func viewDidLoad() {
