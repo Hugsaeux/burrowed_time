@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AddPlaceViewController: UIViewController {
+class AddPlaceViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var placeTitleTextbox: UITextField!
     
     @IBAction func nextButtonClick(_ sender: Any) {
@@ -24,15 +24,14 @@ class AddPlaceViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-        
-//        func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-//            self.view.endEditing(true)
-//            return false
-//        }
+        self.placeTitleTextbox.delegate = self
     }
 
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return false
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

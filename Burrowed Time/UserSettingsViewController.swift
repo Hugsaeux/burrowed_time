@@ -8,7 +8,7 @@
 
 import UIKit
 
-class UserSettingsViewController: UIViewController {
+class UserSettingsViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet weak var usernameTextField: UITextField!
     @IBOutlet weak var phoneNumberTextField: UITextField!
@@ -40,6 +40,7 @@ class UserSettingsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.usernameTextField.delegate = self
         let userID:UserID = UserID(IDnum: "", userName: "", phoneNumber: "")
         _ = userID.loadUserIDFromPhone()
         
@@ -50,6 +51,11 @@ class UserSettingsViewController: UIViewController {
         //phoneNumberTextField.placeholder = phoneNumber
     }
 
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return false
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
