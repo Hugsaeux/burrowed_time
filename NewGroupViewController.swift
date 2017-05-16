@@ -8,7 +8,7 @@
 
 import UIKit
 
-class NewGroupViewController: UIViewController {
+class NewGroupViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var groupNameTextField: UITextField!
     var groupList:GroupList!
@@ -29,10 +29,14 @@ class NewGroupViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        self.groupNameTextField.delegate = self
     }
 
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return false
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
