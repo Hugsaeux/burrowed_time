@@ -9,17 +9,22 @@
 import UIKit
 import Contacts
 
-class LoginScreenViewController: UIViewController {
+class LoginScreenViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet weak var phoneNumberTextField: UITextField!
     @IBOutlet weak var userNameTextField: UITextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.userNameTextField.delegate = self
         
     }
 
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return false
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
