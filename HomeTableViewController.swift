@@ -19,9 +19,46 @@ class HomeTableViewController: UITableViewController {
     var index:Int = 0
     var clickIndex = 0
     var dataViewController:DataViewController!
+    var refresh = UIRefreshControl()
+    
+    func refreshTable(_ sender : UIRefreshControl) {
+        refreshData()
+        refresh.endRefreshing()
+    }
+    
+    func refreshData() {
+        if (index != 0) {
+            refreshGroupInfo(group: cellData.groups[index-1])
+            
+            self.cellData.saveGroupListToPhone()
+        }
+        else {
+            let api = API()
+            let userID:UserID = UserID(IDnum: "", userName: "", phoneNumber: "")
+            _ = userID.loadUserIDFromPhone()
+            
+            let groups:NSDictionary = api.get_user_groups(userid: userID.IDnum)
+            
+            for (key, value) in groups {
+                if (self.cellData.checkGroupName(name: value as! String)) {
+                    let newGroup:Group = Group(groupName: value as! String)
+                    newGroup.setIdentifier(id: key as! String)
+                    self.cellData.addGroup(group: newGroup)
+                }
+            }
+            self.cellData.saveGroupListToPhone()
+        }
+        
+        self.tableView.reloadData()
+        
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.refreshControl = refresh
+        
+        refresh.addTarget(self, action: #selector(refreshTable(_:)), for: .valueChanged)
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -63,8 +100,6 @@ class HomeTableViewController: UITableViewController {
         cell.groupList = cellData
         cell.dataViewController = dataViewController
         
-    
-        
         if (cellData.getSize() > 0) {
             if (index == 0) {
                 cell.cellTitle.text = cellData.groups[indexPath.row].getGroupName()
@@ -78,11 +113,8 @@ class HomeTableViewController: UITableViewController {
                 }
             }
             else {
-                refreshGroupInfo(group: cellData.groups[index-1])
-                cellData.saveGroupListToPhone()
-                
                 cell.selectionStyle = UITableViewCellSelectionStyle.none;
-                print(cellData.groups[index-1].members[indexPath.row].getName()+" at "+cellData.groups[index-1].members[indexPath.row].location)
+                //print(cellData.groups[index-1].members[indexPath.row].getName()+" at "+cellData.groups[index-1].members[indexPath.row].location)
                 cell.cellTitle.text = cellData.groups[index-1].members[indexPath.row].getName()
                 cell.cellLocation.text = cellData.groups[index-1].members[indexPath.row].location
                 cell.invisibilitySwitch.isHidden = true

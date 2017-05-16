@@ -18,6 +18,8 @@ class LocationPickerTableViewCell: UITableViewCell {
     var cellLocation:String!
     var cellIndex:Int!
     
+    let nc = NotificationCenter.default
+    
     @IBAction func switchChanged(_ sender: Any) {
         if (groupList.groups[cellGroupIndex].locations.count < 7) {
             if (!groupList.groups[cellGroupIndex].checkLocation(location: cellLocation)) {
@@ -33,6 +35,9 @@ class LocationPickerTableViewCell: UITableViewCell {
                 groupList.groups[cellGroupIndex].removeLocation(location: cellLocation)
             }
             else {
+                nc.post(name:Notification.Name(rawValue:"LocPickerLocsExceeded"),
+                        object: nil,
+                        userInfo: ["message":"Hello there!", "date":Date()])
                 trackingSwitch.setOn(false, animated: true)
             }
         }
@@ -59,7 +64,7 @@ class LocationPickerTableViewCell: UITableViewCell {
         let api:API = API()
         api.change_group_locations(groupid: groupList.groups[cellGroupIndex].getIdentifier(), locs: locations as NSArray)
         groupList.saveGroupListToPhone()
-        updateCurrentLocation()
+        //updateCurrentLocation()
     }
 
     override func awakeFromNib() {

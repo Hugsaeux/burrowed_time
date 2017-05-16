@@ -11,6 +11,13 @@ import UIKit
 class MapParentViewController: UIViewController {
     var table:MapTableViewController!
     
+    var alertController:UIAlertController = UIAlertController(title: "Limit exceeded", message: "Only up to 20 total locations can be saved.", preferredStyle: .alert)
+    
+    let OKAction = UIAlertAction(title: "Okay", style: .default) { (action:UIAlertAction!) in
+        print("you have pressed Okay button");
+        //Do something with the button press maybe
+    }
+    
     // unwind segues
     @IBAction func cancelToMapTable(unwindSegue: UIStoryboardSegue) {}
     
@@ -23,6 +30,7 @@ class MapParentViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        self.alertController.addAction(OKAction)
     }
 
     override func didReceiveMemoryWarning() {
@@ -30,6 +38,11 @@ class MapParentViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
+    @IBAction func newLocationButtonPressed(_ sender: Any) {
+        if (self.table.cellTitles.count >= 20){
+        self.present(self.alertController, animated: true, completion:nil)
+        }
+    }
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
