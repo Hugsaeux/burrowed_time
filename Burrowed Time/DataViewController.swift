@@ -20,19 +20,13 @@ func refreshGroupInfo(group:Group){
     for (key, value) in groupMembers {
         // pull member location
         let location = locations[key as! String] as! String
-        NSLog("location: \(location)")
-        
         let newPerson:Person = Person(name: value as! String, phoneNumber: "232")
-        
         newPerson.location = location
         group.addMember(person: newPerson)
-
-
-        for member in group.members {
-            if (member.getName() == value as! String) {
-                member.location = location
-            }
-        }
+    }
+    
+    group.members = group.members.sorted {
+        $0.name < $1.name
     }
 }
 
@@ -104,19 +98,6 @@ class DataViewController: UIViewController {
         }
     }
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // pull from server
-        
-        let debugger = UserDefaults.standard.object(forKey: "mapdebugger") as! String
-        if (debugger == "d") {
-            debuggerLabel.text = "Waiting for location"
-        }
-        else {
-            debuggerLabel.text = debugger;
-        }
-    }
-
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -134,6 +115,11 @@ class DataViewController: UIViewController {
         }
         
         if (groupList.groups.count != 0) {
+            if (currentPage != 0) {
+                groupList.groups[currentPage-1].members = groupList.groups[currentPage-1].members.sorted {
+                    $0.name < $1.name
+                }
+            }
             self.table.cellData = groupList
             self.table.tableView.reloadData()
         }
@@ -193,13 +179,13 @@ class DataViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == "homePageSegue") {
             self.table = segue.destination as! HomeTableViewController
-            self.table.cellData = groupList
             self.table.index = currentPage
             self.table.dataViewController = self
             self.table.tableView.reloadData()
             if (editingMode && currentPage == 0) {
                 table.setEditing(true, animated: true)
             }
+            self.table.cellData = groupList
         }
         else if (segue.identifier == "settingsSegue") {
             let settings: SettingsPopUpViewController = segue.destination as! SettingsPopUpViewController
