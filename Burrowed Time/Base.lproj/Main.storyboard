@@ -259,6 +259,7 @@
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
+                                    <action selector="newLocationButtonPressed:" destination="2lB-7A-Gs8" eventType="touchUpInside" id="yXj-Uk-8kP"/>
                                     <segue destination="rzH-cJ-KBF" kind="show" id="vkw-5q-mfD"/>
                                 </connections>
                             </button>
@@ -282,7 +283,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="v2L-WM-mwJ" sceneMemberID="firstResponder"/>
                 <exit id="ywR-qw-S8P" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="2141" y="-176"/>
+            <point key="canvasLocation" x="2140" y="-176.76161919040482"/>
         </scene>
         <!--New Group View Controller-->
         <scene sceneID="XpJ-vp-Ued">

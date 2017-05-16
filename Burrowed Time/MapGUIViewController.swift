@@ -45,7 +45,6 @@ func updateCurrentLocation(){
     api.exit_all()
     
     for region in locationUtil!.manager.monitoredRegions {
-        // Make a new annotation for this region
         let regionIdx = region.identifier
         let regionInfo:NSArray = storedRegionLookup.regionLookup.object(forKey: regionIdx) as! NSArray
         
@@ -60,8 +59,6 @@ func updateCurrentLocation(){
         
         if ((distance! as Double) < radius) {
             api.enter_location(loc_num: regionIdx)
-        }else{
-            //api.exit_location(loc_num: regionIdx)
         }
     }
 }
@@ -273,14 +270,6 @@ class MapGUIViewController: UIViewController, MKMapViewDelegate {
             let currInfo:NSArray = [currentTitle, currentCoordinate.latitude, currentCoordinate.longitude, String(currentRadius)]
             addRegion(center: currentCoordinate, radius: currentRadius, currInfo: currInfo)
 
-/* We believe this is redundant 5/10/17
-            // Start location manager monitoring new region
-            let currRegion = CLCircularRegion.init(center: currentCoordinate, radius: currentRadius, identifier: currentIdx)
-            NSLog("Manager is monitoring AFTER STOPPING: \(locationUtil!.manager.monitoredRegions)")
-            
-            locationUtil!.manager.startMonitoring(for: currRegion)
-            NSLog("Manager is monitoring AFTER STARTING: \(locationUtil!.manager.monitoredRegions)")
-*/
             var locations = [String]()
             var indices = [String]()
             
