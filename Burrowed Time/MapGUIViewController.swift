@@ -41,7 +41,6 @@ func updateCurrentLocation(){
     storedRegionLookup.loadRegionLookupFromPhone()
     let api:API = API()
     
-    
     api.exit_all()
     
     for region in locationUtil!.manager.monitoredRegions {
@@ -70,6 +69,7 @@ class MapGUIViewController: UIViewController, MKMapViewDelegate {
     var addLocationFlag:Bool = false
     var currentCoordinate:CLLocationCoordinate2D!
     var saveLocationFlag:Bool = false
+    var currentAnnotation:LocationAnnotation!
     
     var alertController:UIAlertController = UIAlertController(title: "Location Not Added", message: "Please drop a new location pin to save.", preferredStyle: .alert)
     
@@ -87,20 +87,31 @@ class MapGUIViewController: UIViewController, MKMapViewDelegate {
     @IBOutlet weak var backArrow: UILabel!
     
     @IBAction func longPressed(sender: UILongPressGestureRecognizer) {
+        let touchLocation = sender.location(in: mapView)
+        let locationCoordinate = mapView.convert(touchLocation, toCoordinateFrom: mapView)
+        
         if (addLocationFlag) {
-            let touchLocation = sender.location(in: mapView)
-            let locationCoordinate = mapView.convert(touchLocation, toCoordinateFrom: mapView)
-            
             NSLog("currentTitle = \(currentTitle) : longPressed")
             let annotation:LocationAnnotation = LocationAnnotation(title: currentTitle, coordinate: locationCoordinate)
     
             radiusOverlay(center: annotation.coordinate, radius: currentRadius)
             
             mapView.addAnnotation(annotation)
+            currentAnnotation = annotation
             currentCoordinate = locationCoordinate
             
             addLocationFlag = false
             saveLocationFlag = true
+        }
+        else{
+            currentCoordinate = locationCoordinate
+            
+            mapView.removeAnnotation(currentAnnotation)
+            mapView.removeOverlays(mapView.overlays)
+            
+            currentAnnotation.coordinate = currentCoordinate
+            mapView.addAnnotation(currentAnnotation)
+            radiusOverlay(center: currentCoordinate, radius: currentRadius)
         }
     }
     
@@ -152,6 +163,7 @@ class MapGUIViewController: UIViewController, MKMapViewDelegate {
                 currentRadius = NumberFormatter().number(from: String(describing: regionInfo[RADIUS]))!.doubleValue
                 currentIdx = regionIdx
                 currentCoordinate = coordinate
+                currentAnnotation = annotation
             }
             
             mapView.addAnnotation(annotation)
@@ -231,7 +243,6 @@ class MapGUIViewController: UIViewController, MKMapViewDelegate {
             
         }
     }
-    
     
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
         if overlay.isKind(of: MKCircle.self){
