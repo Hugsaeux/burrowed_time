@@ -23,14 +23,15 @@ class HomeTableViewController: UITableViewController {
     
     func refreshTable(_ sender : UIRefreshControl) {
         refreshData()
+        
+        self.cellData.saveGroupListToPhone()
         refresh.endRefreshing()
     }
     
     func refreshData() {
         if (index != 0) {
             refreshGroupInfo(group: cellData.groups[index-1])
-            
-            self.cellData.saveGroupListToPhone()
+            self.tableView.reloadData()
         }
         else {
             let api = API()
@@ -46,11 +47,7 @@ class HomeTableViewController: UITableViewController {
                     self.cellData.addGroup(group: newGroup)
                 }
             }
-            self.cellData.saveGroupListToPhone()
         }
-        
-        self.tableView.reloadData()
-        
     }
 
     override func viewDidLoad() {
@@ -105,7 +102,6 @@ class HomeTableViewController: UITableViewController {
                 cell.cellTitle.text = cellData.groups[indexPath.row].getGroupName()
                 cell.cellLocation.text = ""
                 cell.invisibilitySwitch.isHidden = false
-                // check invisibility and set the switch value
                 cell.invisibilitySwitch.isOn = cellData.groups[indexPath.row].visibility
                 
                 if (self.isEditing) {
@@ -114,11 +110,9 @@ class HomeTableViewController: UITableViewController {
             }
             else {
                 cell.selectionStyle = UITableViewCellSelectionStyle.none;
-                //print(cellData.groups[index-1].members[indexPath.row].getName()+" at "+cellData.groups[index-1].members[indexPath.row].location)
                 cell.cellTitle.text = cellData.groups[index-1].members[indexPath.row].getName()
                 cell.cellLocation.text = cellData.groups[index-1].members[indexPath.row].location
                 cell.invisibilitySwitch.isHidden = true
-                // check invisibility and set the switch value
             }
         }
     

@@ -23,6 +23,8 @@ class MapTableViewController: UITableViewController {
             let data:NSArray = value as! NSArray
             cellTitles.append(data[0] as! String)
         }
+        
+        cellTitles = cellTitles.sorted()
     }
 
     override func viewDidLoad() {
