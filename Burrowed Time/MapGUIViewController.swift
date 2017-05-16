@@ -71,6 +71,14 @@ class MapGUIViewController: UIViewController, MKMapViewDelegate {
     var currentCoordinate:CLLocationCoordinate2D!
     var saveLocationFlag:Bool = false
     
+    var alertController:UIAlertController = UIAlertController(title: "Location Not Added", message: "Please drop a new location pin to save.", preferredStyle: .alert)
+    
+    let OKAction = UIAlertAction(title: "Okay", style: .default) { (action:UIAlertAction!) in
+        print("you have pressed Okay button");
+        //Do something with the button press maybe
+    }
+    
+    
     @IBOutlet weak var mapTitle: UINavigationItem!
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var radiusSlider: UISlider!
@@ -120,6 +128,8 @@ class MapGUIViewController: UIViewController, MKMapViewDelegate {
         super.viewDidLoad()
         NSLog("currentTitle = \(currentTitle) : viewDidLoad")
         mapTitle.title = currentTitle
+        
+        self.alertController.addAction(OKAction)
         
         let storedRegionLookup = RegionLookup()
         storedRegionLookup.loadRegionLookupFromPhone()
@@ -266,7 +276,10 @@ class MapGUIViewController: UIViewController, MKMapViewDelegate {
         
         NSLog("currentTitle = \(currentTitle) : prepare for segue")
         // Save a new location
-        if (segue.identifier == "saveNewPlace" && saveLocationFlag) {
+        if (addLocationFlag){
+            self.present(self.alertController, animated: true, completion:nil)
+        }
+        else if (segue.identifier == "saveNewPlace" && saveLocationFlag) {
             let currInfo:NSArray = [currentTitle, currentCoordinate.latitude, currentCoordinate.longitude, String(currentRadius)]
             addRegion(center: currentCoordinate, radius: currentRadius, currInfo: currInfo)
 
