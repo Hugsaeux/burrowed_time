@@ -129,6 +129,7 @@ class DataViewController: UIViewController {
         self.dataLabel!.textColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
         
         self.pageControl!.numberOfPages = numberOfPages
+        self.pageControl!.isUserInteractionEnabled = false
         self.pageControl!.currentPage = currentPage
         if (currentPage == 0) {
             homeArrow.isHidden = true
