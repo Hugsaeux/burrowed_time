@@ -11,6 +11,9 @@ import UIKit
 class AddPlaceViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var placeTitleTextbox: UITextField!
     
+    // unwind segues
+    @IBAction func cancelToMapTable(unwindSegue: UIStoryboardSegue) {}
+    
     var alertController:UIAlertController = UIAlertController(title: "Invalid name", message: "This place name is already in use.", preferredStyle: .alert)
     
     let OKAction = UIAlertAction(title: "Okay", style: .default) { (action:UIAlertAction!) in
