@@ -64,6 +64,7 @@ class DataViewController: UIViewController {
                         self.api.set_invisible(groupid: group.getIdentifier(), is_invisible: 0)
                         self.groupList.saveGroupListToPhone()
                         self.table.refreshData()
+                        self.table.tableView.reloadData()
                     }
                 }
                 else {
@@ -71,6 +72,7 @@ class DataViewController: UIViewController {
                         self.api.set_invisible(groupid: group.getIdentifier(), is_invisible: 1)
                         self.groupList.saveGroupListToPhone()
                         self.table.refreshData()
+                        self.table.tableView.reloadData()
                    }
                 }
             }
@@ -84,6 +86,7 @@ class DataViewController: UIViewController {
                                 self.api.set_invisible(groupid: group.getIdentifier(), is_invisible: 0)
                                 self.groupList.saveGroupListToPhone()
                                 self.table.refreshData()
+                                self.table.tableView.reloadData()
                             }
                     }
                     else {
@@ -91,6 +94,7 @@ class DataViewController: UIViewController {
                             self.api.set_invisible(groupid: group.getIdentifier(), is_invisible: 1)
                             self.groupList.saveGroupListToPhone()
                             self.table.refreshData()
+                            self.table.tableView.reloadData()
                       }
                     }
                 }

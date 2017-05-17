@@ -8,7 +8,7 @@
 
 class Location {
     
-    let name:String
+    var name:String
     var locationID:Int
     
     init(name: String, locationID: Int) {

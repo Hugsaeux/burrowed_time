@@ -23,8 +23,6 @@ class HomeTableViewController: UITableViewController {
     
     func refreshTable(_ sender : UIRefreshControl) {
         refreshData()
-        
-        self.cellData.saveGroupListToPhone()
         refresh.endRefreshing()
     }
     
@@ -48,6 +46,8 @@ class HomeTableViewController: UITableViewController {
                 }
             }
         }
+        
+        self.cellData.saveGroupListToPhone()
     }
 
     override func viewDidLoad() {
