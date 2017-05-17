@@ -8,8 +8,10 @@
 
 import UIKit
 
-class LocationPickerViewController: UIViewController {
+class LocationPickerViewController: UIViewController, UITextFieldDelegate {
     var currentTitle:String!
+    var oldTitle:String!
+    var groupList:GroupList!
     
     var alertController:UIAlertController = UIAlertController(title: "Limit exceeded", message: "Only up to 7 locations can be assigned to each group.", preferredStyle: .alert)
     
@@ -20,14 +22,17 @@ class LocationPickerViewController: UIViewController {
     
     let nc = NotificationCenter.default
     
-    
-    @IBOutlet weak var locationNameLabel: UILabel!
+    @IBOutlet weak var locationNameTextField: UITextField!
     
     @IBAction func unwindToLocationPicker(unwindSegue: UIStoryboardSegue) {}
     
     @IBAction func cancelToLocationPicker(unwindSegue: UIStoryboardSegue) {}
     
     @IBAction func saveNewPlace(unwindSegue: UIStoryboardSegue) {}
+    
+    @IBAction func longPressAction(sender: UILongPressGestureRecognizer) {
+        print("here")
+    }
 
     func alertLocationsExceeded(note:Notification) {
         self.present(self.alertController, animated: true, completion:nil)
@@ -35,8 +40,13 @@ class LocationPickerViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //print(currentTitle)
-        locationNameLabel.text = currentTitle
+        self.locationNameTextField.delegate = self
+        
+        locationNameTextField.text = currentTitle
+        oldTitle = currentTitle
+        
+        groupList = GroupList()
+        groupList.loadGroupListFromPhone()
 
         // Do any additional setup after loading the view.
         
@@ -65,5 +75,43 @@ class LocationPickerViewController: UIViewController {
             let locationPickerTable:LocationPickerTableViewController! = segue.destination as! LocationPickerTableViewController
             locationPickerTable.currentLocation = currentTitle
         }
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        currentTitle = locationNameTextField.text
+        
+        let storedRegionLookup = RegionLookup()
+        storedRegionLookup.loadRegionLookupFromPhone()
+        for region in locationUtil!.manager.monitoredRegions {
+            // Make a new annotation for this region
+            let regionIdx = region.identifier
+            let regionInfo:NSArray = storedRegionLookup.regionLookup.object(forKey: regionIdx) as! NSArray
+            let title = String(describing: regionInfo[TITLE])
+            
+            if (title == oldTitle) {
+                let latitude = NumberFormatter().number(from: String(describing: regionInfo[LATITUDE]))!.doubleValue
+                let longitude = NumberFormatter().number(from: String(describing: regionInfo[LONGITUDE]))!.doubleValue
+                let radius = NumberFormatter().number(from: String(describing: regionInfo[RADIUS]))!.doubleValue
+                let currInfo:NSArray = [currentTitle, latitude, longitude, radius]
+                storedRegionLookup.regionLookup[regionIdx] = currInfo
+                storedRegionLookup.saveRegionLookupToPhone()
+            }
+        }
+        
+        for group in groupList.groups {
+            for location in group.locations {
+                if (location.name == oldTitle) {
+                    location.name = currentTitle
+                }
+            }
+        }
+        
+        groupList.saveGroupListToPhone()
+        oldTitle = currentTitle
+        
+        updateLocationNames()
+        
+        return false
     }
 }

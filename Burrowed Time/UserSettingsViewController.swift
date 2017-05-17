@@ -14,28 +14,25 @@ class UserSettingsViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var phoneNumberTextField: UITextField!
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        //let root:RootViewController! = segue.destination as! RootViewController
-        //root.passedData = "\(usernameTextField.text!);\(phoneNumberTextField.text!)"
+        if (segue.identifier == "saveUserSettings") {
+            print("here")
         
-        if (usernameTextField.text! != "") {
-            let userID:UserID = UserID(IDnum: "", userName: "", phoneNumber: "")
-            _ = userID.loadUserIDFromPhone()
-            
-            if (usernameTextField.text != "") {
-                userID.username = usernameTextField.text!
+            if (usernameTextField.text! != "") {
+                let userID:UserID = UserID(IDnum: "", userName: "", phoneNumber: "")
+                _ = userID.loadUserIDFromPhone()
+                
+                if (usernameTextField.text != "") {
+                    userID.username = usernameTextField.text!
+                }
+                userID.saveUserIDToPhone()
+                
+                let api:API = API()
+                api.update_user_info(username: usernameTextField.text!, userid: userID.getIDnum())
+                
+                let groupList = GroupList()
+                groupList.saveGroupListToPhone()
             }
-            userID.saveUserIDToPhone()
-            
-            let api:API = API()
-            api.update_user_info(username: usernameTextField.text!, userid: userID.getIDnum())
-            
-            let groupList = GroupList()
-            groupList.saveGroupListToPhone()
         }
-        
-//        if (phoneNumberTextField.text != "") {
-//            userID.phoneNumber = phoneNumberTextField.text!
-//        }
     }
     
     override func viewDidLoad() {
