@@ -40,6 +40,7 @@ class RootViewController: UIViewController, UIPageViewControllerDelegate, UITabl
     @IBAction func removeGroupUnwindAction(unwindSegue: UIStoryboardSegue) {
         currentIndex = 0
         refreshView(currentPage: 0, editingMode: true)
+        // here
     }
     
     @IBAction func saveAddFriendUnwindAction(unwindSegue: UIStoryboardSegue) {
@@ -132,7 +133,12 @@ class RootViewController: UIViewController, UIPageViewControllerDelegate, UITabl
         _modelController = ModelController()
         _modelController?.editingMode = editingMode
         modelController.startingPage = currentPage
-        self.pageViewController?.dataSource = _modelController
+        
+        if (editingMode) {
+            self.pageViewController?.dataSource = nil // Disables swiping between pages
+        } else {
+            self.pageViewController?.dataSource = _modelController
+        }
         
         let startingViewController: DataViewController = self.modelController.viewControllerAtIndex(currentPage, storyboard: self.storyboard!)!
         let viewControllers = [startingViewController]
