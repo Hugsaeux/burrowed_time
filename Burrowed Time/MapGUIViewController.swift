@@ -207,6 +207,11 @@ class MapGUIViewController: UIViewController, MKMapViewDelegate {
 //            let mapRegion:MKCoordinateRegion = MKCoordinateRegionMakeWithDistance(mapView.userLocation.coordinate, 1000, 1000)
 //            mapView.setRegion(mapRegion, animated: true)
         }
+        
+        if (mapView.showsUserLocation){
+            currentLocationButton.setTitleColor(UIColor.black, for: UIControlState.normal)
+            currentLocationButton.backgroundColor = #colorLiteral(red: 0.5649450421, green: 0.8466786742, blue: 0.6952821612, alpha: 1)
+        }
     }
     
     func clickBack(sender:UITapGestureRecognizer) {
