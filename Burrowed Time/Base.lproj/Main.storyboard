@@ -461,7 +461,7 @@
                                 <rect key="frame" x="0.0" y="28" width="343" height="58"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="0xY-sP-oAD" id="8dm-s7-zk0">
-                                    <rect key="frame" x="0.0" y="0.0" width="343" height="57"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="343" height="57.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Family" textAlignment="justified" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bhc-IV-byI">
@@ -537,7 +537,7 @@
                                 <rect key="frame" x="0.0" y="28" width="343" height="58"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="RzV-65-chN" id="zfr-Ir-EMx">
-                                    <rect key="frame" x="0.0" y="0.0" width="343" height="57"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="343" height="57.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Home" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8f8-KL-V7p">
@@ -1051,13 +1051,13 @@
                                 <items>
                                     <navigationItem title="Place Name" id="tbY-1U-12U">
                                         <barButtonItem key="leftBarButtonItem" style="done" systemItem="cancel" id="FQ1-BT-MMw">
-                                            <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                             <connections>
                                                 <segue destination="nnk-sN-JPB" kind="unwind" unwindAction="cancelToMapTableWithUnwindSegue:" id="KFj-4x-dwv"/>
                                             </connections>
                                         </barButtonItem>
                                         <barButtonItem key="rightBarButtonItem" title="Next" id="ot7-hF-Gvn">
-                                            <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                             <connections>
                                                 <action selector="nextButtonClick:" destination="DxL-sz-ibi" id="P2A-0i-fba"/>
                                             </connections>
@@ -1094,6 +1094,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="nextButton" destination="ot7-hF-Gvn" id="OpN-6v-ybO"/>
                         <outlet property="placeTitleTextbox" destination="yNv-PI-zN7" id="eBG-K1-sI1"/>
                     </connections>
                 </viewController>
@@ -1315,7 +1316,7 @@
                                 <rect key="frame" x="0.0" y="28" width="343" height="56"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="V4b-cH-QgU" id="ZPY-iy-dEc">
-                                    <rect key="frame" x="0.0" y="0.0" width="343" height="55"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="343" height="55.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iba-PW-BrH">
