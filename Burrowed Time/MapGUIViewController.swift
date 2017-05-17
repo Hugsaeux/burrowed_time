@@ -210,7 +210,7 @@ class MapGUIViewController: UIViewController, MKMapViewDelegate {
     }
     
     func clickBack(sender:UITapGestureRecognizer) {
-        self.performSegue(withIdentifier: "cancelToLocationName", sender: self)
+        self.performSegue(withIdentifier: "cancelToMapTable", sender: self)
     }
     
     

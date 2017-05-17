@@ -669,7 +669,8 @@
                         <outlet property="mapTitle" destination="rdE-5y-1PX" id="RPv-Ac-D7z"/>
                         <outlet property="mapView" destination="W6u-Rs-h3E" id="QU1-xz-aqH"/>
                         <outlet property="radiusSlider" destination="Kvc-ha-00Q" id="Ayo-0V-EJI"/>
-                        <segue destination="jQr-yc-igD" kind="unwind" identifier="cancelToLocationName" unwindAction="cancelToMapTableWithUnwindSegue:" id="dzs-Kp-7DD"/>
+                        <outlet property="saveButton" destination="GfB-gM-00Y" id="msX-8f-XQf"/>
+                        <segue destination="jQr-yc-igD" kind="unwind" identifier="cancelToMapTable" unwindAction="cancelToMapTableWithUnwindSegue:" id="6QM-Ay-ouL"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bIz-Ee-MsX" userLabel="First Responder" sceneMemberID="firstResponder"/>
