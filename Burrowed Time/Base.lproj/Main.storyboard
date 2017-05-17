@@ -587,7 +587,7 @@
                                 <items>
                                     <navigationItem title="Map Settings" id="rdE-5y-1PX">
                                         <barButtonItem key="leftBarButtonItem" style="done" systemItem="cancel" id="AAM-RV-QdB">
-                                            <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                             <connections>
                                                 <segue destination="jQr-yc-igD" kind="unwind" unwindAction="cancelToLocationPickerWithUnwindSegue:" id="die-QU-2xv"/>
                                             </connections>
@@ -620,7 +620,7 @@
                                 <color key="backgroundColor" red="0.63921568630000003" green="0.92156862750000001" blue="0.87843137250000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="20"/>
                                 <state key="normal" title="Current Location">
-                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
                                     <action selector="currentLocationButtonPress:" destination="ba4-ym-SFv" eventType="touchDown" id="2eN-lM-RIZ"/>
@@ -665,6 +665,7 @@
                     <connections>
                         <outlet property="backArrow" destination="QKz-tl-Ezo" id="cvP-CU-hC6"/>
                         <outlet property="cancelToLocationButton" destination="AAM-RV-QdB" id="mfp-lC-r6a"/>
+                        <outlet property="currentLocationButton" destination="3Vt-pi-qTt" id="Wbn-dM-ebE"/>
                         <outlet property="mapTitle" destination="rdE-5y-1PX" id="RPv-Ac-D7z"/>
                         <outlet property="mapView" destination="W6u-Rs-h3E" id="QU1-xz-aqH"/>
                         <outlet property="radiusSlider" destination="Kvc-ha-00Q" id="Ayo-0V-EJI"/>
@@ -784,7 +785,7 @@
                                 <items>
                                     <navigationItem title="Add Friend" id="wxD-oc-XwK">
                                         <barButtonItem key="leftBarButtonItem" style="done" systemItem="cancel" id="V3b-tA-azL">
-                                            <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                             <connections>
                                                 <segue destination="Z8F-tY-IIF" kind="unwind" unwindAction="cancelToMainUnwindActionWithUnwindSegue:" id="jAE-Ak-cQu"/>
                                             </connections>
@@ -997,7 +998,7 @@
                                 <rect key="frame" x="0.0" y="28" width="361" height="58"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="AQb-0G-3Gw" id="1Cf-tY-BCf">
-                                    <rect key="frame" x="0.0" y="0.0" width="361" height="57"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="361" height="57.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vrh-fd-f8U">
@@ -1199,7 +1200,7 @@
                                 <rect key="frame" x="0.0" y="28" width="343" height="58"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KrC-gs-8kI" id="X9J-4x-9Am">
-                                    <rect key="frame" x="0.0" y="0.0" width="343" height="57"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="343" height="57.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Group" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NRY-NZ-6QP">
@@ -1445,7 +1446,7 @@
                                 <rect key="frame" x="0.0" y="28" width="343" height="80"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="BqI-Kv-RmU" id="DCF-oc-gTB">
-                                    <rect key="frame" x="0.0" y="0.0" width="343" height="79"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="343" height="79.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Group:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="77z-ch-1ZV">

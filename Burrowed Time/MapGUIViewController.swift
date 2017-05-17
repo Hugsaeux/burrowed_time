@@ -85,6 +85,8 @@ class MapGUIViewController: UIViewController, MKMapViewDelegate {
     
     @IBOutlet weak var cancelToLocationButton: UIBarButtonItem!
     @IBOutlet weak var backArrow: UILabel!
+    @IBOutlet weak var currentLocationButton: UIButton!
+    @IBOutlet weak var saveButton: UIBarButtonItem!
     
     @IBAction func longPressed(sender: UILongPressGestureRecognizer) {
         let touchLocation = sender.location(in: mapView)
@@ -100,6 +102,8 @@ class MapGUIViewController: UIViewController, MKMapViewDelegate {
             currentAnnotation = annotation
             currentCoordinate = locationCoordinate
             
+            saveButton.tintColor = UIColor.black
+            
             addLocationFlag = false
             saveLocationFlag = true
         }
@@ -112,6 +116,8 @@ class MapGUIViewController: UIViewController, MKMapViewDelegate {
             currentAnnotation.coordinate = currentCoordinate
             mapView.addAnnotation(currentAnnotation)
             radiusOverlay(center: currentCoordinate, radius: currentRadius)
+            
+            saveButton.tintColor = UIColor.black
         }
     }
     
@@ -128,10 +134,14 @@ class MapGUIViewController: UIViewController, MKMapViewDelegate {
         if (mapView.showsUserLocation) {
             mapView.showsUserLocation = false
             mapView.setUserTrackingMode(.none, animated: true)
+            currentLocationButton.setTitleColor(#colorLiteral(red: 0.4078193307, green: 0.4078193307, blue: 0.4078193307, alpha: 1), for: UIControlState.normal)
+            currentLocationButton.backgroundColor = #colorLiteral(red: 0.6916844249, green: 0.9323277473, blue: 0.9025284648, alpha: 1)
         }
         else {
             mapView.showsUserLocation = true
             mapView.setUserTrackingMode(.follow, animated: true)
+            currentLocationButton.setTitleColor(UIColor.black, for: UIControlState.normal)
+            currentLocationButton.backgroundColor = #colorLiteral(red: 0.5649450421, green: 0.8466786742, blue: 0.6952821612, alpha: 1)
         }
     }
     
@@ -239,7 +249,7 @@ class MapGUIViewController: UIViewController, MKMapViewDelegate {
         if (newState == MKAnnotationViewDragState.ending) {
             radiusOverlay(center: view.annotation!.coordinate, radius: currentRadius)
             currentCoordinate = view.annotation!.coordinate
-
+            saveButton.tintColor = UIColor.black
             
         }
     }
