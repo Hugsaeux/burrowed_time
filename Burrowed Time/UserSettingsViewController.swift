@@ -47,7 +47,7 @@ class UserSettingsViewController: UIViewController, UITextFieldDelegate {
         let username = userID.getUsername()
         //let phoneNumber = userID.getPhoneNumber()
         
-        usernameTextField.placeholder = username
+        usernameTextField.text = username
         //phoneNumberTextField.placeholder = phoneNumber
     }
 
