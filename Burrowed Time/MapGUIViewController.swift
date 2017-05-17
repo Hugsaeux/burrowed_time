@@ -86,6 +86,7 @@ class MapGUIViewController: UIViewController, MKMapViewDelegate {
     @IBOutlet weak var cancelToLocationButton: UIBarButtonItem!
     @IBOutlet weak var backArrow: UILabel!
     @IBOutlet weak var currentLocationButton: UIButton!
+    @IBOutlet weak var saveButton: UIBarButtonItem!
     
     @IBAction func longPressed(sender: UILongPressGestureRecognizer) {
         let touchLocation = sender.location(in: mapView)
@@ -101,6 +102,8 @@ class MapGUIViewController: UIViewController, MKMapViewDelegate {
             currentAnnotation = annotation
             currentCoordinate = locationCoordinate
             
+            saveButton.tintColor = UIColor.black
+            
             addLocationFlag = false
             saveLocationFlag = true
         }
@@ -113,6 +116,8 @@ class MapGUIViewController: UIViewController, MKMapViewDelegate {
             currentAnnotation.coordinate = currentCoordinate
             mapView.addAnnotation(currentAnnotation)
             radiusOverlay(center: currentCoordinate, radius: currentRadius)
+            
+            saveButton.tintColor = UIColor.black
         }
     }
     
@@ -244,7 +249,7 @@ class MapGUIViewController: UIViewController, MKMapViewDelegate {
         if (newState == MKAnnotationViewDragState.ending) {
             radiusOverlay(center: view.annotation!.coordinate, radius: currentRadius)
             currentCoordinate = view.annotation!.coordinate
-
+            saveButton.tintColor = UIColor.black
             
         }
     }

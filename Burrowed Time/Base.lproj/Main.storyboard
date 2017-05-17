@@ -587,7 +587,7 @@
                                 <items>
                                     <navigationItem title="Map Settings" id="rdE-5y-1PX">
                                         <barButtonItem key="leftBarButtonItem" style="done" systemItem="cancel" id="AAM-RV-QdB">
-                                            <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                             <connections>
                                                 <segue destination="jQr-yc-igD" kind="unwind" unwindAction="cancelToLocationPickerWithUnwindSegue:" id="die-QU-2xv"/>
                                             </connections>
@@ -669,6 +669,7 @@
                         <outlet property="mapTitle" destination="rdE-5y-1PX" id="RPv-Ac-D7z"/>
                         <outlet property="mapView" destination="W6u-Rs-h3E" id="QU1-xz-aqH"/>
                         <outlet property="radiusSlider" destination="Kvc-ha-00Q" id="Ayo-0V-EJI"/>
+                        <outlet property="saveButton" destination="GfB-gM-00Y" id="msX-8f-XQf"/>
                         <segue destination="jQr-yc-igD" kind="unwind" identifier="cancelToMapTable" unwindAction="cancelToMapTableWithUnwindSegue:" id="6QM-Ay-ouL"/>
                     </connections>
                 </viewController>
@@ -785,7 +786,7 @@
                                 <items>
                                     <navigationItem title="Add Friend" id="wxD-oc-XwK">
                                         <barButtonItem key="leftBarButtonItem" style="done" systemItem="cancel" id="V3b-tA-azL">
-                                            <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                             <connections>
                                                 <segue destination="Z8F-tY-IIF" kind="unwind" unwindAction="cancelToMainUnwindActionWithUnwindSegue:" id="jAE-Ak-cQu"/>
                                             </connections>
