@@ -287,7 +287,7 @@ class MapGUIViewController: UIViewController, MKMapViewDelegate {
         
         NSLog("currentTitle = \(currentTitle) : prepare for segue")
         // Save a new location
-        if (addLocationFlag){
+        if (addLocationFlag && segue.identifier == "saveNewPlace"){
             self.present(self.alertController, animated: true, completion:nil)
         }
         else if (segue.identifier == "saveNewPlace" && saveLocationFlag) {

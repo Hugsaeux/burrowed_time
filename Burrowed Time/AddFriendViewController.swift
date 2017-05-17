@@ -9,7 +9,7 @@
 import UIKit
 import Contacts
 
-class AddFriendViewController: UIViewController {
+class AddFriendViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var addFriendTextField: UITextField!
     
     var groupList: GroupList!
@@ -47,6 +47,7 @@ class AddFriendViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.addFriendTextField.delegate = self
         
         self.alertController = UIAlertController(title: "Default AlertController", message: "A standard alert", preferredStyle: .alert)
         
@@ -67,6 +68,11 @@ class AddFriendViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return false
+    }
+    
     @IBAction func addFriendTextFieldChanged() {
         if (addFriendTextField.text != "") {
             let contacts:CNContactStore = CNContactStore()
