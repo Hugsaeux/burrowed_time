@@ -11,6 +11,7 @@ import Contacts
 
 class AddFriendViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var addFriendTextField: UITextField!
+    @IBOutlet weak var addButton: UIBarButtonItem!
     
     var groupList: GroupList!
     var currentGroup: String!
@@ -45,6 +46,17 @@ class AddFriendViewController: UIViewController, UITextFieldDelegate {
         }
     }
 
+    func editingChanged(_ textField: UITextField) {
+        
+        guard
+            let friend = addFriendTextField.text, !friend.isEmpty
+            else {
+                addButton.isEnabled = false
+                return
+        }
+        addButton.isEnabled = true
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.addFriendTextField.delegate = self
@@ -61,6 +73,8 @@ class AddFriendViewController: UIViewController, UITextFieldDelegate {
         }
         
         self.alertController.addAction(OKAction)
+        addFriendTextField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
+        addButton.isEnabled = false
     }
 
     override func didReceiveMemoryWarning() {

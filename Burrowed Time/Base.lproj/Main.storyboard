@@ -792,7 +792,7 @@
                                             </connections>
                                         </barButtonItem>
                                         <barButtonItem key="rightBarButtonItem" title="Add" id="4RA-eM-xn8">
-                                            <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                             <connections>
                                                 <action selector="addButtonPress:" destination="sMM-X5-IH6" id="rTQ-pT-vGU"/>
                                             </connections>
@@ -850,6 +850,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="addButton" destination="4RA-eM-xn8" id="kLi-JL-3cY"/>
                         <outlet property="addFriendTextField" destination="8Cd-4p-2ce" id="czf-Vn-0xG"/>
                         <segue destination="Z8F-tY-IIF" kind="unwind" identifier="saveAddFriend" unwindAction="saveAddFriendUnwindActionWithUnwindSegue:" id="Du2-6m-zRX"/>
                     </connections>
