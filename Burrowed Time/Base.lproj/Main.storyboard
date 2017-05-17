@@ -1054,7 +1054,7 @@
                                         <barButtonItem key="leftBarButtonItem" style="done" systemItem="cancel" id="FQ1-BT-MMw">
                                             <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                             <connections>
-                                                <segue destination="nnk-sN-JPB" kind="unwind" unwindAction="cancelToMapTableWithUnwindSegue:" id="KFj-4x-dwv"/>
+                                                <segue destination="nnk-sN-JPB" kind="unwind" unwindAction="cancelToMapWithUnwindSegue:" id="AhY-2l-VOW"/>
                                             </connections>
                                         </barButtonItem>
                                         <barButtonItem key="rightBarButtonItem" title="Next" id="ot7-hF-Gvn">
@@ -1186,7 +1186,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="acl-uu-Wr2" sceneMemberID="firstResponder"/>
                 <exit id="bRr-5l-PZO" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1984.8" y="1298.5007496251876"/>
+            <point key="canvasLocation" x="2017" y="1300"/>
         </scene>
         <!--Location Picker Table View Controller-->
         <scene sceneID="rVW-k2-dsv">

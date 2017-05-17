@@ -19,7 +19,7 @@ class MapParentViewController: UIViewController {
     }
     
     // unwind segues
-    @IBAction func cancelToMapTable(unwindSegue: UIStoryboardSegue) {}
+    @IBAction func cancelToMap(unwindSegue: UIStoryboardSegue) {}
     
     @IBAction func saveNewPlaceUnwindAction(unwindSegue: UIStoryboardSegue) {
         self.table.getCellData()

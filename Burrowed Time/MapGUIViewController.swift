@@ -386,22 +386,13 @@ class MapGUIViewController: UIViewController, MKMapViewDelegate {
                     
                     if ((distance! as Double) < currentRadius) {
                         api.enter_location(loc_num: regionIdx)
-                    }else{
+                    }
+                    else {
                         api.exit_location(loc_num: regionIdx)
                     }
                 }
             }
             
-            let locationPickerPage:LocationPickerViewController! = self.storyboard?.instantiateViewController(withIdentifier: "LocationPicker") as! LocationPickerViewController
-            
-            locationPickerPage.currentTitle = self.currentTitle
-            print(self.currentTitle)
-            
-            self.present(locationPickerPage, animated: true, completion: nil)
-        }
-           
-        // you hit cancel
-        else {
             let locationPickerPage:LocationPickerViewController! = self.storyboard?.instantiateViewController(withIdentifier: "LocationPicker") as! LocationPickerViewController
             
             locationPickerPage.currentTitle = self.currentTitle
