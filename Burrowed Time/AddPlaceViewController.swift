@@ -10,6 +10,7 @@ import UIKit
 
 class AddPlaceViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var placeTitleTextbox: UITextField!
+    @IBOutlet weak var nextButton: UIBarButtonItem!
     
     // unwind segues
     @IBAction func cancelToMapTable(unwindSegue: UIStoryboardSegue) {}
@@ -48,10 +49,23 @@ class AddPlaceViewController: UIViewController, UITextFieldDelegate {
         }
     }
 
+    func editingChanged(_ textField: UITextField) {
+        
+        guard
+            let place = placeTitleTextbox.text, !place.isEmpty
+            else {
+                nextButton.isEnabled = false
+                return
+        }
+        nextButton.isEnabled = true
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.placeTitleTextbox.delegate = self
         self.alertController.addAction(OKAction)
+        placeTitleTextbox.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
+        nextButton.isEnabled = false
     }
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
