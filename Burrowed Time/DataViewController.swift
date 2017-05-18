@@ -40,6 +40,8 @@ class DataViewController: UIViewController {
     @IBOutlet weak var settingsPopUp: UIView!
     @IBOutlet weak var topBarSwitch: UISwitch!
     @IBOutlet weak var homeTable: UIView!
+    @IBOutlet weak var closedEyeIcon: UIImageView!
+    @IBOutlet weak var openEyeIcon: UIImageView!
     
     var pageTitle: String = ""
     var currentPage: Int = 0
@@ -60,20 +62,24 @@ class DataViewController: UIViewController {
             for group in self.groupList.groups {
                 group.setVisibility(value: self.topBarSwitch.isOn.description)
                 if (self.topBarSwitch.isOn) {
+                    closedEyeIcon.isHidden = true
                     DispatchQueue.global(qos: DispatchQoS.background.qosClass).sync {
                         self.api.set_invisible(groupid: group.getIdentifier(), is_invisible: 0)
                         self.groupList.saveGroupListToPhone()
                         self.table.refreshData()
                         self.table.tableView.reloadData()
                     }
+                    openEyeIcon.isHidden = false
                 }
                 else {
-                   DispatchQueue.global(qos: DispatchQoS.background.qosClass).sync {
+                    openEyeIcon.isHidden = true
+                    DispatchQueue.global(qos: DispatchQoS.background.qosClass).sync {
                         self.api.set_invisible(groupid: group.getIdentifier(), is_invisible: 1)
                         self.groupList.saveGroupListToPhone()
                         self.table.refreshData()
                         self.table.tableView.reloadData()
-                   }
+                    }
+                    closedEyeIcon.isHidden = false
                 }
             }
         }
@@ -82,20 +88,24 @@ class DataViewController: UIViewController {
                 if (group.getGroupName() == self.pageTitle) {
                     group.setVisibility(value: self.topBarSwitch.isOn.description)
                     if (self.topBarSwitch.isOn) {
-                            DispatchQueue.global(qos: DispatchQoS.background.qosClass).sync {
-                                self.api.set_invisible(groupid: group.getIdentifier(), is_invisible: 0)
-                                self.groupList.saveGroupListToPhone()
-                                self.table.refreshData()
-                                self.table.tableView.reloadData()
-                            }
+                        closedEyeIcon.isHidden = true
+                        DispatchQueue.global(qos: DispatchQoS.background.qosClass).sync {
+                            self.api.set_invisible(groupid: group.getIdentifier(), is_invisible: 0)
+                            self.groupList.saveGroupListToPhone()
+                            self.table.refreshData()
+                            self.table.tableView.reloadData()
+                        }
+                        openEyeIcon.isHidden = false
                     }
                     else {
-                      DispatchQueue.global(qos: DispatchQoS.background.qosClass).sync {
+                        openEyeIcon.isHidden = true
+                        DispatchQueue.global(qos: DispatchQoS.background.qosClass).sync {
                             self.api.set_invisible(groupid: group.getIdentifier(), is_invisible: 1)
                             self.groupList.saveGroupListToPhone()
                             self.table.refreshData()
                             self.table.tableView.reloadData()
-                      }
+                        }
+                        closedEyeIcon.isHidden = false
                     }
                 }
             }
