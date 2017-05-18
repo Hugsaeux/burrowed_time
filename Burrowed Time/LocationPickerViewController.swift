@@ -35,6 +35,8 @@ class LocationPickerViewController: UIViewController, UITextFieldDelegate {
     }
 
     func alertLocationsExceeded(note:Notification) {
+        self.alertController.title = "Limit exceeded"
+        self.alertController.message = "Only up to 7 locations can be assigned to each group."
         self.present(self.alertController, animated: true, completion:nil)
     }
     
@@ -78,40 +80,56 @@ class LocationPickerViewController: UIViewController, UITextFieldDelegate {
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        currentTitle = locationNameTextField.text
-        
+        var duplicateName:Bool = false
         let storedRegionLookup = RegionLookup()
         storedRegionLookup.loadRegionLookupFromPhone()
-        for region in locationUtil!.manager.monitoredRegions {
-            // Make a new annotation for this region
+        
+        for region in locationUtil!.manager.monitoredRegions{
             let regionIdx = region.identifier
             let regionInfo:NSArray = storedRegionLookup.regionLookup.object(forKey: regionIdx) as! NSArray
-            let title = String(describing: regionInfo[TITLE])
             
-            if (title == oldTitle) {
-                let latitude = NumberFormatter().number(from: String(describing: regionInfo[LATITUDE]))!.doubleValue
-                let longitude = NumberFormatter().number(from: String(describing: regionInfo[LONGITUDE]))!.doubleValue
-                let radius = NumberFormatter().number(from: String(describing: regionInfo[RADIUS]))!.doubleValue
-                let currInfo:NSArray = [currentTitle, latitude, longitude, radius]
-                storedRegionLookup.regionLookup[regionIdx] = currInfo
-                storedRegionLookup.saveRegionLookupToPhone()
+            if (String(describing: regionInfo[TITLE]) == locationNameTextField.text){
+                duplicateName = true
             }
         }
-        
-        for group in groupList.groups {
-            for location in group.locations {
-                if (location.name == oldTitle) {
-                    location.name = currentTitle
+        if (duplicateName){
+            self.alertController.title = "Invalid Name"
+            self.alertController.message = "This place name is already in use."
+            self.present(self.alertController, animated: true, completion:nil)
+        }else{
+            textField.resignFirstResponder()
+            currentTitle = locationNameTextField.text
+            
+            
+            for region in locationUtil!.manager.monitoredRegions {
+                // Make a new annotation for this region
+                let regionIdx = region.identifier
+                let regionInfo:NSArray = storedRegionLookup.regionLookup.object(forKey: regionIdx) as! NSArray
+                let title = String(describing: regionInfo[TITLE])
+                
+                if (title == oldTitle) {
+                    let latitude = NumberFormatter().number(from: String(describing: regionInfo[LATITUDE]))!.doubleValue
+                    let longitude = NumberFormatter().number(from: String(describing: regionInfo[LONGITUDE]))!.doubleValue
+                    let radius = NumberFormatter().number(from: String(describing: regionInfo[RADIUS]))!.doubleValue
+                    let currInfo:NSArray = [currentTitle, latitude, longitude, radius]
+                    storedRegionLookup.regionLookup[regionIdx] = currInfo
+                    storedRegionLookup.saveRegionLookupToPhone()
                 }
             }
+            
+            for group in groupList.groups {
+                for location in group.locations {
+                    if (location.name == oldTitle) {
+                        location.name = currentTitle
+                    }
+                }
+            }
+            
+            groupList.saveGroupListToPhone()
+            oldTitle = currentTitle
+            
+            updateLocationNames()
         }
-        
-        groupList.saveGroupListToPhone()
-        oldTitle = currentTitle
-        
-        updateLocationNames()
-        
         return false
     }
 }
