@@ -64,7 +64,7 @@
                             </containerView>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HMS-df-pPK">
                                 <rect key="frame" x="310" y="37" width="51" height="31"/>
-                                <color key="onTintColor" red="0.62745098040000002" green="0.83921568629999999" blue="0.70588235290000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="onTintColor" red="0.60807108879089355" green="0.81328165531158447" blue="0.682381272315979" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <connections>
                                     <action selector="invisibilityButtonClick:" destination="S4R-Ja-viH" eventType="valueChanged" id="XQe-X8-dbD"/>
                                 </connections>
@@ -109,7 +109,7 @@
                                 <fontDescription key="fontDescription" name="GillSans-SemiBold" family="Gill Sans" pointSize="26"/>
                                 <color key="tintColor" red="0.89411764709999997" green="0.52941176469999995" blue="0.51764705879999995" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" title="≡">
-                                    <color key="titleColor" red="0.63158285617828369" green="0.7019614577293396" blue="0.7020035982131958" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                    <color key="titleColor" red="0.92941248416900635" green="0.92941534519195557" blue="0.92942160367965698" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 </state>
                                 <connections>
                                     <action selector="settingsButtonClick:" destination="S4R-Ja-viH" eventType="touchDown" id="7VF-9L-sbf"/>
@@ -461,7 +461,7 @@
                                 <rect key="frame" x="0.0" y="28" width="343" height="58"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="0xY-sP-oAD" id="8dm-s7-zk0">
-                                    <rect key="frame" x="0.0" y="0.0" width="343" height="57.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="343" height="57"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Family" textAlignment="justified" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bhc-IV-byI">
@@ -537,7 +537,7 @@
                                 <rect key="frame" x="0.0" y="28" width="343" height="58"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="RzV-65-chN" id="zfr-Ir-EMx">
-                                    <rect key="frame" x="0.0" y="0.0" width="343" height="57.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="343" height="57"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Home" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8f8-KL-V7p">
@@ -1324,12 +1324,12 @@
                                 <rect key="frame" x="0.0" y="28" width="343" height="56"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="V4b-cH-QgU" id="ZPY-iy-dEc">
-                                    <rect key="frame" x="0.0" y="0.0" width="343" height="55.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="343" height="55"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iba-PW-BrH">
                                             <rect key="frame" x="279" y="11" width="51" height="31"/>
-                                            <color key="onTintColor" red="0.52549019610000003" green="0.71372549019999998" blue="0.68627450980000004" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="onTintColor" red="0.60415017604827881" green="0.80935990810394287" blue="0.67846018075942993" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                             <connections>
                                                 <action selector="switchEvent:" destination="V4b-cH-QgU" eventType="valueChanged" id="XAf-c6-9IS"/>
                                             </connections>
