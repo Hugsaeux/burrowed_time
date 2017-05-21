@@ -20,7 +20,7 @@ class GroupLocationPickerTableViewCell: UITableViewCell {
     let nc = NotificationCenter.default
     
     @IBAction func switchEvent(_ sender: Any) {
-        if (groupList.groups[groupList.getIndexOfGroup(groupName: currentGroup)].locations.count < 7) {
+        if (groupList.groups[groupList.getIndexOfGroup(groupName: currentGroup)].locations.count < 8) {
             if (!groupList.groups[groupList.getIndexOfGroup(groupName: currentGroup)].checkLocation(location: locationLabel.text!)) {
                 let location:Location = Location(name: locationLabel.text!, locationID: cellIndex)
                 groupList.groups[groupList.getIndexOfGroup(groupName: currentGroup)].addLocation(location: location)
@@ -53,7 +53,7 @@ class GroupLocationPickerTableViewCell: UITableViewCell {
             //updateCurrentLocation()
         }
             
-        else if (groupList.groups[groupList.getIndexOfGroup(groupName: currentGroup)].locations.count == 7 && locationSwitch.isOn == false) {
+        else if (groupList.groups[groupList.getIndexOfGroup(groupName: currentGroup)].locations.count == 8 && locationSwitch.isOn == false) {
             groupList.groups[groupList.getIndexOfGroup(groupName: currentGroup)].removeLocation(location: locationLabel.text!)
             
             var locations = [Int]()
