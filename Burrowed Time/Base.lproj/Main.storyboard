@@ -152,6 +152,14 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Eye_open_edit" translatesAutoresizingMaskIntoConstraints="NO" id="dFL-bM-JU6">
+                                <rect key="frame" x="332" y="39" width="26" height="27"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <imageView hidden="YES" userInteractionEnabled="NO" alpha="0.5" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Eye_close_edit" translatesAutoresizingMaskIntoConstraints="NO" id="aIk-yu-aS7">
+                                <rect key="frame" x="312" y="39" width="27" height="27"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" red="0.52549019610000003" green="0.71372549019999998" blue="0.68627450980000004" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -190,11 +198,13 @@
                     <toolbarItems/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="closedEyeIcon" destination="aIk-yu-aS7" id="2Hu-hp-mZs"/>
                         <outlet property="dataLabel" destination="SKO-Px-K5C" id="uk3-0p-vv5"/>
                         <outlet property="debuggerLabel" destination="SdY-OA-TGN" id="NQz-Nf-KXS"/>
                         <outlet property="editingDoneButton" destination="zzE-MT-gEc" id="cnL-Gn-e4k"/>
                         <outlet property="homeArrow" destination="jmR-Zv-vlM" id="AIw-rL-Q9u"/>
                         <outlet property="homeTable" destination="aTB-Qe-Kcc" id="h7n-jw-b5l"/>
+                        <outlet property="openEyeIcon" destination="dFL-bM-JU6" id="mIj-0L-e2V"/>
                         <outlet property="pageControl" destination="jqt-YF-qrX" id="wBX-fs-GMl"/>
                         <outlet property="settingsPopUp" destination="V7v-Ym-pyr" id="SNM-Sq-KYv"/>
                         <outlet property="topBarSwitch" destination="HMS-df-pPK" id="NZ0-16-GrA"/>
@@ -203,7 +213,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GmD-Rr-ZGN" sceneMemberID="firstResponder"/>
                 <exit id="2nl-Oq-grN" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="591.20000000000005" y="-245.12743628185908"/>
+            <point key="canvasLocation" x="741.60000000000002" y="-243.32833583208398"/>
         </scene>
         <!--Map Parent View Controller-->
         <scene sceneID="4WC-Xi-W4a">
@@ -1007,7 +1017,7 @@
                                 <rect key="frame" x="0.0" y="28" width="361" height="58"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="AQb-0G-3Gw" id="1Cf-tY-BCf">
-                                    <rect key="frame" x="0.0" y="0.0" width="361" height="57"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="361" height="57.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vrh-fd-f8U">
@@ -1210,7 +1220,7 @@
                                 <rect key="frame" x="0.0" y="28" width="343" height="58"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KrC-gs-8kI" id="X9J-4x-9Am">
-                                    <rect key="frame" x="0.0" y="0.0" width="343" height="57"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="343" height="57.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Group" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NRY-NZ-6QP">
@@ -1456,7 +1466,7 @@
                                 <rect key="frame" x="0.0" y="28" width="343" height="80"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="BqI-Kv-RmU" id="DCF-oc-gTB">
-                                    <rect key="frame" x="0.0" y="0.0" width="343" height="79"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="343" height="79.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Group:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="77z-ch-1ZV">
@@ -1553,6 +1563,8 @@
         </scene>
     </scenes>
     <resources>
+        <image name="Eye_close_edit" width="512" height="512"/>
+        <image name="Eye_open_edit" width="512" height="512"/>
         <image name="icon-1" width="130" height="124"/>
     </resources>
 </document>
