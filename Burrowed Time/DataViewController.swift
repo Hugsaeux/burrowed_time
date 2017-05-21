@@ -60,28 +60,34 @@ class DataViewController: UIViewController {
     
     @IBAction func invisibilityButtonClick(_ sender: Any) {
         if (self.currentPage == 0) {
+            if(self.topBarSwitch.isOn){
+                closedEyeIcon.isHidden = true
+            }else{
+                openEyeIcon.isHidden = true
+            }
             for group in self.groupList.groups {
                 group.setVisibility(value: self.topBarSwitch.isOn.description)
                 if (self.topBarSwitch.isOn) {
-                    closedEyeIcon.isHidden = true
                     DispatchQueue.global(qos: DispatchQoS.background.qosClass).sync {
                         self.api.set_invisible(groupid: group.getIdentifier(), is_invisible: 0)
                         self.groupList.saveGroupListToPhone()
                         self.table.refreshData()
                         self.table.tableView.reloadData()
                     }
-                    openEyeIcon.isHidden = false
                 }
                 else {
-                    openEyeIcon.isHidden = true
                     DispatchQueue.global(qos: DispatchQoS.background.qosClass).sync {
                         self.api.set_invisible(groupid: group.getIdentifier(), is_invisible: 1)
                         self.groupList.saveGroupListToPhone()
                         self.table.refreshData()
                         self.table.tableView.reloadData()
                     }
-                    closedEyeIcon.isHidden = false
                 }
+            }
+            if(self.topBarSwitch.isOn){
+                openEyeIcon.isHidden = false
+            }else{
+                closedEyeIcon.isHidden = false
             }
         }
         else {
