@@ -12,6 +12,7 @@ class UserSettingsViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet weak var usernameTextField: UITextField!
     @IBOutlet weak var phoneNumberTextField: UITextField!
+    @IBOutlet weak var saveButton: UIBarButtonItem!
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == "saveUserSettings") {
@@ -35,6 +36,17 @@ class UserSettingsViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
+    func editingChanged(_ textField: UITextField) {
+        
+        guard
+            let place = usernameTextField.text, !place.isEmpty
+            else {
+                saveButton.isEnabled = false
+                return
+        }
+        saveButton.isEnabled = true
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.usernameTextField.delegate = self
@@ -46,6 +58,8 @@ class UserSettingsViewController: UIViewController, UITextFieldDelegate {
         
         usernameTextField.text = username
         //phoneNumberTextField.placeholder = phoneNumber
+        usernameTextField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
+        saveButton.isEnabled = false
     }
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

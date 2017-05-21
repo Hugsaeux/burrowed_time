@@ -83,7 +83,12 @@ class LocationPickerViewController: UIViewController, UITextFieldDelegate {
         var duplicateName:Bool = false
         let storedRegionLookup = RegionLookup()
         storedRegionLookup.loadRegionLookupFromPhone()
-        
+        if((locationNameTextField.text?.isEmpty)! || locationNameTextField.text?.trimmingCharacters(in: NSCharacterSet.whitespaces) == ""){
+            self.alertController.title = "Invalid Name"
+            self.alertController.message = "Locations cannot have a blank name."
+            self.present(self.alertController, animated: true, completion:nil)
+            return false
+        }
         for region in locationUtil!.manager.monitoredRegions{
             let regionIdx = region.identifier
             let regionInfo:NSArray = storedRegionLookup.regionLookup.object(forKey: regionIdx) as! NSArray
