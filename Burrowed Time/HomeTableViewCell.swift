@@ -35,10 +35,14 @@ class HomeTableViewCell: UITableViewCell {
         for group in groupList.groups {
             if (group.visibility == true) {
                 dataViewController.topBarSwitch.isOn = true
+                dataViewController.closedEyeIcon.isHidden = true
+                dataViewController.openEyeIcon.isHidden = false
                 break
             }
             
             dataViewController.topBarSwitch.isOn = false
+            dataViewController.closedEyeIcon.isHidden = false
+            dataViewController.openEyeIcon.isHidden = true
         }
     }
 
