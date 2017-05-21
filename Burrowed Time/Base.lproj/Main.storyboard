@@ -470,6 +470,7 @@
                     </view>
                     <connections>
                         <outlet property="phoneNumberTextField" destination="ugK-nA-IUQ" id="ONQ-6p-Jj6"/>
+                        <outlet property="saveButton" destination="t0a-9c-6UE" id="FW0-FP-1do"/>
                         <outlet property="usernameTextField" destination="KBi-BO-leG" id="22r-Hc-8hD"/>
                     </connections>
                 </viewController>
