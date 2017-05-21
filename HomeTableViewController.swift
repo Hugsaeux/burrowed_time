@@ -102,10 +102,15 @@ class HomeTableViewController: UITableViewController {
                 cell.cellTitle.text = cellData.groups[indexPath.row].getGroupName()
                 cell.cellLocation.text = ""
                 cell.invisibilitySwitch.isHidden = false
-                cell.invisibilitySwitch.isOn = cellData.groups[indexPath.row].visibility
+                let visible = cellData.groups[indexPath.row].visibility
+                cell.invisibilitySwitch.isOn = visible
+                cell.eyeClosedIcon.isHidden = visible
+                cell.eyeOpenIcon.isHidden = !visible
                 
                 if (self.isEditing) {
                     cell.invisibilitySwitch.isHidden = true
+                    cell.eyeClosedIcon.isHidden = true
+                    cell.eyeOpenIcon.isHidden = true
                 }
             }
             else {
@@ -113,6 +118,8 @@ class HomeTableViewController: UITableViewController {
                 cell.cellTitle.text = cellData.groups[index-1].members[indexPath.row].getName()
                 cell.cellLocation.text = cellData.groups[index-1].members[indexPath.row].location
                 cell.invisibilitySwitch.isHidden = true
+                cell.eyeClosedIcon.isHidden = true
+                cell.eyeOpenIcon.isHidden = true
             }
         }
     
