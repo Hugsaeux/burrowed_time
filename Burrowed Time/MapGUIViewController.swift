@@ -248,6 +248,15 @@ class MapGUIViewController: UIViewController, MKMapViewDelegate {
         }
     }
     
+    func mapView(_ mapView: MKMapView, didAdd views: [MKAnnotationView]) {
+        // Allows user to drop a pin directly on top of the blue current location beacon
+        if (mapView.showsUserLocation) {
+            let currentLocationAnnotationView:MKAnnotationView = mapView.view(for: mapView.userLocation)!
+            currentLocationAnnotationView.isEnabled = false // Disable interaction with the beacon
+
+        }
+    }
+    
     // Dragging the pin
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, didChange newState: MKAnnotationViewDragState, fromOldState oldState: MKAnnotationViewDragState) {
         NSLog("currentTitle = \(currentTitle) : MKAnnotationViewDragState")
