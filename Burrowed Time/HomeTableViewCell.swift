@@ -12,6 +12,8 @@ class HomeTableViewCell: UITableViewCell {
     @IBOutlet weak var cellTitle: UILabel!
     @IBOutlet weak var cellLocation: UILabel!
     @IBOutlet weak var invisibilitySwitch: UISwitch!
+    @IBOutlet weak var eyeOpenIcon: UIImageView!
+    @IBOutlet weak var eyeClosedIcon: UIImageView!
     
     var groupList:GroupList! = nil
     var dataViewController:DataViewController! = nil
@@ -22,29 +24,45 @@ class HomeTableViewCell: UITableViewCell {
         groupList.saveGroupListToPhone()
         
         if (invisibilitySwitch.isOn) {
+            self.eyeClosedIcon.isHidden = true
           //  DispatchQueue.main.async {
                 self.api.set_invisible(groupid: self.groupList.groups[self.groupList.getIndexOfGroup(groupName: self.cellTitle.text!)].getIdentifier(), is_invisible: 0)
            // }
+            self.eyeOpenIcon.isHidden = false
         }
         else {
+            self.eyeOpenIcon.isHidden = true
            // DispatchQueue.main.async {
                 self.api.set_invisible(groupid: self.groupList.groups[self.groupList.getIndexOfGroup(groupName: self.cellTitle.text!)].getIdentifier(), is_invisible: 1)
           //  }
+            self.eyeClosedIcon.isHidden = false
         }
         
         for group in groupList.groups {
             if (group.visibility == true) {
                 dataViewController.topBarSwitch.isOn = true
+                dataViewController.closedEyeIcon.isHidden = true
+                dataViewController.openEyeIcon.isHidden = false
                 break
             }
             
             dataViewController.topBarSwitch.isOn = false
+            dataViewController.closedEyeIcon.isHidden = false
+            dataViewController.openEyeIcon.isHidden = true
         }
     }
 
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        if (invisibilitySwitch.isOn) {
+            self.eyeClosedIcon.isHidden = true
+            self.eyeOpenIcon.isHidden = false
+        }
+        else {
+            self.eyeOpenIcon.isHidden = true
+            self.eyeClosedIcon.isHidden = false
+        }
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

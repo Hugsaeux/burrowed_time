@@ -42,6 +42,7 @@ class DataViewController: UIViewController {
     @IBOutlet weak var homeTable: UIView!
     @IBOutlet weak var closedEyeIcon: UIImageView!
     @IBOutlet weak var openEyeIcon: UIImageView!
+    @IBOutlet weak var homeIcon: UIImageView!
     
     var pageTitle: String = ""
     var currentPage: Int = 0
@@ -147,9 +148,11 @@ class DataViewController: UIViewController {
         self.pageControl!.currentPage = currentPage
         if (currentPage == 0) {
             homeArrow.isHidden = true
+            homeIcon.isHidden = false
         }
         else {
             homeArrow.isHidden = false
+            homeIcon.isHidden = true
         }
         if (editingMode && currentPage == 0) {
             self.topBarSwitch.isHidden = true
@@ -172,16 +175,22 @@ class DataViewController: UIViewController {
             for group in groupList.groups {
                 if (group.visibility == true) {
                     topBarSwitch.isOn = true
+                    closedEyeIcon.isHidden = true
+                    openEyeIcon.isHidden = false
                     break
                 }
                 
                 topBarSwitch.isOn = false
+                closedEyeIcon.isHidden = false
+                openEyeIcon.isHidden = true
             }
         }
         else {
             for group in groupList.groups {
                 if (group.getGroupName() == pageTitle) {
                     topBarSwitch.isOn = group.visibility
+                    closedEyeIcon.isHidden = group.visibility
+                    openEyeIcon.isHidden = !group.visibility
                 }
             }
         }
