@@ -18,22 +18,23 @@ class HomeTableViewCell: UITableViewCell {
     var groupList:GroupList! = nil
     var dataViewController:DataViewController! = nil
     var api:API = API();
+    var cellID:String!
     
     @IBAction func switchEvent(_ sender: AnyObject) {
-        groupList.groups[groupList.getIndexOfGroup(groupName: cellTitle.text!)].visibility = invisibilitySwitch.isOn
+        groupList.groups[groupList.getIndexOfGroup(groupID: cellID)].visibility = invisibilitySwitch.isOn
         groupList.saveGroupListToPhone()
         
         if (invisibilitySwitch.isOn) {
             self.eyeClosedIcon.isHidden = true
           //  DispatchQueue.main.async {
-                self.api.set_invisible(groupid: self.groupList.groups[self.groupList.getIndexOfGroup(groupName: self.cellTitle.text!)].getIdentifier(), is_invisible: 0)
+                self.api.set_invisible(groupid: self.groupList.groups[self.groupList.getIndexOfGroup(groupID: cellID)].getIdentifier(), is_invisible: 0)
            // }
             self.eyeOpenIcon.isHidden = false
         }
         else {
             self.eyeOpenIcon.isHidden = true
            // DispatchQueue.main.async {
-                self.api.set_invisible(groupid: self.groupList.groups[self.groupList.getIndexOfGroup(groupName: self.cellTitle.text!)].getIdentifier(), is_invisible: 1)
+                self.api.set_invisible(groupid: self.groupList.groups[self.groupList.getIndexOfGroup(groupID: cellID)].getIdentifier(), is_invisible: 1)
           //  }
             self.eyeClosedIcon.isHidden = false
         }

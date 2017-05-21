@@ -16,24 +16,25 @@ class GroupLocationPickerTableViewCell: UITableViewCell {
     var groupList:GroupList!
     var currentGroup:String!
     var cellIndex:Int!
+    var pageID:String = ""
     
     let nc = NotificationCenter.default
     
     @IBAction func switchEvent(_ sender: Any) {
-        if (groupList.groups[groupList.getIndexOfGroup(groupName: currentGroup)].locations.count < 8) {
-            if (!groupList.groups[groupList.getIndexOfGroup(groupName: currentGroup)].checkLocation(location: locationLabel.text!)) {
+        if (groupList.groups[groupList.getIndexOfGroup(groupID: pageID)].locations.count < 8) {
+            if (!groupList.groups[groupList.getIndexOfGroup(groupID: pageID)].checkLocation(location: locationLabel.text!)) {
                 let location:Location = Location(name: locationLabel.text!, locationID: cellIndex)
-                groupList.groups[groupList.getIndexOfGroup(groupName: currentGroup)].addLocation(location: location)
+                groupList.groups[groupList.getIndexOfGroup(groupID: pageID)].addLocation(location: location)
             }
             else {
-                groupList.groups[groupList.getIndexOfGroup(groupName: currentGroup)].removeLocation(location: locationLabel.text!)
+                groupList.groups[groupList.getIndexOfGroup(groupID: pageID)].removeLocation(location: locationLabel.text!)
             }
             
             var locations = [Int]()
             let storedRegionLookup = RegionLookup()
             storedRegionLookup.loadRegionLookupFromPhone()
             for region in locationUtil!.manager.monitoredRegions {
-                for location in groupList.groups[groupList.getIndexOfGroup(groupName: currentGroup)].locations {
+                for location in groupList.groups[groupList.getIndexOfGroup(groupID: pageID)].locations {
                     // Make a new annotation for this region
                     let regionIdx = region.identifier
                     let regionInfo:NSArray = storedRegionLookup.regionLookup.object(forKey: regionIdx) as! NSArray
@@ -47,20 +48,20 @@ class GroupLocationPickerTableViewCell: UITableViewCell {
             }
             
             let api:API = API()
-            api.change_group_locations(groupid: groupList.groups[groupList.getIndexOfGroup(groupName: currentGroup)].getIdentifier(), locs: locations as NSArray)
+            api.change_group_locations(groupid: groupList.groups[groupList.getIndexOfGroup(groupID: pageID)].getIdentifier(), locs: locations as NSArray)
             
             groupList.saveGroupListToPhone()
             //updateCurrentLocation()
         }
             
-        else if (groupList.groups[groupList.getIndexOfGroup(groupName: currentGroup)].locations.count == 8 && locationSwitch.isOn == false) {
-            groupList.groups[groupList.getIndexOfGroup(groupName: currentGroup)].removeLocation(location: locationLabel.text!)
+        else if (groupList.groups[groupList.getIndexOfGroup(groupID: pageID)].locations.count == 8 && locationSwitch.isOn == false) {
+            groupList.groups[groupList.getIndexOfGroup(groupID: pageID)].removeLocation(location: locationLabel.text!)
             
             var locations = [Int]()
             let storedRegionLookup = RegionLookup()
             storedRegionLookup.loadRegionLookupFromPhone()
             for region in locationUtil!.manager.monitoredRegions {
-                for location in groupList.groups[groupList.getIndexOfGroup(groupName: currentGroup)].locations {
+                for location in groupList.groups[groupList.getIndexOfGroup(groupID: pageID)].locations {
                     // Make a new annotation for this region
                     let regionIdx = region.identifier
                     let regionInfo:NSArray = storedRegionLookup.regionLookup.object(forKey: regionIdx) as! NSArray
@@ -74,7 +75,7 @@ class GroupLocationPickerTableViewCell: UITableViewCell {
             }
             
             let api:API = API()
-            api.change_group_locations(groupid: groupList.groups[groupList.getIndexOfGroup(groupName: currentGroup)].getIdentifier(), locs: locations as NSArray)
+            api.change_group_locations(groupid: groupList.groups[groupList.getIndexOfGroup(groupID: pageID)].getIdentifier(), locs: locations as NSArray)
             
             groupList.saveGroupListToPhone()
             //updateCurrentLocation()

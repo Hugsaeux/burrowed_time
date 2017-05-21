@@ -20,6 +20,8 @@ class HomeTableViewController: UITableViewController {
     var clickIndex = 0
     var dataViewController:DataViewController!
     var refresh = UIRefreshControl()
+    var editingMode:Bool!
+    var pageID:String = ""
     
     func refreshTable(_ sender : UIRefreshControl) {
         refreshData()
@@ -39,7 +41,7 @@ class HomeTableViewController: UITableViewController {
             let groups:NSDictionary = api.get_user_groups(userid: userID.IDnum)
             
             for (key, value) in groups {
-                if (self.cellData.checkGroupName(name: value as! String)) {
+                if (self.cellData.checkGroupID(id: key as! String)) {
                     let newGroup:Group = Group(groupName: value as! String)
                     newGroup.setIdentifier(id: key as! String)
                     self.cellData.addGroup(group: newGroup)
@@ -106,6 +108,7 @@ class HomeTableViewController: UITableViewController {
                 cell.invisibilitySwitch.isOn = visible
                 cell.eyeClosedIcon.isHidden = visible
                 cell.eyeOpenIcon.isHidden = !visible
+                cell.cellID = cellData.groups[indexPath.row].getIdentifier()
                 
                 if (self.isEditing) {
                     cell.invisibilitySwitch.isHidden = true
@@ -141,19 +144,18 @@ class HomeTableViewController: UITableViewController {
 
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            let cell:HomeTableViewCell = tableView.cellForRow(at: indexPath) as! HomeTableViewCell
-            let indexOfGroup:Int = cellData.getIndexOfGroup(groupName: cell.cellTitle.text!)
-            let group:Group = cellData.groups[indexOfGroup]
-            
-            
-            let api:API = API()
-            api.leave_group(groupid: group.getIdentifier())
-            
-            cellData.removeGroup(groupName: cell.cellTitle.text!)
-            cellData.saveGroupListToPhone()
-            
-            tableView.deleteRows(at: [indexPath], with: .fade)
+        if (editingMode) {
+            if editingStyle == .delete {
+                let group:Group = cellData.groups[indexPath.row]
+                
+                let api:API = API()
+                api.leave_group(groupid: group.getIdentifier())
+                
+                cellData.removeGroup(groupID: cellData.groups[indexPath.row].getIdentifier())
+                cellData.saveGroupListToPhone()
+                
+                tableView.deleteRows(at: [indexPath], with: .fade)
+            }
         }
     }
     

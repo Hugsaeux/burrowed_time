@@ -13,6 +13,7 @@ class GroupLocationPickerViewController: UIViewController {
     
     var groupName: String!
     var groupList: GroupList!
+    var pageID: String! = ""
     
     var alertController:UIAlertController = UIAlertController(title: "Limit exceeded", message: "Only up to 7 locations can be assigned to each group.", preferredStyle: .alert)
     let OKAction = UIAlertAction(title: "Okay", style: .default) { (action:UIAlertAction!) in
@@ -47,6 +48,7 @@ class GroupLocationPickerViewController: UIViewController {
             let groupLocationTableView:GroupLocationPickerTableViewController! = segue.destination as! GroupLocationPickerTableViewController
             groupLocationTableView.groupList = groupList
             groupLocationTableView.currentGroup = groupName
+            groupLocationTableView.pageID = pageID
         }
     }
 

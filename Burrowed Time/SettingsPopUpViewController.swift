@@ -21,6 +21,7 @@ class SettingsPopUpViewController: UIViewController {
     var currentPage: Int = 0
     var groupList: GroupList!
     var pageTitle: String!
+    var pageID: String = ""
     var dataViewController:DataViewController!
 
     
@@ -34,6 +35,7 @@ class SettingsPopUpViewController: UIViewController {
             let addFriend:AddFriendViewController! = self.storyboard?.instantiateViewController(withIdentifier: "AddFriendPage") as! AddFriendViewController
             addFriend.groupList = groupList
             addFriend.currentGroup = pageTitle
+            addFriend.pageID = pageID
             self.present(addFriend, animated: true, completion: nil)
         }
     }
@@ -58,6 +60,7 @@ class SettingsPopUpViewController: UIViewController {
             let groupLocationPicker:GroupLocationPickerViewController! = self.storyboard?.instantiateViewController(withIdentifier: "GroupLocationPicker") as! GroupLocationPickerViewController
             groupLocationPicker.groupName = pageTitle
             groupLocationPicker.groupList = groupList
+            groupLocationPicker.pageID = pageID
             self.present(groupLocationPicker, animated: true, completion: nil)
         }
     }

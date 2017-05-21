@@ -49,6 +49,7 @@ class ModelController: NSObject, UIPageViewControllerDataSource {
         
         if (index >= 1 && index <= dataViewController.groupList.getSize()) {
             dataViewController.pageTitle = dataViewController.groupList.groups[index-1].getGroupName()
+            dataViewController.pageID = dataViewController.groupList.groups[index-1].getIdentifier()
         }
         
         if (editingMode) {

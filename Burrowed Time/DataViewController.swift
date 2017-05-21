@@ -53,6 +53,7 @@ class DataViewController: UIViewController {
     var editingMode:Bool = false
     var api:API = API()
     var dataViewController:DataViewController!
+    var pageID:String = ""
     
     @IBAction func settingsButtonClick(_ sender: Any) {
         settingsPopUp.isHidden = false
@@ -86,7 +87,7 @@ class DataViewController: UIViewController {
         }
         else {
             for group in self.groupList.groups {
-                if (group.getGroupName() == self.pageTitle) {
+                if (group.getIdentifier() == self.pageID) {
                     group.setVisibility(value: self.topBarSwitch.isOn.description)
                     if (self.topBarSwitch.isOn) {
                         closedEyeIcon.isHidden = true
@@ -187,7 +188,7 @@ class DataViewController: UIViewController {
         }
         else {
             for group in groupList.groups {
-                if (group.getGroupName() == pageTitle) {
+                if (group.getIdentifier() == pageID) {
                     topBarSwitch.isOn = group.visibility
                     closedEyeIcon.isHidden = group.visibility
                     openEyeIcon.isHidden = !group.visibility
@@ -204,8 +205,10 @@ class DataViewController: UIViewController {
         if (segue.identifier == "homePageSegue") {
             self.table = segue.destination as! HomeTableViewController
             self.table.index = currentPage
+            self.table.editingMode = editingMode;
             self.table.dataViewController = self
             self.table.tableView.reloadData()
+            self.table.pageID = pageID
             if (editingMode && currentPage == 0) {
                 table.setEditing(true, animated: true)
             }
@@ -216,6 +219,7 @@ class DataViewController: UIViewController {
             settings.currentPage = currentPage
             settings.groupList = groupList
             settings.pageTitle = pageTitle
+            settings.pageID = pageID
         }
     }
 }

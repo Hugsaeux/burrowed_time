@@ -17,6 +17,7 @@ class AddFriendViewController: UIViewController, UITextFieldDelegate {
     var currentGroup: String!
     var cellData:[CNContact]!
     var table:AddressBookTableViewController!
+    var pageID = ""
     
     var alertController:UIAlertController!
     
@@ -25,6 +26,7 @@ class AddFriendViewController: UIViewController, UITextFieldDelegate {
             table = segue.destination as! AddressBookTableViewController
             table.groupList = groupList
             table.currentGroup = currentGroup
+            table.pageID = pageID
         }
     }
     
@@ -32,7 +34,7 @@ class AddFriendViewController: UIViewController, UITextFieldDelegate {
         let number = Int(addFriendTextField.text!)
         if (number != nil) {
             let api:API = API()
-            let result = api.invite_to_group(groupid: groupList.groups[groupList.getIndexOfGroup(groupName: currentGroup)].getIdentifier(), phonenumber: addFriendTextField.text!)
+            let result = api.invite_to_group(groupid: groupList.groups[groupList.getIndexOfGroup(groupID: pageID)].getIdentifier(), phonenumber: addFriendTextField.text!)
             
             if (result["Success"] as! Bool){
                 self.alertController.title = "Success"

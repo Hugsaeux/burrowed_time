@@ -11,6 +11,7 @@ import UIKit
 class GroupLocationPickerTableViewController: UITableViewController {
     var groupList:GroupList!
     var currentGroup:String!
+    var pageID = ""
     
     var cellTitles:[String] = [String]()
     
@@ -58,8 +59,9 @@ class GroupLocationPickerTableViewController: UITableViewController {
         cell.groupList = groupList
         cell.currentGroup = currentGroup
         cell.cellIndex = indexPath.row
+        cell.pageID = pageID
         
-        if (groupList.groups[groupList.getIndexOfGroup(groupName: currentGroup)].checkLocation(location: cellTitles[indexPath.row])) {
+        if (groupList.groups[groupList.getIndexOfGroup(groupID: pageID)].checkLocation(location: cellTitles[indexPath.row])) {
             cell.locationSwitch.isOn = true;
         }
         else {

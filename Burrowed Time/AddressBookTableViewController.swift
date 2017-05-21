@@ -14,6 +14,7 @@ class AddressBookTableViewController: UITableViewController {
     var groupList:GroupList!
     var currentGroup:String!
     var currentIndex:Int!
+    var pageID = ""
     
     var alertController:UIAlertController!
     
@@ -102,10 +103,9 @@ class AddressBookTableViewController: UITableViewController {
         groupList.addPersonToGroup(groupName: currentGroup, newPerson: newPerson)
         groupList.saveGroupListToPhone()
         */
-        currentIndex = groupList.getIndexOfGroup(groupName: currentGroup)
         
         let api:API = API()
-        let result = api.invite_to_group(groupid: groupList.groups[groupList.getIndexOfGroup(groupName: currentGroup)].getIdentifier(), phonenumber: phoneNumber)
+        let result = api.invite_to_group(groupid: groupList.groups[groupList.getIndexOfGroup(groupID: pageID)].getIdentifier(), phonenumber: phoneNumber)
         
         if (result["Success"] as! Bool){
             self.alertController.title = "Success"

@@ -63,7 +63,7 @@ class GroupList {
             
             JSONstring = "\(JSONstring)}"
             
-            if (group.getGroupName() != self.groups[self.groups.count-1].getGroupName()) {
+            if (group.getIdentifier() != self.groups[self.groups.count-1].getIdentifier()) {
                 JSONstring = "\(JSONstring),"
             }
             
@@ -84,15 +84,15 @@ class GroupList {
     
     //  add group to the list
     func addGroup(group: Group){
-        if (checkGroupName(name: group.getGroupName())) {
+        if (checkGroupID(id: group.getIdentifier())) {
             self.groups.append(group)
         }
     }
     
     // check if group with same name already exists
-    func checkGroupName(name: String) -> Bool {
+    func checkGroupID(id: String) -> Bool {
         for group in groups {
-            if (group.getGroupName() == name) {
+            if (group.getIdentifier() == id) {
                 return false
             }
         }
@@ -101,16 +101,15 @@ class GroupList {
     }
     
     //  remove a group from the list
-    func removeGroup(groupName: String) {
-        var name1:String
-        let name2:String = groupName
-        
-        for i in 0 ..< groups.count {
-            name1 = groups[i].getGroupName()
-            if (name1 == name2) {
-                groups.remove(at: i)
+    func removeGroup(groupID: String) {
+        var index = 0;
+        for group in groups {
+            if (group.getIdentifier() == groupID) {
+                groups.remove(at: index)
                 break;
             }
+            
+            index+=1
         }
     }
     
@@ -170,8 +169,6 @@ class GroupList {
                 self.addGroup(group: group)
             }
         }
-        
-        
     }
     
     /*
@@ -197,19 +194,19 @@ class GroupList {
         
         return true
     }
+ 
+//    func addPersonToGroup(groupName: String, newPerson: Person) {
+//        for group in groups {
+//            if (group.getGroupName() == groupName) {
+//                group.addMember(person: newPerson)
+//            }
+//        }
+//    }
     
-    func addPersonToGroup(groupName: String, newPerson: Person) {
-        for group in groups {
-            if (group.getGroupName() == groupName) {
-                group.addMember(person: newPerson)
-            }
-        }
-    }
-    
-    func getIndexOfGroup(groupName: String) -> Int {
+    func getIndexOfGroup(groupID: String) -> Int {
         var index = 0
         for group in groups {
-            if (group.getGroupName() == groupName) {
+            if (group.getIdentifier() == groupID) {
                 return index
             }
             index+=1;
