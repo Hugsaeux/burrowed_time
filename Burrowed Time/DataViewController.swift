@@ -59,12 +59,13 @@ class DataViewController: UIViewController {
     }
     
     @IBAction func invisibilityButtonClick(_ sender: Any) {
+        if(self.topBarSwitch.isOn){
+            closedEyeIcon.isHidden = true
+        }else{
+            openEyeIcon.isHidden = true
+        }
         if (self.currentPage == 0) {
-            if(self.topBarSwitch.isOn){
-                closedEyeIcon.isHidden = true
-            }else{
-                openEyeIcon.isHidden = true
-            }
+            
             for group in self.groupList.groups {
                 group.setVisibility(value: self.topBarSwitch.isOn.description)
                 if (self.topBarSwitch.isOn) {
@@ -84,38 +85,39 @@ class DataViewController: UIViewController {
                     }
                 }
             }
-            if(self.topBarSwitch.isOn){
-                openEyeIcon.isHidden = false
-            }else{
-                closedEyeIcon.isHidden = false
-            }
+            
         }
         else {
             for group in self.groupList.groups {
                 if (group.getGroupName() == self.pageTitle) {
                     group.setVisibility(value: self.topBarSwitch.isOn.description)
                     if (self.topBarSwitch.isOn) {
-                        closedEyeIcon.isHidden = true
+                        //closedEyeIcon.isHidden = true
                         DispatchQueue.global(qos: DispatchQoS.background.qosClass).sync {
                             self.api.set_invisible(groupid: group.getIdentifier(), is_invisible: 0)
                             self.groupList.saveGroupListToPhone()
                             self.table.refreshData()
                             self.table.tableView.reloadData()
                         }
-                        openEyeIcon.isHidden = false
+                        //openEyeIcon.isHidden = false
                     }
                     else {
-                        openEyeIcon.isHidden = true
+                        //openEyeIcon.isHidden = true
                         DispatchQueue.global(qos: DispatchQoS.background.qosClass).sync {
                             self.api.set_invisible(groupid: group.getIdentifier(), is_invisible: 1)
                             self.groupList.saveGroupListToPhone()
                             self.table.refreshData()
                             self.table.tableView.reloadData()
                         }
-                        closedEyeIcon.isHidden = false
+                        //closedEyeIcon.isHidden = false
                     }
                 }
             }
+        }
+        if(self.topBarSwitch.isOn){
+            openEyeIcon.isHidden = false
+        }else{
+            closedEyeIcon.isHidden = false
         }
     }
 
@@ -162,6 +164,8 @@ class DataViewController: UIViewController {
         }
         if (editingMode && currentPage == 0) {
             self.topBarSwitch.isHidden = true
+            self.openEyeIcon.isHidden = true
+            self.closedEyeIcon.isHidden = true
             self.editingDoneButton.isHidden = false
         }
         else {
