@@ -130,14 +130,18 @@ class MapGUIViewController: UIViewController, MKMapViewDelegate {
         }
     }
     
-    @IBAction func currentLocationButtonPress(_ sender: Any) {
-        if (mapView.showsUserLocation) {
+    @IBAction func currentLocationButtonPress(_ sender: Any) {        
+        let mapLat = mapView.centerCoordinate.latitude
+        let mapLong = mapView.centerCoordinate.longitude
+        let userLat = locationUtil!.manager.location!.coordinate.latitude
+        let userLong = locationUtil!.manager.location!.coordinate.longitude
+        let tolerance = 0.0001
+        if (((abs(mapLat - userLat)) < tolerance) && (abs(mapLong - userLong) < tolerance) && mapView.showsUserLocation) {
             mapView.showsUserLocation = false
             mapView.setUserTrackingMode(.none, animated: true)
             currentLocationButton.setTitleColor(#colorLiteral(red: 0.4078193307, green: 0.4078193307, blue: 0.4078193307, alpha: 1), for: UIControlState.normal)
             currentLocationButton.backgroundColor = #colorLiteral(red: 0.6916844249, green: 0.9323277473, blue: 0.9025284648, alpha: 1)
-        }
-        else {
+        } else {
             mapView.showsUserLocation = true
             mapView.setUserTrackingMode(.follow, animated: true)
             currentLocationButton.setTitleColor(UIColor.black, for: UIControlState.normal)
