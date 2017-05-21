@@ -12,6 +12,7 @@ class NewGroupViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var groupNameTextField: UITextField!
     var groupList:GroupList!
+    @IBOutlet weak var createGroupButton: UIBarButtonItem!
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == "saveNewGroup") {
@@ -27,9 +28,22 @@ class NewGroupViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
+    func editingChanged(_ textField: UITextField) {
+        
+        guard
+            let place = groupNameTextField.text, !place.isEmpty
+            else {
+                createGroupButton.isEnabled = false
+                return
+        }
+        createGroupButton.isEnabled = true
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.groupNameTextField.delegate = self
+        groupNameTextField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
+        createGroupButton.isEnabled = false
     }
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

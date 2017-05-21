@@ -185,22 +185,28 @@ class DataViewController: UIViewController {
             for group in groupList.groups {
                 if (group.visibility == true) {
                     topBarSwitch.isOn = true
-                    closedEyeIcon.isHidden = true
-                    openEyeIcon.isHidden = false
+                    if (!editingMode){
+                        closedEyeIcon.isHidden = true
+                        openEyeIcon.isHidden = false
+                    }
                     break
                 }
                 
                 topBarSwitch.isOn = false
-                closedEyeIcon.isHidden = false
-                openEyeIcon.isHidden = true
+                if (!editingMode){
+                    closedEyeIcon.isHidden = false
+                    openEyeIcon.isHidden = true
+                }
             }
         }
         else {
             for group in groupList.groups {
                 if (group.getGroupName() == pageTitle) {
                     topBarSwitch.isOn = group.visibility
-                    closedEyeIcon.isHidden = group.visibility
-                    openEyeIcon.isHidden = !group.visibility
+                    if (!editingMode){
+                        closedEyeIcon.isHidden = group.visibility
+                        openEyeIcon.isHidden = !group.visibility
+                    }
                 }
             }
         }
