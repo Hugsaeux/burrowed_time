@@ -382,6 +382,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="createGroupButton" destination="wXq-Lj-RVR" id="veE-Sa-g1e"/>
                         <outlet property="groupNameTextField" destination="eRv-YZ-a14" id="ipZ-m1-amZ"/>
                     </connections>
                 </viewController>
