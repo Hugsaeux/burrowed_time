@@ -87,6 +87,7 @@ class LocationPickerViewController: UIViewController, UITextFieldDelegate {
             self.alertController.title = "Invalid Name"
             self.alertController.message = "Locations cannot have a blank name."
             self.present(self.alertController, animated: true, completion:nil)
+            return false
         }
         for region in locationUtil!.manager.monitoredRegions{
             let regionIdx = region.identifier
