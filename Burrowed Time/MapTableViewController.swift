@@ -81,15 +81,18 @@ class MapTableViewController: UITableViewController {
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
+            // Remove row from table
+            let cell:MapTableViewCell = tableView.cellForRow(at: indexPath) as! MapTableViewCell
+            let deletedTitle:String = cell.title.text!
+            cellTitles.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+            NSLog("Deleting: \(deletedTitle)")
+            
             // Delete the location from the data source
             let storedRegionLookup = RegionLookup()
             storedRegionLookup.loadRegionLookupFromPhone()
             let storedRegionIdx = RegionIdx()
             storedRegionIdx.loadRegionIdxFromPhone()
-
-            let cell:MapTableViewCell = tableView.cellForRow(at: indexPath) as! MapTableViewCell
-            let deletedTitle:String = cell.title.text!
-            NSLog("Attempted to delete \(deletedTitle)")
             
             let newLookup = NSMutableDictionary()
             let oldToNewID = NSMutableDictionary()  // Lookup new integer ID using old string ID
@@ -99,7 +102,6 @@ class MapTableViewController: UITableViewController {
             for region in locationUtil!.manager.monitoredRegions {
                 locationUtil!.manager.stopMonitoring(for: region)
                 
-                print("At time of delete manager was monitoring the region: \(region)")
                 let info:NSArray = storedRegionLookup.regionLookup.object(forKey: region.identifier) as! NSArray
                 if (info[TITLE] as! String != deletedTitle) {
                     let lat = NumberFormatter().number(from: String(describing: info[LATITUDE]))!.doubleValue
@@ -157,9 +159,6 @@ class MapTableViewController: UITableViewController {
                 api.change_group_locations(groupid: groupid, locs: locs)
             }
             groupList.saveGroupListToPhone()
-            
-            cellTitles.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .fade)
         }
     }
 
