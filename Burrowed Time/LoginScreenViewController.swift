@@ -31,14 +31,23 @@ class LoginScreenViewController: UIViewController, UITextFieldDelegate {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        var phoneNumber = phoneNumberTextField.text!
         if (userNameTextField.text != "" && phoneNumberTextField.text != "") {
+            
+           
+            
+            if (phoneNumber.characters.count > 10) {
+                
+                phoneNumber = String(phoneNumber.characters.suffix(10)) //Strip off country codes
+            }
+            
             let api:API = API()
             
             let lookUp = api.lookup_user(phonenumber: phoneNumberTextField.text!)
             let userID = lookUp.object(forKey: "userid") as! Int
             
             if (userID != -1) {
-                let userID:UserID = UserID(IDnum: userID.description, userName: userNameTextField.text!, phoneNumber: phoneNumberTextField.text!)
+                let userID:UserID = UserID(IDnum: userID.description, userName: userNameTextField.text!, phoneNumber: phoneNumber)
                 userID.saveUserIDToPhone()
                 
                 // Update user info to reflect typed-in name
@@ -46,9 +55,9 @@ class LoginScreenViewController: UIViewController, UITextFieldDelegate {
                 api.update_user_info(username: userNameTextField.text!, userid: userID.getIDnum())
             }
             else {
-                let id:String = api.add_user(username: userNameTextField.text!, phonenumber: phoneNumberTextField.text!)
+                let id:String = api.add_user(username: userNameTextField.text!, phonenumber: phoneNumber)
                 
-                let userID:UserID = UserID(IDnum: id, userName: userNameTextField.text!, phoneNumber: phoneNumberTextField.text!)
+                let userID:UserID = UserID(IDnum: id, userName: userNameTextField.text!, phoneNumber: phoneNumber)
                 userID.saveUserIDToPhone()
             }
             
