@@ -138,7 +138,7 @@ class AddressBookTableViewController: UITableViewController {
             self.alertController.message = "Invitation Sent"
         }else{
             self.alertController.title = "Invitation Failed"
-            self.alertController.message = (result["Message"] as! String)
+            self.alertController.message = (result["Message"] as! String + ".\nTry manually entering the number.")
         }
         
         self.present(self.alertController, animated: true, completion:nil)
