@@ -1189,9 +1189,9 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xhG-Hg-Q3y">
-                                <rect key="frame" x="16" y="35" width="30" height="32"/>
-                                <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="17"/>
-                                <state key="normal" title="Save">
+                                <rect key="frame" x="22" y="28" width="30" height="49"/>
+                                <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="32"/>
+                                <state key="normal" title="&lt;">
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -1219,7 +1219,7 @@
                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="28"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="done"/>
                             </textField>
                         </subviews>
                         <color key="backgroundColor" red="0.54979302200000002" green="0.6478827533" blue="0.64143304899999998" alpha="1" colorSpace="calibratedRGB"/>
@@ -1227,9 +1227,9 @@
                             <constraint firstItem="1pf-wJ-99q" firstAttribute="leading" secondItem="lFw-U8-M57" secondAttribute="leading" constant="98" id="23e-o0-0bx"/>
                             <constraint firstItem="sug-Ya-zt7" firstAttribute="leading" secondItem="lFw-U8-M57" secondAttribute="leading" constant="3" id="2gj-Q5-O4o"/>
                             <constraint firstItem="FDE-5h-hMn" firstAttribute="top" secondItem="YDn-Tw-aZR" secondAttribute="bottom" constant="15" id="4sO-GK-EpU"/>
-                            <constraint firstItem="xhG-Hg-Q3y" firstAttribute="leading" secondItem="lFw-U8-M57" secondAttribute="leading" constant="16" id="6bl-5v-7eO"/>
+                            <constraint firstItem="xhG-Hg-Q3y" firstAttribute="leading" secondItem="lFw-U8-M57" secondAttribute="leading" constant="22" id="6bl-5v-7eO"/>
                             <constraint firstAttribute="trailing" secondItem="uh5-X0-YYR" secondAttribute="trailing" constant="13" id="CxH-eB-eFB"/>
-                            <constraint firstItem="xhG-Hg-Q3y" firstAttribute="top" secondItem="YDn-Tw-aZR" secondAttribute="bottom" constant="15" id="JrQ-9s-wgQ"/>
+                            <constraint firstItem="xhG-Hg-Q3y" firstAttribute="top" secondItem="YDn-Tw-aZR" secondAttribute="bottom" constant="8" id="JrQ-9s-wgQ"/>
                             <constraint firstAttribute="trailing" secondItem="FDE-5h-hMn" secondAttribute="trailing" constant="16" id="RPa-SV-Kas"/>
                             <constraint firstItem="UHe-qt-l57" firstAttribute="top" secondItem="uh5-X0-YYR" secondAttribute="bottom" constant="59" id="Vci-m6-YHC"/>
                             <constraint firstItem="uh5-X0-YYR" firstAttribute="top" secondItem="lFw-U8-M57" secondAttribute="top" constant="94" id="WZD-IT-WAm"/>

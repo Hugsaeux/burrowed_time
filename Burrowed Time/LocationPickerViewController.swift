@@ -89,51 +89,55 @@ class LocationPickerViewController: UIViewController, UITextFieldDelegate {
             self.present(self.alertController, animated: true, completion:nil)
             return false
         }
-        for region in locationUtil!.manager.monitoredRegions{
-            let regionIdx = region.identifier
-            let regionInfo:NSArray = storedRegionLookup.regionLookup.object(forKey: regionIdx) as! NSArray
-            
-            if (String(describing: regionInfo[TITLE]) == locationNameTextField.text){
-                duplicateName = true
-            }
-        }
-        if (duplicateName){
-            self.alertController.title = "Invalid Name"
-            self.alertController.message = "This place name is already in use."
-            self.present(self.alertController, animated: true, completion:nil)
-        }else{
-            textField.resignFirstResponder()
-            currentTitle = locationNameTextField.text
-            
-            
-            for region in locationUtil!.manager.monitoredRegions {
-                // Make a new annotation for this region
+        
+        if !(locationNameTextField.text == oldTitle) {
+            for region in locationUtil!.manager.monitoredRegions{
                 let regionIdx = region.identifier
                 let regionInfo:NSArray = storedRegionLookup.regionLookup.object(forKey: regionIdx) as! NSArray
-                let title = String(describing: regionInfo[TITLE])
                 
-                if (title == oldTitle) {
-                    let latitude = NumberFormatter().number(from: String(describing: regionInfo[LATITUDE]))!.doubleValue
-                    let longitude = NumberFormatter().number(from: String(describing: regionInfo[LONGITUDE]))!.doubleValue
-                    let radius = NumberFormatter().number(from: String(describing: regionInfo[RADIUS]))!.doubleValue
-                    let currInfo:NSArray = [currentTitle, latitude, longitude, radius]
-                    storedRegionLookup.regionLookup[regionIdx] = currInfo
-                    storedRegionLookup.saveRegionLookupToPhone()
+                if (String(describing: regionInfo[TITLE]) == locationNameTextField.text){
+                    duplicateName = true
                 }
             }
-            
-            for group in groupList.groups {
-                for location in group.locations {
-                    if (location.name == oldTitle) {
-                        location.name = currentTitle
+        
+            if (duplicateName){
+                self.alertController.title = "Invalid Name"
+                self.alertController.message = "This place name is already in use."
+                self.present(self.alertController, animated: true, completion:nil)
+            }else{
+                textField.resignFirstResponder()
+                currentTitle = locationNameTextField.text
+                
+                
+                for region in locationUtil!.manager.monitoredRegions {
+                    // Make a new annotation for this region
+                    let regionIdx = region.identifier
+                    let regionInfo:NSArray = storedRegionLookup.regionLookup.object(forKey: regionIdx) as! NSArray
+                    let title = String(describing: regionInfo[TITLE])
+                    
+                    if (title == oldTitle) {
+                        let latitude = NumberFormatter().number(from: String(describing: regionInfo[LATITUDE]))!.doubleValue
+                        let longitude = NumberFormatter().number(from: String(describing: regionInfo[LONGITUDE]))!.doubleValue
+                        let radius = NumberFormatter().number(from: String(describing: regionInfo[RADIUS]))!.doubleValue
+                        let currInfo:NSArray = [currentTitle, latitude, longitude, radius]
+                        storedRegionLookup.regionLookup[regionIdx] = currInfo
+                        storedRegionLookup.saveRegionLookupToPhone()
                     }
                 }
+                
+                for group in groupList.groups {
+                    for location in group.locations {
+                        if (location.name == oldTitle) {
+                            location.name = currentTitle
+                        }
+                    }
+                }
+                
+                groupList.saveGroupListToPhone()
+                oldTitle = currentTitle
+                
+                updateLocationNames()
             }
-            
-            groupList.saveGroupListToPhone()
-            oldTitle = currentTitle
-            
-            updateLocationNames()
         }
         return false
     }
