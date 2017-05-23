@@ -35,7 +35,7 @@ class UserSettingsViewController: UIViewController, UITextFieldDelegate {
             }
         }
     }
-    
+
     func editingChanged(_ textField: UITextField) {
         
         guard
@@ -46,7 +46,7 @@ class UserSettingsViewController: UIViewController, UITextFieldDelegate {
         }
         saveButton.isEnabled = true
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.usernameTextField.delegate = self
@@ -58,15 +58,15 @@ class UserSettingsViewController: UIViewController, UITextFieldDelegate {
         
         usernameTextField.text = username
         //phoneNumberTextField.placeholder = phoneNumber
-        usernameTextField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
-        saveButton.isEnabled = false
+//        usernameTextField.addTarget(self, action: #selector(editingChanged), for: .editingChanged)
+//        saveButton.isEnabled = false
     }
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return false
     }
-    
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
