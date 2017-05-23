@@ -78,9 +78,34 @@ class AddressBookTableViewController: UITableViewController {
         // get mobile number
         var phoneNumber:String = ""
         
+        //Accomodate several types of phone inputs. Note- iPhone defaults phone numbers to home fax.
         for num in cellData[indexPath.row].phoneNumbers {
             let numVal = num.value
             if num.label == CNLabelPhoneNumberMobile {
+                phoneNumber = numVal.stringValue
+                break;
+            }
+            else if num.label == CNLabelPhoneNumberHomeFax {
+                phoneNumber = numVal.stringValue
+                break;
+            }
+            else if num.label == CNLabelPhoneNumberiPhone {
+                phoneNumber = numVal.stringValue
+                break;
+            }
+            else if num.label == CNLabelPhoneNumberMain {
+                phoneNumber = numVal.stringValue
+                break;
+            }
+            else if num.label == CNLabelPhoneNumberWorkFax {
+                phoneNumber = numVal.stringValue
+                break;
+            }
+            else if num.label == CNLabelPhoneNumberPager {
+                phoneNumber = numVal.stringValue
+                break;
+            }
+            else if num.label == CNLabelPhoneNumberOtherFax {
                 phoneNumber = numVal.stringValue
                 break;
             }
@@ -92,11 +117,12 @@ class AddressBookTableViewController: UITableViewController {
         
         phoneNumber = phoneNumber.components(separatedBy: CharacterSet.decimalDigits.inverted).joined()
         let length = phoneNumber.characters.count;
-        
-        if (length != 11) {
-            phoneNumber = "1\(phoneNumber)"
+        print("before" + phoneNumber)
+        if (length > 10) {
+           phoneNumber = String(phoneNumber.characters.suffix(10))
         }
-        
+        print("after" + phoneNumber)
+
         /*
         let newPerson:Person = Person(name: "\(cellData[indexPath.row].givenName) \(cellData[indexPath.row].familyName)", phoneNumber: phoneNumber)
         
