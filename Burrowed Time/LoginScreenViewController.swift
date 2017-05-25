@@ -34,8 +34,6 @@ class LoginScreenViewController: UIViewController, UITextFieldDelegate {
         var phoneNumber = phoneNumberTextField.text!
         if (userNameTextField.text != "" && phoneNumberTextField.text != "") {
             
-           
-            
             if (phoneNumber.characters.count > 10) {
                 
                 phoneNumber = String(phoneNumber.characters.suffix(10)) //Strip off country codes

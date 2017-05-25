@@ -46,6 +46,9 @@ class HomeTableViewController: UITableViewController {
                     newGroup.setIdentifier(id: key as! String)
                     self.cellData.addGroup(group: newGroup)
                 }
+                else {
+                    self.cellData.groups[self.cellData.getIndexOfGroup(groupID: key as! String)].groupName = value as! String
+                }
             }
         }
         

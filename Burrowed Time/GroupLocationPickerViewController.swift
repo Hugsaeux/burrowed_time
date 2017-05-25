@@ -8,8 +8,8 @@
 
 import UIKit
 
-class GroupLocationPickerViewController: UIViewController {
-    @IBOutlet weak var titleLabel: UILabel!
+class GroupLocationPickerViewController: UIViewController, UITextFieldDelegate {
+    @IBOutlet weak var titleTextField: UITextField!
     
     var groupName: String!
     var groupList: GroupList!
@@ -28,7 +28,8 @@ class GroupLocationPickerViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        titleLabel.text = groupName
+        titleTextField.delegate = self
+        titleTextField.text = groupName
         
         self.alertController.addAction(OKAction)
         nc.addObserver(forName:Notification.Name(rawValue:"GroupLocsExceeded"),
@@ -50,6 +51,24 @@ class GroupLocationPickerViewController: UIViewController {
             groupLocationTableView.currentGroup = groupName
             groupLocationTableView.pageID = pageID
         }
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        
+        if((titleTextField.text?.isEmpty)! || titleTextField.text?.trimmingCharacters(in: NSCharacterSet.whitespaces) == ""){
+            self.alertController.title = "Invalid Name"
+            self.alertController.message = "Groups cannot have a blank name."
+            self.present(self.alertController, animated: true, completion:nil)
+            return false
+        }
+        
+        let api:API = API()
+        // call api to change the group name
+        
+        print("change group name!")
+        
+        textField.resignFirstResponder()
+        return false
     }
 
 }
