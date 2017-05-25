@@ -138,7 +138,9 @@ class LocationPickerViewController: UIViewController, UITextFieldDelegate {
                 
                 updateLocationNames()
             }
+            return false
         }
-        return false
+        textField.resignFirstResponder()
+        return true
     }
 }
