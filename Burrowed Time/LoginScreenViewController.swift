@@ -43,7 +43,7 @@ class LoginScreenViewController: UIViewController, UITextFieldDelegate {
             
             let api:API = API()
             
-            let lookUp = api.lookup_user(phonenumber: phoneNumberTextField.text!)
+            let lookUp = api.lookup_user(phonenumber: phoneNumber)
             let userID = lookUp.object(forKey: "userid") as! Int
             
             if (userID != -1) {
