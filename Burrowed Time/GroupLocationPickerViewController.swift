@@ -63,9 +63,15 @@ class GroupLocationPickerViewController: UIViewController, UITextFieldDelegate {
         }
         
         let api:API = API()
-        // call api to change the group name
+        var groupid:String = ""
+        for group in groupList.groups {
+            if (group.getGroupName() == groupName){
+                groupid = group.getIdentifier()
+            }
+        }
+        api.change_group_name(groupid: groupid, groupname: titleTextField.text!)
         
-        print("change group name!")
+        print(groupid)
         
         textField.resignFirstResponder()
         return false

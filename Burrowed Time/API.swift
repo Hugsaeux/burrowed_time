@@ -109,7 +109,7 @@ class API {
     func change_group_name(groupid: String, groupname: String) {
         let parameters: Parameters = [
             "groupid": groupid,
-            "groupnam": groupname
+            "groupname": groupname
         ]
         
         _ = send_post(endpoint: "change-group-name", parameters: parameters)
