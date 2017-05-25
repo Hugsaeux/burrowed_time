@@ -148,6 +148,10 @@ class DataViewController: UIViewController {
             self.table.tableView.reloadData()
         }
         
+        if (currentPage > 0) {
+            pageTitle = groupList.groups[currentPage-1].getGroupName()
+        }
+        
         self.dataLabel!.text = pageTitle
         self.dataLabel!.font = UIFont(name:"GillSans-SemiBold", size: 28.0)
         self.dataLabel!.textColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
