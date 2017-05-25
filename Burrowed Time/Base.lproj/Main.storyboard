@@ -498,8 +498,8 @@
                                     <rect key="frame" x="0.0" y="0.0" width="343" height="57.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Family" textAlignment="justified" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bhc-IV-byI">
-                                            <rect key="frame" x="15" y="2" width="320" height="56"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Family" textAlignment="justified" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.75" translatesAutoresizingMaskIntoConstraints="NO" id="bhc-IV-byI">
+                                            <rect key="frame" x="15" y="2" width="218" height="56"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="56" id="OPg-sE-sdz"/>
                                             </constraints>
@@ -547,7 +547,7 @@
                                         <constraint firstItem="bhc-IV-byI" firstAttribute="top" secondItem="8dm-s7-zk0" secondAttribute="top" constant="2" id="buj-aW-EF8"/>
                                         <constraint firstItem="Dpg-XG-hd5" firstAttribute="top" secondItem="8dm-s7-zk0" secondAttribute="topMargin" constant="11" id="cCe-gj-5qv"/>
                                         <constraint firstItem="G8f-xT-tpY" firstAttribute="top" secondItem="8dm-s7-zk0" secondAttribute="top" constant="12" id="loH-bg-gpw"/>
-                                        <constraint firstAttribute="trailing" secondItem="bhc-IV-byI" secondAttribute="trailing" constant="8" id="pY8-po-L0G"/>
+                                        <constraint firstAttribute="trailing" secondItem="bhc-IV-byI" secondAttribute="trailing" constant="110" id="pY8-po-L0G"/>
                                         <constraint firstItem="QGI-QE-U5C" firstAttribute="leading" secondItem="G8f-xT-tpY" secondAttribute="trailing" constant="-49" id="s2F-EQ-kla"/>
                                         <constraint firstAttribute="trailing" secondItem="QGI-QE-U5C" secondAttribute="trailing" constant="17" id="xUm-ou-jtz"/>
                                         <constraint firstItem="A96-LM-z49" firstAttribute="leading" secondItem="Dpg-XG-hd5" secondAttribute="trailing" constant="1" id="zTC-Tc-aw9"/>
