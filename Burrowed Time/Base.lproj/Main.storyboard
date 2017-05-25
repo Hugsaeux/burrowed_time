@@ -498,8 +498,8 @@
                                     <rect key="frame" x="0.0" y="0.0" width="343" height="57.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Family" textAlignment="justified" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bhc-IV-byI">
-                                            <rect key="frame" x="15" y="2" width="320" height="56"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Family" textAlignment="justified" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.75" translatesAutoresizingMaskIntoConstraints="NO" id="bhc-IV-byI">
+                                            <rect key="frame" x="15" y="2" width="218" height="56"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="56" id="OPg-sE-sdz"/>
                                             </constraints>
@@ -514,8 +514,8 @@
                                                 <action selector="switchEvent:" destination="0xY-sP-oAD" eventType="valueChanged" id="uxa-Ed-B7x"/>
                                             </connections>
                                         </switch>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Home" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G8f-xT-tpY">
-                                            <rect key="frame" x="236" y="18" width="90" height="21"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Home" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.75" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="G8f-xT-tpY">
+                                            <rect key="frame" x="236" y="12" width="90" height="31"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="90" id="ppp-h8-hqO"/>
                                             </constraints>
@@ -543,10 +543,11 @@
                                         <constraint firstItem="A96-LM-z49" firstAttribute="top" secondItem="8dm-s7-zk0" secondAttribute="topMargin" constant="11" id="Bdv-Tt-pJi"/>
                                         <constraint firstItem="QGI-QE-U5C" firstAttribute="top" secondItem="8dm-s7-zk0" secondAttribute="top" constant="13" id="Ere-qB-ZJj"/>
                                         <constraint firstItem="bhc-IV-byI" firstAttribute="leading" secondItem="8dm-s7-zk0" secondAttribute="leading" constant="15" id="OaX-dX-vXO"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="G8f-xT-tpY" secondAttribute="bottom" constant="6.5" id="SSS-c8-Iu1"/>
                                         <constraint firstItem="bhc-IV-byI" firstAttribute="top" secondItem="8dm-s7-zk0" secondAttribute="top" constant="2" id="buj-aW-EF8"/>
                                         <constraint firstItem="Dpg-XG-hd5" firstAttribute="top" secondItem="8dm-s7-zk0" secondAttribute="topMargin" constant="11" id="cCe-gj-5qv"/>
-                                        <constraint firstItem="G8f-xT-tpY" firstAttribute="top" secondItem="8dm-s7-zk0" secondAttribute="top" constant="18" id="loH-bg-gpw"/>
-                                        <constraint firstAttribute="trailing" secondItem="bhc-IV-byI" secondAttribute="trailing" constant="8" id="pY8-po-L0G"/>
+                                        <constraint firstItem="G8f-xT-tpY" firstAttribute="top" secondItem="8dm-s7-zk0" secondAttribute="top" constant="12" id="loH-bg-gpw"/>
+                                        <constraint firstAttribute="trailing" secondItem="bhc-IV-byI" secondAttribute="trailing" constant="110" id="pY8-po-L0G"/>
                                         <constraint firstItem="QGI-QE-U5C" firstAttribute="leading" secondItem="G8f-xT-tpY" secondAttribute="trailing" constant="-49" id="s2F-EQ-kla"/>
                                         <constraint firstAttribute="trailing" secondItem="QGI-QE-U5C" secondAttribute="trailing" constant="17" id="xUm-ou-jtz"/>
                                         <constraint firstItem="A96-LM-z49" firstAttribute="leading" secondItem="Dpg-XG-hd5" secondAttribute="trailing" constant="1" id="zTC-Tc-aw9"/>

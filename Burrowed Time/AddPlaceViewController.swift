@@ -37,7 +37,11 @@ class AddPlaceViewController: UIViewController, UITextFieldDelegate {
             }
             
             if (repeatedName){
+                self.alertController.message = "This place name is already in use."
                 self.present(self.alertController, animated: true, completion:nil)
+            }else if (placeTitleTextbox.text?.trimmingCharacters(in: NSCharacterSet.whitespaces) == ""){
+                self.alertController.message = "You cannot have a blank name."
+                self.present(self.alertController, animated:true, completion:nil)
             }else{
                 let mapSettingsPage:MapGUIViewController! = self.storyboard?.instantiateViewController(withIdentifier: "MapSettingsPage") as! MapGUIViewController
             

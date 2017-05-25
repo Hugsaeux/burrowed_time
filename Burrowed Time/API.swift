@@ -106,6 +106,15 @@ class API {
         
     }
     
+    func change_group_name(groupid: String, groupname: String) {
+        let parameters: Parameters = [
+            "groupid": groupid,
+            "groupnam": groupname
+        ]
+        
+        _ = send_post(endpoint: "change-group-name", parameters: parameters)
+    }
+    
     func join_group(groupid: String, locs:NSArray){
         let parameters: Parameters = [
             "userid": userID.IDnum,
