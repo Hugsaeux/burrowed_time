@@ -8,8 +8,8 @@
 
 import UIKit
 
-class GroupLocationPickerViewController: UIViewController {
-    @IBOutlet weak var titleLabel: UILabel!
+class GroupLocationPickerViewController: UIViewController, UITextFieldDelegate {
+    @IBOutlet weak var titleTextField: UITextField!
     
     var groupName: String!
     var groupList: GroupList!
@@ -28,7 +28,8 @@ class GroupLocationPickerViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        titleLabel.text = groupName
+        titleTextField.delegate = self
+        titleTextField.text = groupName
         
         self.alertController.addAction(OKAction)
         nc.addObserver(forName:Notification.Name(rawValue:"GroupLocsExceeded"),
@@ -50,6 +51,34 @@ class GroupLocationPickerViewController: UIViewController {
             groupLocationTableView.currentGroup = groupName
             groupLocationTableView.pageID = pageID
         }
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        
+        if((titleTextField.text?.isEmpty)! || titleTextField.text?.trimmingCharacters(in: NSCharacterSet.whitespaces) == ""){
+            self.alertController.title = "Invalid Name"
+            self.alertController.message = "Groups cannot have a blank name."
+            self.present(self.alertController, animated: true, completion:nil)
+            return false
+        }
+        
+        let api:API = API()
+        var groupid:String = ""
+        for group in groupList.groups {
+            if (group.getGroupName() == groupName){
+                groupid = group.getIdentifier()
+            }
+        }
+        api.change_group_name(groupid: groupid, groupname: titleTextField.text!)
+        
+        groupList.groups[groupList.getIndexOfGroup(groupID: groupid)].groupName = titleTextField.text!
+        //print(groupList.groups[groupList.getIndexOfGroup(groupID: groupid)].groupName)
+        
+        //print(groupid)
+        groupList.saveGroupListToPhone()
+        
+        textField.resignFirstResponder()
+        return false
     }
 
 }

@@ -11,7 +11,7 @@ import Foundation
 
 class Group {
     
-    let groupName:String
+    var groupName:String
     var visibility:Bool
     var members = [Person]()
     var identifier:String!

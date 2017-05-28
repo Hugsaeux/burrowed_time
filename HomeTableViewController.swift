@@ -31,7 +31,6 @@ class HomeTableViewController: UITableViewController {
     func refreshData() {
         if (index != 0) {
             refreshGroupInfo(group: cellData.groups[index-1])
-            self.tableView.reloadData()
         }
         else {
             let api = API()
@@ -46,10 +45,14 @@ class HomeTableViewController: UITableViewController {
                     newGroup.setIdentifier(id: key as! String)
                     self.cellData.addGroup(group: newGroup)
                 }
+                else {
+                    self.cellData.groups[self.cellData.getIndexOfGroup(groupID: key as! String)].groupName = value as! String
+                }
             }
         }
         
         self.cellData.saveGroupListToPhone()
+        self.tableView.reloadData()
     }
 
     override func viewDidLoad() {

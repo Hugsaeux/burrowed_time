@@ -34,8 +34,6 @@ class LoginScreenViewController: UIViewController, UITextFieldDelegate {
         var phoneNumber = phoneNumberTextField.text!
         if (userNameTextField.text != "" && phoneNumberTextField.text != "") {
             
-           
-            
             if (phoneNumber.characters.count > 10) {
                 
                 phoneNumber = String(phoneNumber.characters.suffix(10)) //Strip off country codes
@@ -43,7 +41,7 @@ class LoginScreenViewController: UIViewController, UITextFieldDelegate {
             
             let api:API = API()
             
-            let lookUp = api.lookup_user(phonenumber: phoneNumberTextField.text!)
+            let lookUp = api.lookup_user(phonenumber: phoneNumber)
             let userID = lookUp.object(forKey: "userid") as! Int
             
             if (userID != -1) {
