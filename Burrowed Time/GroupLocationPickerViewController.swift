@@ -71,7 +71,11 @@ class GroupLocationPickerViewController: UIViewController, UITextFieldDelegate {
         }
         api.change_group_name(groupid: groupid, groupname: titleTextField.text!)
         
-        print(groupid)
+        groupList.groups[groupList.getIndexOfGroup(groupID: groupid)].groupName = titleTextField.text!
+        //print(groupList.groups[groupList.getIndexOfGroup(groupID: groupid)].groupName)
+        
+        //print(groupid)
+        groupList.saveGroupListToPhone()
         
         textField.resignFirstResponder()
         return false
