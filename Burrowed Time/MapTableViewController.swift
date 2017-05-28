@@ -81,6 +81,9 @@ class MapTableViewController: UITableViewController {
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
+            // Disable user interaction with table
+            self.view.isUserInteractionEnabled = false
+
             // Remove row from table
             let cell:MapTableViewCell = tableView.cellForRow(at: indexPath) as! MapTableViewCell
             let deletedTitle:String = cell.title.text!
@@ -97,51 +100,71 @@ class MapTableViewController: UITableViewController {
             let newLookup = NSMutableDictionary()
             let oldToNewID = NSMutableDictionary()  // Lookup new integer ID using old string ID
             let locDict = NSMutableDictionary()
-            var newIdx = 0
-            
+            var deletedIdx:String = ""
+            var deletedLast:Bool = false
+            var newRegion:CLCircularRegion = CLCircularRegion()
+    
             for region in locationUtil!.manager.monitoredRegions {
-                locationUtil!.manager.stopMonitoring(for: region)
-                
                 let info:NSArray = storedRegionLookup.regionLookup.object(forKey: region.identifier) as! NSArray
-                if (info[TITLE] as! String != deletedTitle) {
-                    let lat = NumberFormatter().number(from: String(describing: info[LATITUDE]))!.doubleValue
-                    let long = NumberFormatter().number(from: String(describing: info[LONGITUDE]))!.doubleValue
-                    let rad = NumberFormatter().number(from: String(describing: info[RADIUS]))!.doubleValue
+                if (info[TITLE] as! String == deletedTitle) {
+                    // Stop monitoring the deleted region
+                    locationUtil!.manager.stopMonitoring(for: region)
                     
-                    let center = CLLocationCoordinate2D(latitude: lat, longitude: long)
-                    let currRegion = CLCircularRegion(center: center, radius: rad, identifier: String(newIdx))
-                    locationUtil!.manager.startMonitoring(for: currRegion)
-                    
-                    newLookup[newIdx.description] = info
-                    oldToNewID[region.identifier] = newIdx
-                    locDict[newIdx.description] = info[TITLE]
-                    newIdx += 1
-                }
-                else {
+                    // Exit the deleted region
                     let api:API = API()
                     api.exit_location(loc_num: region.identifier)
+                    
+                    // Remember the deleted index
+                    deletedIdx = region.identifier
+                    
+                    // Decrement index
+                    storedRegionIdx.decrementIdx()
+                    storedRegionIdx.saveRegionIdxToPhone()
+                
+                    // Determine whether deletedIdx was last
+                    if (deletedIdx == storedRegionIdx.regionIdx as String) {
+                        deletedLast = true
+                    }
+                }
+            }
+            
+            for region in locationUtil!.manager.monitoredRegions {
+                let info:NSArray = storedRegionLookup.regionLookup.object(forKey: region.identifier) as! NSArray
+                let lat = NumberFormatter().number(from: String(describing: info[LATITUDE]))!.doubleValue
+                let long = NumberFormatter().number(from: String(describing: info[LONGITUDE]))!.doubleValue
+                let rad = NumberFormatter().number(from: String(describing: info[RADIUS]))!.doubleValue
+                let center = CLLocationCoordinate2D(latitude: lat, longitude: long)
+                let currRegion = CLCircularRegion(center: center, radius: rad, identifier: deletedIdx)
+                
+                if (!deletedLast && (region.identifier == storedRegionIdx.regionIdx as String)) {
+                    locationUtil!.manager.stopMonitoring(for: region)
+                    newRegion = currRegion
+                    newLookup[deletedIdx] = info
+                    oldToNewID[region.identifier] = deletedIdx as String
+                    locDict[deletedIdx] = info[TITLE]
+                } else {
+                    newLookup[region.identifier] = info
+                    oldToNewID[region.identifier] = region.identifier as String
+                    locDict[region.identifier] = info[TITLE]
                 }
             }
             
             let newRegionLookup = RegionLookup(regionLookup: newLookup)
             newRegionLookup.saveRegionLookupToPhone()
             
-            // Decrement index
-            storedRegionIdx.decrementIdx()
-            storedRegionIdx.saveRegionIdxToPhone()
-            
             // Delete the location from the database
             locDict[storedRegionIdx.regionIdx] = NSNull()
             let api:API = API()
             api.change_location_names(loc_dict: locDict)
             
-            // Update current location in database
-            updateCurrentLocation()
+            // Start monitoring the renamed region
+            if (!deletedLast) {
+                locationUtil!.manager.startMonitoring(for: newRegion)
+            }
             
             // Rename locations in groupList
             let groupList:GroupList = GroupList()
             groupList.loadGroupListFromPhone()
-            
             for group:Group in groupList.groups {
                 let groupid = group.getIdentifier()
                 let locs = NSMutableArray()
@@ -151,31 +174,22 @@ class MapTableViewController: UITableViewController {
                         group.removeLocation(location: location.name)
                     } else {
                         let oldID = String(location.getLocationID())
-                        let newID = oldToNewID[oldID] as! Int
-                        location.setLocationID(newID: newID)
+                        let newID = Int(oldToNewID[oldID] as! String)
+                        location.setLocationID(newID: newID!)
                         locs.add(newID)
                     }
                 }
                 api.change_group_locations(groupid: groupid, locs: locs)
             }
             groupList.saveGroupListToPhone()
+            
+            // Update current location in database
+            updateCurrentLocation()
+            
+            // Reallow user interaction with table
+            self.view.isUserInteractionEnabled = true
         }
     }
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
 
     // MARK: - Navigation
 
