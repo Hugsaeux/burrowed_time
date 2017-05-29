@@ -1325,9 +1325,8 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Group Name" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="o2Y-Fi-t0X">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Group Name" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="o2Y-Fi-t0X">
                                 <rect key="frame" x="3" y="37" width="369" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" name="GillSans" family="Gill Sans" pointSize="28"/>
                                 <textInputTraits key="textInputTraits" returnKeyType="done"/>
@@ -1354,9 +1353,13 @@
                             <constraint firstAttribute="trailing" secondItem="Fal-8P-wm2" secondAttribute="trailing" constant="16" id="4ZY-T5-M9D"/>
                             <constraint firstItem="DUP-7Q-0as" firstAttribute="top" secondItem="Fal-8P-wm2" secondAttribute="bottom" constant="59" id="8qn-uX-PzM"/>
                             <constraint firstItem="Auf-zC-3Vb" firstAttribute="top" secondItem="fis-5F-W7U" secondAttribute="bottom" constant="15" id="A4L-LB-MW0"/>
+                            <constraint firstItem="o2Y-Fi-t0X" firstAttribute="top" secondItem="fis-5F-W7U" secondAttribute="bottom" constant="17" id="Qsw-db-Wbe"/>
                             <constraint firstAttribute="trailing" secondItem="Auf-zC-3Vb" secondAttribute="trailing" constant="16" id="RSG-0Q-VMS"/>
                             <constraint firstItem="Fal-8P-wm2" firstAttribute="leading" secondItem="G5F-6f-KpM" secondAttribute="leading" constant="16" id="Roq-lx-tL3"/>
+                            <constraint firstItem="Fal-8P-wm2" firstAttribute="top" secondItem="o2Y-Fi-t0X" secondAttribute="bottom" constant="27" id="VYS-x4-C1D"/>
                             <constraint firstItem="G8e-vi-ILA" firstAttribute="leading" secondItem="G5F-6f-KpM" secondAttribute="leading" constant="3" id="XaY-6h-RAL"/>
+                            <constraint firstItem="o2Y-Fi-t0X" firstAttribute="leading" secondItem="G5F-6f-KpM" secondAttribute="leading" constant="3" id="ZCc-gY-kxy"/>
+                            <constraint firstAttribute="trailing" secondItem="o2Y-Fi-t0X" secondAttribute="trailing" constant="3" id="hYs-Sa-7ow"/>
                             <constraint firstAttribute="trailing" secondItem="G8e-vi-ILA" secondAttribute="trailing" constant="3" id="mEo-Wv-lJs"/>
                             <constraint firstItem="Fal-8P-wm2" firstAttribute="top" secondItem="G8e-vi-ILA" secondAttribute="bottom" constant="18" id="mwt-rZ-Bs3"/>
                             <constraint firstItem="G8e-vi-ILA" firstAttribute="top" secondItem="fis-5F-W7U" secondAttribute="bottom" constant="8" id="xGk-iF-b0J"/>
